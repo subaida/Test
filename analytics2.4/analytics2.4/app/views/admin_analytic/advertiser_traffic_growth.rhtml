@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "zestadz-datepicker"%>
+ <link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datasource-beta-min.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>  
+</head>
+
+<body>
+<form  action="/admin_analytic/advertiser_traffic_growth" method="post" name="form_analytic">
+<%begin%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                <td width="84%" align="left"><span class="heading">Publisher Traffic Growth </span></td>
+                </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td width="1%" height="15"></td>
+            <td width="98%" height="15"></td>
+            <td width="1%" height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="subpagetableborder">
+                <tr class="link_strip">
+                  <td width="40%" height="30" align="left" valign="middle"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="83%" height="30" valign="middle" class="report_text"><strong>&nbsp;Export to: <a href="/admin_analytic/pdf_open">PDF</a> | <a href="#">Print</a></strong></td>
+                      </tr>
+                  </table></td>
+                  <td width="17%" height="30">&nbsp;</td>
+                  <td width="43%" height="30" align="right" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+                      <tr>
+                        <td align="right" width="44%"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-'); " value="<%if params[:start_on]!='select start date' and params[:start_on]!=nil%><%=params[:start_on]%><%else%>select start date<%end%>"/></td>
+                        <td align="right" width="44%"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if params[:end_on]!='select end date' and params[:end_on]!=nil %><%=params[:end_on]%><%else%>select end date<%end%>"/></td>
+                        <td align="right" width="17%"><select name="advTraffic" >
+                          <option value="" > All </option>
+                          <%for i in 0...@tblAdvertiserTraffic.size%>
+						    	<option value="<%=@tblAdvertiserTraffic[i].Advertiser_Id%>"  <%if params[:advTraffic].to_i==@tblAdvertiserTraffic[i].Advertiser_Id%>selected="selected"<%else%><%end%> ><%=@tblAdvertiserTraffic[i].Advertiser_Name%></option>
+                         <% end %>
+                        </select></td>
+                        <td width="23%" align="right"><select name="select2" class="dropdown">
+                          <option>Locations</option>
+                        </select></td>
+                        <td width="16%" align="right"><input name="submit" type="submit" value="Go" ></td>
+                      </tr>
+                  </table></td>
+                </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                  <td width="50%"><a href="/admin_analytic/admin_home">Admin Home</a> &gt;  Advertiser Traffic Growth   </td>
+                  <td width="50%" align="right">&nbsp; </td>
+                </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td width="85%"><%@AdvTraffic_xml = session[:xml_string]%>
+              <div id="advTraffic_div" align="center">No Data</div>
+              <%if @AdvTraffic_xml!=nil && @AdvTraffic_xml!=""%>
+                <%if @AdvTraffic_xml[:sesAdvTrafficXML]!=nil && @AdvTraffic_xml[:sesAdvTrafficXML]!=""%>
+                <script type="text/javascript">
+						var myChart_demo = new FusionCharts("/FusionCharts_Developer/Charts/Column3D.swf", "myChartId", "900", "350", "0", "0");
+						myChart_demo.setDataXML("<%=@AdvTraffic_xml[:sesAdvTrafficXML]%>");
+						myChart_demo.setTransparent(true);
+						myChart_demo.render("advTraffic_div");
+					</script>
+                <%end%>
+                <%end%>
+            </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td align="center" class="footer_bg">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<%
+ rescue Exception=>e
+       puts "DEBUGGER :: ERROR :: in Admin_Campaign_Performance.rb - Admin_Campaign_Performance :: #{e.to_s}"
+     end %>
+</form>
+</body>
+</html>

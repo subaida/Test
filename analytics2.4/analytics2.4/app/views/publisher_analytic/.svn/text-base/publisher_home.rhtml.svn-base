@@ -1,0 +1,764 @@
+<%begin%>
+<% bundle :name => "publisher_analytics_home_bundle" do %>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "analytic-datepicker"%>
+<script language="JavaScript" src="/FusionMaps_Developer/JSClass/FusionMaps.js"></script>
+<%end%>
+<script src="/javascripts/prototype.js"></script>
+<script src="/javascripts/effects.js"></script>
+<script type="text/JavaScript">
+var flag='true';
+document.getElementsByClassName = function(className, parentElement) {
+  if (Prototype.BrowserFeatures.XPath) {
+    var q = ".//*[contains(concat(' ', @class, ' '), ' " + className + " ')]";
+    return document._getElementsByXPath(q, parentElement);
+  } else {
+    var children = null;
+	if(document.body.getElementsByTagName('*').length==0){
+		children=($(parentElement) || document.body).childNodes;
+	}
+	else{
+ 		children=($(parentElement) || document.body).getElementsByTagName('*');
+	}
+    var elements = [], child;
+    for (var i = 0, length = children.length; i < length; i++) {
+      child = children[i];
+      if (Element.hasClassName(child, className))
+        elements.push(Element.extend(child));
+    }
+    return elements;
+  }
+}
+
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('pub_start_on').value= start_date;
+		document.getElementById('pub_end_on').value= end_date;	
+	}
+}
+
+function change2mouseover(obj)
+{	
+	if (obj.className=='panels_active')
+	{
+		obj.className='panels_hover';
+	}
+}
+function change2active(obj)
+{	
+	if (obj.className=='panels_hover')
+	{
+		obj.className='panels_active';
+	}
+	
+}
+
+function acceptDates(status)
+{
+
+ statusMoveAdv('menuDiv') ;
+ document.getElementById('duration').disabled=false;
+ document.getElementById('go').disabled=false;
+ if (status=='Ok')
+ {
+ 	document.getElementById('pub_start_on').value= document.getElementById('start_on').value
+	document.getElementById('pub_end_on').value= document.getElementById('end_on').value
+ }
+}
+
+function change2visited(obj)
+{	
+	new Effect[Element.visible('menuDiv') ? 'BlindUp' : 'BlindUp']('menuDiv', {duration: 0.25});
+	//document.getElementById('duration').disabled=false;
+	if (flag=='true')
+	{	
+		//alert(document.getElementsByClassName('panels_visited')[0].className);
+		var obj1=document.getElementsByClassName('panels_visited')[0];
+		obj1.className='panels_active';
+		obj.className='panels_visited';
+		var array=new Array()
+		array=document.getElementsByClassName('panels_active')
+		for(i=0; i < array.length;i++)
+		{
+			array[i].disabled="disabled";
+		}
+		//document.getElementById('go').disabled="disabled";
+	}
+}
+
+
+
+//--- pop-up window 
+
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+
+
+function updateChart(chart)
+{
+	if(flag=='true')
+	{
+		document.getElementById('showTextReport').style.display="none";
+		document.getElementById('container').style.display="block";
+		new Ajax.Updater('summary_div', "/publisher_analytic/updateChart?report_type="+chart, {asynchronous:true, evalScripts:true,onComplete:function(request){Element.hide('indicator');Element.show('summary_div');enableAction();setTimeout(flag='true',20);}, onLoading:function(request){flag='false';Element.show('indicator');Element.hide('summary_div');}});
+	}
+}
+
+function showTextReport()
+{
+	if (flag=='true')
+	{
+		new Ajax.Updater('showTextReport', "/publisher_analytic/showTextReport", {asynchronous:true, evalScripts:true,onComplete:function(request){document.getElementById('container').style.display="none";Element.hide('indicator_showtext');Element.show('showTextReport');enableAction();setTimeout(flag='true',20);}, onLoading:function(request){flag='false';Element.show('indicator_showtext');}});
+	}
+}
+function enableAction()
+{
+	array=document.getElementsByClassName('panels_active')
+	for(i=0;i< array.length;i++)
+	{
+		array[i].disabled="";
+	}
+	//document.getElementById('go').disabled="";
+}
+function noData()
+{
+	alert('No Data to display.');
+}
+function indicatorHide(div_id)
+{	
+	var obj=document.getElementsByClassName(div_id);
+	if (obj !=null)
+	{	for(i=0;i < obj.length;i++)
+		{
+			obj[i].className=obj[i].id;
+		}
+		
+	}
+}
+function resetDate(obj)
+	{
+		document.getElementById('duration').selectedIndex = 0;
+	}
+
+</script>
+<script type="text/javascript">
+	window.onload=function(){ 
+
+			 <%if @summry_report!=nil && @summry_report!=""%>
+					 <%if @summry_report[:summary]!=nil && @summry_report[:summary]!=""%>
+							<%if session[:report_type]=='imp_click'%>
+								var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/MSLine.swf", "myChartId", "100%", "100%", "0", "0");
+							<%else%>
+								var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId", "100%", "100%", "0", "0");
+							<%end%>
+							myChart_summary.setDataXML("<%=@summry_report[:summary]%>");
+							myChart_summary.setTransparent(true);
+							myChart_summary.render("summary_div");
+					<%end%>
+					<%if @summry_report[:handset]!=nil && @summry_report[:handset]!=""%>
+							var myChart_handset = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+							myChart_handset.setDataXML("<%=@summry_report[:handset]%>");
+							myChart_handset.setTransparent(true);
+							myChart_handset.render("handset_div");
+					<%end%>
+					<%if @summry_report[:channel]!=nil && @summry_report[:channel]!=""%>
+							var myChart_channel = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+							myChart_channel.setDataXML("<%=@summry_report[:channel]%>");
+							myChart_channel.setTransparent(true);
+							myChart_channel.render("channel_div");
+                    <%end%>
+					<%if @summry_report[:visitor]!=nil && @summry_report[:visitor]!=""%>
+							var myChart_unique_visitor = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId", "100%", "100%", "0", "0");
+							myChart_unique_visitor.setDataXML("<%=@summry_report[:visitor]%>");
+							myChart_unique_visitor.setTransparent(true);
+							myChart_unique_visitor.render("visitor_div");
+					<%end%>
+					<%if @summry_report[:traffic]!=nil && @summry_report[:traffic]!=""%>
+							var map = new FusionMaps("/FusionMaps_Developer/Maps/FCMap_World8.swf", "Map1Id","100%", "100%","0", "0");
+						 	map.setDataXML("<%=@summry_report[:traffic]%>");
+						  	map.setTransparent(true);
+						 	map.render("traffic_div");
+					<%end%>
+					<%if @summry_report[:carrier]!=nil && @summry_report[:carrier]!=""%>
+							var myChart_carrier = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+						 	myChart_carrier.setDataXML("<%=@summry_report[:carrier]%>");
+						  	myChart_carrier.setTransparent(true);
+						 	myChart_carrier.render("carrier_div");
+					<%end%>
+
+			<%end%>
+			setTimeout("indicatorHide('nodata_indicator')",500);
+			}
+		</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="1%">&nbsp;</td>
+    <td width="98%">
+	<table width="100%" border="0">
+		  <tr>
+			<td align="LEFT"><span class="heading">Publisher Analytics</span></td>
+			<td></td>
+		  </tr>
+	</table></td>
+    <td width="1%">&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+   <%if (@adclient_list==nil || @adclient_list=='') || (@adclient_list!=nil and @adclient_list.size==0)%>
+  <tr>
+    <td height="15"></td>
+    <td height="15"><table width="100%" border="0" class="infobar">
+      <tr>
+        <td style="color:#FF0000;">&nbsp;No active site or app defined.</td>
+      </tr>
+    </table></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+  <%end%>
+  <tr>
+    <td height="15"></td>
+    <td height="15" align="CENTER">
+	<form name="form_pub_analytic" action="/publisher_analytic/generate_report" method="post">
+	<table width="100%" border="0" cellpadding="5" cellspacing="0" class="subpagetableborder">
+      
+      <tr >
+        <td align="center" colspan="3" width="100%"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td width="75%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                <tr class="link_strip"> 
+                  <td align="LEFT" height="35"><div style="float:left;"><strong>AD Client:</strong> &nbsp;
+                      <select name="adclient_dropdown" id="adclient_id" class="dropdown" style="width:150px;">
+                        <%if (@adclient_list==nil || @adclient_list=='') || (@adclient_list!=nil and @adclient_list.size==0)%>
+							<option value="" >No Site or App Defined</option>
+                        <%else%>
+							<option value="<%=encrypt('WAP')%>" <%if session[:report_adclient].to_s=='WAP'%>selected="selected"<%end%>>ALL - WAP</option>
+							<option value="<%=encrypt('SMS')%>" <%if session[:report_adclient].to_s=='SMS'%>selected="selected"<%end%>>ALL - SMS</option>
+							<%for adclient in @adclient_list%>
+								<%if adclient.id !=nil and adclient.id !="" and adclient.app_name !="" and adclient.app_name!=nil %>
+								<option value="<%=encrypt(adclient.id)%>"<%if session[:report_adclient].to_i==(adclient.id).to_i%>selected="selected"<%end%>><%=adclient.app_name%></option>
+								<%end%>
+							<%end%>
+                        <%end%>
+                      </select>
+                    &nbsp;&nbsp;<strong>Choose Duration:&nbsp; </strong>
+                    <select  onChange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" <%if (@adclient_list==nil || @adclient_list=='') || (@adclient_list!=nil and @adclient_list.size==0)%>disabled="disabled"<%end%>  style="width:110px;">
+					  <option value="1" <%if session[:duration]=='1'%>selected="selected"<%end%>>Yesterday</option>
+					  <option value="6" <%if session[:duration]=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                      <option value="29" <%if session[:duration]=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                      <option value="89" <%if session[:duration]=='89'%>selected="selected"<%end%>>Last 90 days</option>
+                      <option value="179" <%if session[:duration]=='179'%>selected="selected"<%end%>>Last 180 days</option>
+                      <option value="364" <%if session[:duration]=='364'%>selected="selected"<%end%>>Last 365 days</option>
+                      <option value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+                    </select>
+					</div>
+					<div <%if @check_access=='true'%>style="float:left;"<%else%>style="display:none;float:left;"<%end%>>
+					<%if @check_access=='true'%>&nbsp;&nbsp;<%end%><strong>Impressions:</strong>&nbsp;
+					<select name="filled" id="filled">
+						<option value="filled" <%if session[:filled]=='filled'%>selected="selected"<%end%> >Filled</option>
+						<option value="unfilled"  <%if session[:filled]=='unfilled'%>selected="selected"<%end%>>Unfilled</option>
+						<option value="both"  <%if session[:filled]=='both'%>selected="selected"<%end%>>Both</option>
+					</select>
+					</div>
+                    <div style="float:left;">&nbsp;&nbsp;&nbsp;<input type="submit" name="Submit" id="go" value="GO"  <%if (@adclient_list==nil || @adclient_list=='') || (@adclient_list!=nil and @adclient_list.size==0)%>disabled="disabled"<%end%>/></div></td>
+                </tr>
+            </table></td>
+            <td width="25%"><table align="LEFT" width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                <tr class="link_strip">
+                  <td height="35" align="LEFT" width="79%"><strong>Range</strong> :&nbsp;
+                  <%if session[:report_start_on]!='' and session[:report_start_on]!=nil %>
+                      <%=session[:report_start_on]%>
+                      <%else%>
+                      <%=@startdate%>
+                      <%end%>
+                    &nbsp;<strong>to</strong>&nbsp;
+                    <%if session[:report_end_on]!='' and session[:report_end_on]!=nil %>
+                    <%=session[:report_end_on]%>
+                    <%else%>
+                    <%=@enddate%>
+                    <%end%></td>
+                  <td class="footer_text" align="LEFT" width="21%"><input  type="hidden" id="pub_start_on" name="pub_start_on" readonly='true' value="<%if session[:report_start_on]!="" && session[:report_start_on]!=nil %><%=session[:report_start_on]%><%else%><%=@startdate%><%end%>"/>
+                      <input type="hidden" name="pub_end_on" id="pub_end_on"  readonly='true' value="<%if session[:report_end_on]!="" && session[:report_end_on]!=nil %><%=session[:report_end_on]%><%else%><%=@enddate%><%end%>" /> </td>
+                </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td align="center" colspan="3">
+		<table align="center" border="0" cellpadding="5" cellspacing="0" width="100%">
+            <tr>
+              <td align="center" width="14%" valign="MIDDLE" >
+			  <div class="panels_visited" onClick="change2visited(this);updateChart('impressions');" onMouseOver="change2mouseover(this);" onMouseOut="change2active(this);" id="impressions"> <strong>
+					<%if @adclient_summary!=nil %><%if @adclient_summary[0] !=nil %>
+						<%=number_with_delimiter(@adclient_summary[0].sum_impressions)%><%else%>0
+					<%end%><%end%>
+  &nbsp;Impressions </strong><br />
+              <span>Click to view chart</span></div>			  </td>
+			   <td align="center" valign="middle" width="14%">
+              <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);updateChart('clicks');<%end%>" onMouseOver="change2mouseover(this);" id="clicks" onMouseOut="change2active(this);">
+			  <strong>
+			  		<%if session[:filled]=='unfilled'%>0<%else%>
+					<%if @adclient_summary!=nil %><%if @adclient_summary[0] !=nil %>
+						<%=number_with_delimiter(@adclient_summary[0].sum_clicks)%><%else%>0
+					<%end%><%end%><%end%>&nbsp;
+                Clicks </strong><br />
+                <span>Click to view chart</span>				</div>				</td>
+				 <td align="center" valign="middle" width="14%">
+             <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);updateChart('ctr');<%end%>" onMouseOver="change2mouseover(this);" onMouseOut="change2active(this);" id="ctr" > <strong>
+			  	CTR
+					<%if session[:filled]=='unfilled'%>0<%else%>
+					<%if @adclient_summary!=nil %><%if @adclient_summary[0] !=nil %>
+						<%=@adclient_summary[0].sum_ctr==nil ? 0.00 : sprintf('%.2f',@adclient_summary[0].sum_ctr)%><%else%>0.00
+					<%end%><%end%><%end%>
+                % </strong> <br />
+                Click to view chart</div>				</td>
+				 <td align="center" valign="middle" width="14%">
+              <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);updateChart('Impressions Vs Clicks');<%end%>" onMouseOver="change2mouseover(this);" onMouseOut="change2active(this);" id="Impressions Vs Clicks" ><strong> Impressions Vs Clicks</strong><br />
+                Click to view chart </div>				</td>
+				 <td align="center" valign="middle" width="14%">
+              <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);updateChart('ecpm');<%end%>" onMouseOver="change2mouseover(this);" onMouseOut="change2active(this);" id="ecpm" ><strong>
+			  	eCPM
+					<%if session[:filled]=='unfilled'%>$0<%else%>
+					<%if @adclient_summary!=nil %><%if @adclient_summary[0] !=nil %>
+					   $<%=@adclient_summary[0].sum_ecpm==nil ? 0.00 : sprintf('%.2f',@adclient_summary[0].sum_ecpm)%><%else%>$0.00
+					<%end%><%end%><%end%>
+                 </strong><br />
+                Click to view chart </div>				</td>
+				 <td align="center" valign="middle" width="14%">
+              <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);updateChart('revenue');<%end%>" onMouseOver="change2mouseover(this);" onMouseOut="change2active(this);" id="revenue"><strong> Earnings 
+			  	  <%if session[:filled]=='unfilled'%>$0<%else%>
+                  <%if @adclient_summary!=nil %><%if @adclient_summary[0] !=nil %>
+				  	$<%=@adclient_summary[0].sum_revenue==nil ? 0.00 : number_with_delimiter(sprintf('%.2f',@adclient_summary[0].sum_revenue))%><%else%>$0.00
+                  <%end%><%end%><%end%>
+                 </strong><br />
+                  Click to view chart </div>				  </td>
+				   <td align="center" valign="middle" width="14%">
+              <div class="panels_active" onClick="<%if session[:filled]!='unfilled'%>change2visited(this);showTextReport();<%end%>" onMouseOver="change2mouseover(this);" id="showText" onMouseOut="change2active(this);" ><strong> Tabular Report</strong><br />
+                  Click to view report </div></td>
+            </tr>
+        </table></td>
+      </tr>
+    </table>
+	</form>	</td>
+    <td height="15"></td>
+  </tr>
+  
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15" ></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td width="1%" ></td>
+    <td align="center" width="98%" valign="TOP">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" height="225">
+      <tr>
+        <td width="2%">&nbsp;</td>
+        <td align="CENTER" width="96%" height="100%">
+		<div  align="center" id="summary_div" style="width:90%; height:100%;"><div id="nodata_linechart_b" class="nodata_indicator">&nbsp;</div>
+        </div>
+            <span id="indicator" style="display:none;"><img src="/images/indicator.gif" height="32" width="32" alt="In progress..." /></span>		</td>
+        <td width="3%">&nbsp;</td>
+      </tr>
+    </table>	</td>
+    <td width="1%"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15">
+	<span id="indicator_showtext" style="display:none;"><div align="center"><img src="/images/indicator.gif" height="32" width="32" alt="In progress..." /></div></span>
+	<div id="showTextReport" style="display:none;"></div>
+	<div id="container">  <div id="content"> <div id="main_content">      
+
+<script type="text/javascript"> dashboard = new goog.analytics.Dashboard({"DashboardInfo":{"Modules":{"LEFT":[{"Compare":false,"Handle":"obj.dashval.getval","Id":"ContentReport_module"},{"Compare":false,"Handle":"obj1.dashval1.getval1","Id":"DemographicReport_module"},{"Compare":false,"Handle":"obj2.dashval2.getval2","Id":"VisitorsOverviewReport_module"}],"RIGHT":[{"Compare":false,"Handle":"obj3.dashval3.getval3","Id":"UrlReport_module"},{"Compare":false,"Handle":"obj4.dashval4.getval4","Id":"TrafficSourcesReport_module"},{"Compare":false,"Handle":"obj5.dashval5.getval5","Id":"CarrierReport_module"}]}}}); </script>
+
+
+ <script type="text/javascript">
+      var dragger = new _IG_Drag();
+
+      dragger._onDragStart = function(object) {
+        dashboard._beginDrag(object._IG_DragSurrogateView.id);
+      };
+
+      dragger._onDragTargetHit = function(object, old_object) {
+        dashboard._draggedOver(object.id);
+        dragger._cacheTargets();
+      };
+
+      dragger._onDragEnd = function(source, target) {
+        dashboard._endDrag();
+      };
+    </script>
+
+
+<div class="report_section dashboard" id="dashboardLayout"><div class="subsections"><div class="section section_1">
+
+<ul class="dashboard_modules" id="f_modules_col_1">
+
+<li>
+	<div id="ContentReport_module"> <div class="dashboard_module"> <h2> <b> <span id="ContentReport_module_title"> Handsets Overview </span>  </b> </h2> <div id="ContentReport"> <div class="graph">  
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td >
+				<%@handset = session[:xml_array]%>
+				<%if @handset!=nil%>
+					<%@handset_summary=@handset[:handset_arr]%>
+					<%if @handset_summary!=nil%>
+						<%if @handset_summary.length>0%>
+							<%@arr_length=@handset_summary.length-1%>
+							<%@total_value=@handset_summary[@arr_length][3]%>
+						<%end%>
+					<%end%>
+				<%end%>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  height="160">
+              <tr>	
+                <td <%if @handset_summary!=nil%><%if @handset_summary.length>0%> width="35%"<%else%>width="100%"<%end%><%else%>width="100%" <%end%>  height="160" valign="MIDDLE">			
+					<div align="center" id="handset_div" style="width:100%; height:100%;" valign="middle"> <div id="nodata_piechart" class="nodata_indicator">&nbsp;</div>
+					</div>				</td>				
+			<%if @handset_summary!=nil%>
+				<%if @handset_summary.length>0%>
+				<td width="65%" align="CENTER">
+					<table class="subpagetableborder" width="90%" border="0" cellspacing="0" cellpadding="2">
+						<%for i in 0...@handset_summary.length %>
+						  <tr <%if i%2==0%> class="cell_dark_bg"<%else%>class="cell_light_bg"<%end%>>
+						  	<td align="CENTER" height="10" valign="MIDDLE"><table width="10" border="0" style="background-color:#<%=@handset_summary[i][2]%>;" cellspacing="0" cellpadding="0" height="10">
+                              <tr>
+                                <td></td>
+                              </tr>
+                            </table></td>
+							<td align="LEFT" style="padding-left:3px"><%=truncate((@handset_summary[i][0]).to_s,20)%></td>
+							<td class="widget_textnum" align="RIGHT" ><%=sprintf('%.2f',((@handset_summary[i][1]).to_f*100)/@total_value)%>%</td>
+							<td align="RIGHT"><%=number_with_delimiter(@handset_summary[i][1])%> req </td>	
+						  </tr>
+					  <%end%>
+						</table>					</td>
+				<%end%>	
+			<%end%>
+              		</tr>
+		      	</table>				</td>
+  			</tr>
+		</table>
+
+
+
+  </div> </div> <p><b> <span class="report_text"><a id="ContentReport_module_view_report" href="<%if @summry_report!=nil%><%if @summry_report[:handset]!=nil && @summry_report[:handset]!=""%>/publisher_analytic/publisher_handset <%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>" >view report</a></span></b></p> 
+	</div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("ContentReport_module", document.getElementById("ContentReport_module_title"), document.getElementById("ContentReport_module"));
+    dragger._addTarget("ContentReport_module", document.getElementById("ContentReport_module"));
+  </script>
+  </li> 
+  <li><div id="TrafficSourcesReport_module"> <div class="dashboard_module"> <h2> <b> <span id="TrafficSourcesReport_module_title"> Traffic Sources Overview    </span>  </b> </h2> <div id="TrafficSourcesReport"> <div class="graph">  
+  	
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+              <tr>
+                <td width="100%" height="165" align="CENTER" valign="MIDDLE">
+					<div id="traffic_div" style="width:96%; height:100%;"><div id="nodata_mapchart" class="nodata_indicator">&nbsp;</div></div>				</td>
+              </tr>
+		</table>	</td>
+  </tr>
+</table>
+
+
+    </div> </div> <p><b><span class="report_text"><a id="TrafficSourcesReport_module_view_report" href="<%if @summry_report!=nil %><%if @summry_report[:traffic]!=nil and @summry_report[:traffic]!=""%>/publisher_analytic/publisher_traffic<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>" >view report</a></span></b></p> 
+  </div> </div>
+
+<script type="text/javascript">
+    dragger._addSource("TrafficSourcesReport_module", document.getElementById("TrafficSourcesReport_module_title"), document.getElementById("TrafficSourcesReport_module"));
+    dragger._addTarget("TrafficSourcesReport_module", document.getElementById("TrafficSourcesReport_module"));
+  </script></li>
+  <li>
+	<div id="UrlReport_module"> <div class="dashboard_module"> <h2> <b> <span id="UrlReport_module_title"> Top URLs Getting Traffic  </span>  </b> </h2> 
+	    <div id="UrlReport"> <div class="graph">  
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+  <tr>
+    <td>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+            <tr>
+                <td valign="TOP" align="right">
+					<%@url=session[:xml_array]%>
+					<%if @url!=nil%>
+						<%@url_summary=@url[:url_arr]%>
+						<%if @url_summary!=nil%>
+							<%if @url_summary.length>0%>
+								<%@arr_length=@url_summary.length-1%>
+								<%@total_value=@url_summary[@arr_length][3]%>
+							<%end%>
+						<%end%>
+					<%end%>
+					<table width="100%" border="0" cellspacing="0" <%if @url_summary!=nil%><%if @url_summary.length>0%>class="subpagetableborder"<%end%><%end%> >
+					<%if @url_summary!=nil%>
+						 <%if @url_summary.length>0%>
+							 <%for i in 0...@url_summary.length%>
+							  <tr>
+							  	<td>
+									<table <%if i%2==0%> class="cell_dark_bg_url"<%else%>class="cell_light_bg_url"<%end%> height="32px" width="100%">
+										<tr>
+											<td width="53%" class="widget_text"><%=(@url_summary[i][0]==' ' || @url_summary[i][0]=='' || @url_summary[i][0]==nil) ? 'Unknown' : truncate(@url_summary[i][0],35)%></td>
+											<td class="widget_textnum" width="16%" align="RIGHT"><%=sprintf('%.2f',((@url_summary[i][1]).to_f*100)/@total_value)%>%</td>
+											<td class="widget_greytext" width="31%" align="RIGHT"><%=number_with_delimiter(@url_summary[i][1])%> requests</td>
+										</tr>
+									</table>								</td>
+							  </tr>
+							  <%end%>
+						 <%else%>
+						 	<tr>
+						  		<td align="center" height="19" valign="MIDDLE"><div id="nodata_td" class="nodata_indicator">&nbsp;</div></td>
+						   </tr>
+						 <%end%>
+					  <%else%>
+						  <tr>
+						 		<td align="center" height="19"  valign="MIDDLE"><div id="nodata_td" class="nodata_indicator">&nbsp;</div></td>
+						  </tr>
+					   <%end%>
+				  </table>				</td>
+              </tr>
+           </table>		</td>
+  	</tr>
+</table>
+	 </div> </div> <p><b><span class="report_text"><a id="UrlReport_module_view_report" href="<%if @url_summary!=nil%><%if @url_summary.length>0%>/publisher_analytic/publisher_url<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>" >view report</a></span></b></p> 
+	</div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("UrlReport_module", document.getElementById("UrlReport_module_title"), document.getElementById("UrlReport_module"));
+    dragger._addTarget("UrlReport_module", document.getElementById("UrlReport_module"));
+  </script>
+  </li>
+  
+   
+  
+<li id="left_after_pad" style="display:none;"></li>
+</ul>
+</div>
+<div class="section section_2"><ul class="dashboard_modules" id="f_modules_col_2"><li><div id="VisitorsOverviewReport_module"> <div class="dashboard_module"> <h2> <b> <span id="VisitorsOverviewReport_module_title"> Visitors Overview    </span>  </b> </h2> <div id="VisitorsOverviewReport"> <div class="graph">  
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+            <tr>
+                <td width="100%" height="165" align="CENTER" valign="MIDDLE">
+	  				<div id="visitor_div" style="width:98%; height:100%;"><div id="nodata_linechart" class="nodata_indicator">&nbsp;</div></div>				</td>
+           	</tr>
+	  	</table>	</td>
+  </tr>
+</table>
+ </div> </div> <p><b><span class="report_text"><a id="VisitorsOverviewReport_module_view_report" href="<%if @summry_report!=nil %><%if @summry_report[:visitor]!=nil && @summry_report[:visitor]!=""%>/publisher_analytic/publisher_visitor<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>" >view report</a></span></b></p> 
+</div> </div>
+
+<script type="text/javascript">
+    dragger._addSource("VisitorsOverviewReport_module", document.getElementById("VisitorsOverviewReport_module_title"), document.getElementById("VisitorsOverviewReport_module"));
+    dragger._addTarget("VisitorsOverviewReport_module", document.getElementById("VisitorsOverviewReport_module"));
+  </script></li>
+  
+  <li>
+  		<div id="DemographicReport_module"> <div class="dashboard_module"> <h2> <b> <span id="DemographicReport_module_title"> Channel Overview  </span>  </b> </h2> <div id="DemographicReport"> <div class="graph">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+		  		<%@channel=session[:xml_array]%>
+                <%if  @channel!=nil%>
+                	<%@channel_summary=@channel[:channel_arr]%>
+					<%if @channel_summary!=nil%>    
+						<%if @channel_summary.length>0%>
+							<%@arr_length=@channel_summary.length-1%>
+							<%@total_value=@channel_summary[@arr_length][3]%>
+						<%end%>
+					<%end%>
+                <%end%>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0" height="160">
+              <tr> 
+                <td <%if @channel_summary!=nil%><%if @channel_summary.length>0%> width="35%"<%else%>width="100%"<%end%><%else%>width="100%" <%end%>height="160">
+                    <div align="center" id="channel_div" style="width:100%; height:100%;"><div id="nodata_piechart" class="nodata_indicator">&nbsp;</div></div>	          </td>
+			<%if @channel_summary!=nil%>     
+				<%if @channel_summary.length>0%>
+                <td width="65%" align="CENTER">
+                    <table class="subpagetableborder" width="90%" border="0" cellspacing="0" cellpadding="2">
+                      <%for i in 0...@channel_summary.length %>
+                      <tr <%if i%2==0%> class="cell_dark_bg"<%else%>class="cell_light_bg"<%end%>>
+                        <td height="20" valign="MIDDLE" align="CENTER">
+						<table width="10" border="0" style="background-color:#<%=@channel_summary[i][2]%>;" cellspacing="0" cellpadding="0" height="10">
+                            <tr>
+                              <td></td>
+                            </tr>
+                        </table></td>
+                        <td align="LEFT" style="padding-left:3px"><%=truncate(@channel_summary[i][0],20)%></td>
+                        <td class="widget_textnum" align="RIGHT" ><%=sprintf('%.2f',((@channel_summary[i][1]).to_f*100)/@total_value)%>%</td>
+                        <td align="RIGHT"><%=number_with_delimiter(@channel_summary[i][1])%> req</td>
+                      </tr>                      
+              		 <%end%>  
+                    </table>				    </td>
+			  <%end%> 
+			<%end%>
+              </tr>
+          </table></td>
+        </tr>
+      </table>
+	</div> 
+	</div> <p><b><span class="report_text"><a href="<%if @summry_report!=nil%><%if @summry_report[:channel]!=nil && @summry_report[:channel]!=""%>/publisher_analytic/publisher_channel<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></span></b></p> 
+	</div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("DemographicReport_module", document.getElementById("DemographicReport_module_title"), 				document.getElementById("DemographicReport_module"));
+    dragger._addTarget("DemographicReport_module", document.getElementById("DemographicReport_module"));
+  </script>
+  </li>
+  <li>
+  		<div id="CarrierReport_module"> <div class="dashboard_module"> <h2> <b> <span id="CarrierReport_module_title"> Carriers Overview  </span>  </b> </h2> <div id="CarrierReport"> <div class="graph">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+		  		<%@carrier=session[:xml_array]%>
+                <%if  @carrier!=nil%>
+                	<%@carrier_summary=@carrier[:carrier_arr]%>
+					<%if @carrier_summary!=nil%>    
+						<%if @carrier_summary.length>0%>
+							<%@arr_length=@carrier_summary.length-1%>
+							<%@total_value=@carrier_summary[@arr_length][3]%>
+						<%end%>
+					<%end%>
+                <%end%>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0" height="160">
+              <tr> 
+                <td <%if @carrier_summary!=nil%><%if @carrier_summary.length>0%> width="35%"<%else%>width="100%"<%end%><%else%>width="100%" <%end%>height="160">
+                    <div align="center" id="carrier_div" style="width:100%; height:100%;"><div id="nodata_piechart" class="nodata_indicator">&nbsp;</div></div>	          </td>
+			<%if @carrier_summary!=nil%>     
+				<%if @carrier_summary.length>0%>
+                <td width="65%" align="CENTER">
+                    <table class="subpagetableborder" width="90%" border="0" cellspacing="0" cellpadding="2">
+                      <%for i in 0...@carrier_summary.length %>
+                      <tr <%if i%2==0%> class="cell_dark_bg"<%else%>class="cell_light_bg"<%end%>>
+                        <td height="20" valign="MIDDLE" align="CENTER">
+						<table width="10" border="0" style="background-color:#<%=@carrier_summary[i][2]%>;" cellspacing="0" cellpadding="0" height="10">
+                            <tr>
+                              <td></td>
+                            </tr>
+                        </table></td>
+                        <td align="LEFT" style="padding-left:3px"><%=truncate(@carrier_summary[i][0],20)%></td>
+                        <td class="widget_textnum" align="RIGHT" ><%=sprintf('%.2f',((@carrier_summary[i][1]).to_f*100)/@total_value)%>%</td>
+                        <td align="RIGHT"><%=number_with_delimiter(@carrier_summary[i][1])%> req</td>
+                      </tr>                      
+              		 <%end%>  
+                    </table>				    </td>
+			  <%end%> 
+			<%end%>
+              </tr>
+          </table></td>
+        </tr>
+      </table>
+	</div> 
+	</div> <p><b><span class="report_text"><a href="<%if @summry_report!=nil%><%if @summry_report[:carrier]!=nil && @summry_report[:carrier]!=""%>/publisher_analytic/publisher_carriers<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></span></b></p> 
+	</div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("CarrierReport_module", document.getElementById("CarrierReport_module_title"), document.getElementById("CarrierReport_module"));
+    dragger._addTarget("CarrierReport_module", document.getElementById("CarrierReport_module"));
+  </script>
+  </li>
+<li id="right_after_pad" style="display:block;"></li></ul></div></div></div>
+<script type="text/javascript">
+    dragger._addTarget("left_after_pad", document.getElementById("left_after_pad"));
+    dragger._addTarget("right_after_pad", document.getElementById("right_after_pad"));
+  </script>
+  </div> </div>  </div> </td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+</table>
+
+<!--POPUP MENU-->
+ <div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:report_start_on]!="" && session[:report_start_on]!=nil %><%=session[:report_start_on]%><%else%><%=@startdate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" class="Inputtext" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:report_end_on]!="" && session[:report_end_on]!=nil %><%=session[:report_end_on]%><%else%><%=@enddate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');" class="Inputtext"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.form_pub_analytic.submit();" type="submit" value="submit" /></td>
+                   <td align="left" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+ </div>
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in Publisher home and error is #{e.to_s}"%>
+<%end%>

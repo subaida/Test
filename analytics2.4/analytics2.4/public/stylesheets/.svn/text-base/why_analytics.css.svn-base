@@ -1,0 +1,48 @@
+.sliderwrapper{
+position: relative; /*leave as is*/
+overflow: hidden; /*leave as is*/
+border: 1px solid #ddd;
+width: 1000px; /*width of featured content slider*/
+padding:5px;
+height: 300px;
+background-color:#FFFFFF;
+}
+
+.sliderwrapper .contentdiv{
+visibility: hidden; /*leave as is*/
+position: absolute; /*leave as is*/
+left: 0;  /*leave as is*/
+top: 0;  /*leave as is*/
+padding: 5px;
+background-color:#FFFFFF;
+/*background-image:url(../images/static_images/cs_bg.gif); */
+background-repeat:repeat-x;
+width: 100%; /*width of content DIVs within slider. Total width should equal slider's inner width (390+5+5=400) */
+height: 100%;
+filter:progid:DXImageTransform.Microsoft.alpha(opacity=100);
+-moz-opacity: 1;
+opacity: 1;
+}
+
+.pagination{
+width: 1010px; /*Width of pagination DIV. Total width should equal slider's outer width (400+10+10=420)*/
+text-align: right;
+background-color: #FFFFFF;
+padding:5px 0 0 0;
+}
+
+.pagination a{
+padding: 0 2px;
+text-decoration: none; 
+
+}
+
+.pagination a:hover, .pagination a.selected{
+color: #000;
+
+}
+
+.content{ font-family:Arial, Helvetica, sans-serif; font-size:17px; font-weight:bold; color:#000; line-height:20px;}
+ul,li{ font-family:Arial, Helvetica, sans-serif; font-size:17px; font-weight:bold; color:#000; padding-bottom:5px; line-height:20px; }
+
+.slider_header{ font-family:Arial, Helvetica, sans-serif; font-size:20px; color:#CE0000; line-height:25px; margin-top:5px; padding-top:5px;}

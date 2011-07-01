@@ -1,0 +1,20 @@
+
+
+<chart palette='2' caption='County Comparison' shownames='1' showvalues='0' numberPrefix='$' useRoundEdges='1' legendBorderAlpha='0'>
+<categories>
+<category label='Iowa' />
+<category label='Texas' />
+<category label='Virginia' />
+<category label='Ohio' />
+<category label='Idaho' />
+</categories>
+
+<dataset >
+<set value='23600' />
+<set value='12435' />
+<set value='85622' />
+<set value='16457' />
+<set value='74533' />
+</dataset>
+
+</chart>"

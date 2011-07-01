@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; Handling Additional Events </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>FusionMaps also allows you to handle the following event types in your parent movie:</p>
+      <ul>
+        <li>Loading &amp; Rendering of Map</li>
+        <li>Roll over and roll out event for each entity  </li>
+      </ul></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Handling rendering event of map </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>All the maps in FusionMaps suite expose an event rendered once they've finished rendering. You can create your listener objects to listen to this event, using the following code:</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p><span class="codeComment">//Create a listener object to listen to the rendered event of the map </span><br />
+        var objL:Object = new Object();<br />
+        objL.rendered = function(){<br />
+  &nbsp;&nbsp;&nbsp;trace(&quot;The map has finished rendering&quot;);<br />
+        }</p>
+      <p><span class="codeComment">//Register the object with the chart</span><br />
+    myFirstMap.addEventListener(&quot;rendered&quot;, objL);</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">When you run this code with your map, you'll get notified when the map rendering process is completed. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Handling roll over/roll out event for entities </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionMaps allows you to capture roll over/out events in your  code whenever an entity in map has been hovered upon. This  feature can be particularly useful if you want to show additional  information for each entity on roll over.</p>
+      <p>To enable this, the first step is to add <span class="codeInline">exposeHoverEvent='1'</span> attribute to <span class="codeInline">&lt;map&gt;</span> element, as shown under:</p>
+      <p class="codeInline">&lt;map ... exposeHoverEvent='1' ...&gt; </p>
+      <p>After this, you can listen to the events using the code below: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p><span class="codeComment">//Create a listener object to listen to events <br />
+      </span>objL.rollOver = function(target){<br />
+&nbsp;&nbsp;&nbsp;trace(&quot;Mouse was rolled over entity with id &quot; + target.id + &quot; | Short Name: &quot; + target.sName + &quot; | Long Name: &quot; + target.lName + &quot; | Value: &quot; + target.value); <br />
+}<br />
+objL.rollOut = function(target){<br />
+&nbsp;&nbsp;&nbsp;trace(&quot;Mouse was rolled out&quot;); <br />
+}<br />
+<span class="codeComment">//Register the events</span> <br />
+map1.addEventListener(&quot;rollOver&quot;, objL);<br />
+map1.addEventListener(&quot;rollOut&quot;, objL);</p>
+      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see above, we've defined the <span class="codeInline">rollOver</span> and <span class="codeInline">rollOut</span> events for the map. Whenever the entities are now hovered upon, the listener object is called and the methods invoked. The <span class="codeInline">target</span> object passed to the method contains following parameters: <span class="codeInline">id</span>, <span class="codeInline">sName</span> (short name), <span class="codeInline">lName</span> (long name) and <span class="codeInline">value</span>.</p>
+      <p>In the above example, we've just traced out the entity name received as parameter. In your code, you could pass indexes of data and then deal with it the way you want to.</p>
+      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

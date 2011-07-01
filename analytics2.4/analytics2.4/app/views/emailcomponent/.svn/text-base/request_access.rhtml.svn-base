@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Forgot Password</title>
+<style type="text/css">
+<!--
+.style5 {	font-size: 22px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.style9 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+-->
+</style>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+  
+  <tr>
+    <td width="99%"><span class="style5">Hi <%=@user1.username%>!</span></td>
+  </tr>
+  <tr>
+    <td><p class="style9">We are sending you this email because we received a notification from you requesting your Account Information, which has been given below.</p>
+      <p class="style9">Username : <%=@user1.username%> </p>
+      <p class="style9">Password : <%=@user1.password%><span class="style9">. </span></p>
+      <p class="style9"><span class="style9">Email id : <%=@user1.email_id%><br />
+        </span><br />
+        <span class="style9">If you have any questions please connect with us at <a href="mailto:support@zestadz.com">support@zestadz.com</a><br />
+        <br />
+        <strong>ZestADZ Team </strong></span></p></td>
+  </tr>
+</table>
+</body>
+</html>

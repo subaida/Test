@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ Analytics</title>
+<% bundle :name => "analytics_admin_bundle_new" do %>   
+	<%= stylesheet_link_tag "zestadz-datepicker" %>
+	<%= stylesheet_link_tag "ga-ltr" %>
+	<%= stylesheet_link_tag "style" %>
+	<%= javascript_include_tag "application"%>
+	<script language="JavaScript" src="/FusionCharts_Developer/JSClass/FusionCharts.js"></script>
+	<script language="JavaScript" src="/FusionMaps_Developer/JSClass/FusionMaps.js"></script>
+	<link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/datasource-beta.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>
+<%end%>
+<link type="text/css" href="/stylesheets/popup.css" rel="stylesheet" />
+<%if @mongo_datepicker!=true%>
+	<%= javascript_include_tag "analytic-datepicker"%>
+<%end%>
+<%= javascript_include_tag "toolkit"%>
+</head>
+<script>
+function printWindow(){
+ window.print();
+}
+</script>
+
+<%begin%>
+
+<body >
+<div id="light" class="white_content">
+</div>
+<div id="fade" class="black_overlay"></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor= "#111111" id="AutoNumber1" style="border-collapse: collapse">
+  <tr>
+    <td width="100%" align="center" valign="top"><table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2" cellpadding="0">
+      <tr class="header_bg">
+        <td width="100%" align="left" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="20%" height="60" valign="top" align="LEFT"><a href="/admin_analytic/admin_home"><img src="/images/zestadz_analytics_logo.JPG" hspace="5" border="0" /></a></td>
+            <td width="80%" align="LEFT"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="RIGHT"><strong><%=session[:userName]%></strong>&nbsp;|&nbsp;<a href="/login/logout" >Logout</a>&nbsp; &nbsp</td>
+              </tr>
+              <tr>
+                <td height="15"></td>
+              </tr>
+              <tr>
+                <td align="RIGHT">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td align="left" valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="100%" align="left" valign="top"><div id="manageDiv"><%= yield %></div></td>
+      </tr>
+      
+      <tr class="footer_bg">
+         <td width="100%" align="center" valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+           
+           <tr>
+             <td align="CENTER" height="30"><span class="footer_text">Copyright &copy; 2010 </span><a href="http://www.zestadz.com" target="_blank">ZestADZ</a><span class="footer_text">. All rights reserved</span> </td>
+           </tr>
+         </table></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</body>
+<%rescue Exception=>e%>
+puts Error :: reports #{e.to_s}
+<%end%>
+</html>

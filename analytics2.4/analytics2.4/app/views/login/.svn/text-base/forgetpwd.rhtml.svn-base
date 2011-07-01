@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Zestadz | Mobile Advertising Platform - India's first &amp; largest mobile advertising market place</title>
+<%= stylesheet_link_tag "zadzstyle", :media =>"all"%>
+<script type="text/JavaScript">
+<!--
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<link href="../../../public/stylesheets/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+<body >
+<table width="1004" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="10">&nbsp;</td>
+    <td width="949"><h1 class="title">Request for Access on Analytics.</h1></td>
+    <td width="25">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="10">&nbsp;</td>
+    <td>
+		<% form_tag :controller => 'login', :action => 'request_access', :id=>@user do %>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><strong>Please provide us your  Email-id so that we can proceed  further on your request</strong></td>
+        <td width="337">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="infobar" valign="TOP" >(request for an access you need to be existing user of ZestADZ)</td>
+      </tr>
+      <tr>
+        <td class="errortext style6" width="582" valign="TOP" ><%if @flash[:notice]%>
+              <%=@flash[:notice] %>
+              <% end %>
+              <% if (session[:errorText]!=nil) %>
+              <%=session[:errorText]%>
+              <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="19%">E-mail ID </td>
+            <td width="81%"><label> <%= text_field 'user', 'email',:size=>'35', :id=>'access_on_analytics' , :class=>'emailTextBox'%> </label></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="textWhite" align="RIGHT" height="30">&nbsp;</td>
+            <td class="textWhite" valign="bottom"><input type="submit" name="SIGNIN" value="Send" /></td>
+          </tr>
+          <tr>
+            <td class="textWhite" align="RIGHT" height="30">&nbsp;</td>
+            <td class="textWhite"><%=@flash[:message]%></td>
+          </tr>
+        </table>
+              
+      </table><%end%></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="10">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

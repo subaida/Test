@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><span class="pageHeader">Number Formatting in FusionMaps </span></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>&nbsp;</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionMaps v3 offers you a lot of options to format your numbers on the map. From number prefixes and suffixes to controlling the decimal places to scaling your numbers based on a pre-defined scale, FusionMaps lets you do it all. In this section, we'll see the number formatting properties supported by FusionMaps and look into number scaling in the next section.</p>
+      <p>We'll start with  setting decimal precisions for the numbers on map. </p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Controlling decimal precision </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>All the maps in FusionMaps v3 support the attribute <span class="codeInline">decimals</span>. This single attribute lets you control the decimal precision of all the numbers on the map. Using this attribute, you can globally set the number of decimal places of ALL   numbers of the map. For e.g., if you have numbers on your map as 12.432,   13.4 and 13 and you set <span class="codeInline">&lt;map ... decimals='2'   &gt;</span>, the numbers would be converted to 12.43, 13.4 and 13   respectively.</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="98%" border="0" align="center">
+      <tr>
+        <td><div align="center"><img src="Images/Number_Format_1.jpg" width="420" height="248" /></div></td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center" class="imageCaption">Map without any decimal formatting applied </div></td>
+        <td valign="top"><div align="center" class="imageCaption"></div></td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center"><img src="Images/Number_Format_2.jpg" width="421" height="249" /></div></td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center"><span class="imageCaption">With decimals set to 2 (see value of North America now)</span></div></td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Similarly, if you had data as 0.12342, 0.134 and 0.13, and you set decimals as 3, FusionMaps would output 0.124, 0.134 and 0.13 respectively. Note that even though we've set decimals to 3, FusionMaps now doesn't forcibly add the 0 padding to 0.13 to form 0.130, as the trailing 0 is un-necessary.</p>
+    <p>However, if you want your numbers on the map to have trailing zeroes too, you can set <span class="codeInline">&lt;map ... forceDecimals='1' &gt;</span> and now the numbers would show as 0.124, 0.134 and 0.130 respectively. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Automatic number formatting </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionMaps can format your numbers by adding K,M (Kilo, Million) and proper commas to the numbers. To do so, just add <span class="codeInline">&lt;map ... formatNumberScale='1' ...&gt;</span></p>
+    <p> Shown below is an example: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Number_Format_3.jpg" width="423" height="246" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above image, the data for map is 12400, 13400 and 13900, 72700, 88500 &amp; 32200. FusionMaps automatically formats the number scaling to convert to K (Thousands) &amp; M (Millions). </p>    
+    <p>When showing full numbers, if you do not need the commas too, set <span class="codeInline">formatNumber=0</span>. But, setting <span class="codeInline">formatNumber=0</span> wouldn't format any decimal places too (even if explicitly specified in XML). </p>      <p>Shown below is an example with <span class="codeInline">&lt;map ... formatNumber='0' formatNumberScale='0' ..&gt;</span> : </p></td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text"><img src="Images/Number_Format_4.jpg" width="424" height="249" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">You can see that the commas have been removed from numbers.  </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Setting custom thousand and decimal separator character</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>By default, FusionMaps uses . (dot) as decimal separator and , (comma) as thousand separator character. However, you can customize this character depending on your requirements. </p>
+    <p>To do so, use the <span class="codeInline">decimalSeparator</span> and <span class="codeInline">thousandSeparator</span> attribute. For  example, let's set our thousands separator as dot and decimal separator as comma. To do so, you'll have to use the following xml: </p>
+    <p class="codeInline">&lt;map ... <strong>decimalSeparator=',' thousandSeparator='.'</strong> &gt; </p>
+    <p>Shown below is the output. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="98%" border="0" align="center">
+      <tr>
+        <td><div align="center"><img src="Images/Number_Format_5.jpg" width="421" height="246" /></div></td>
+        <td><div align="center"></div></td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center" class="imageCaption">Map with default decimal and thousand separator. FusionMaps by default separates thousands using commas and decimals using dots. </div></td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center"><img src="Images/Number_Format_6.jpg" width="416" height="240" /></div></td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center"><span class="imageCaption">Map with swapped decimal and thousands separator character. </span></div></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Adding number prefix and suffix </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionMaps allows you to add a prefix or suffix to all numbers on the   map. You can use the following attributes of <span class="codeInline">&lt;map&gt;</span> element to attain   the same:</p>
+      <ul>
+        <li><span class="codeInline">numberPrefix=&quot;$&quot;</span> : Using this attribute, you   could add prefix to all the numbers visible on the map. For example, to   represent all dollars figure on the map, you could specify this attribute to '   $' to show like $40000, $50000. </li>
+        <li><span class="codeInline">numberSuffix=&quot;p.a&quot;</span> : Using this attribute, you   could add suffix to all the numbers visible on the map. For example, to   represent all figure quantified as per annum on the map, you could specify   this attribute to ' /a' to show like 40000/a, 50000/a. </li>
+      </ul>
+    <p>If you intend to use special characters for <span class="codeInline">numberPrefix</span> or   <span class="codeInline">numberSuffix</span>, you'll need to URL Encode them when using <span class="codeInline">dataXML</span> method. For example, if you wish to have <span class="codeInline">numberSuffix</span> as % (like 30%), you'll need to   specify it as under:<br />
+      <span class="codeInline">numberSuffix='%25'</span></p>
+    <p>In dataURL method, you can <strong>directly</strong> specify the character. </p>
+    <p>Examples:<br />
+    </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="98%" border="0" align="center">
+      <tr>
+        <td width="50%"><div align="center"><img src="Images/Number_Format_7.jpg" width="413" height="241" /></div></td>
+        </tr>
+      <tr>
+        <td width="50%" valign="top"><div align="center" class="imageCaption">Number Prefix set as $ for the map </div></td>
+        </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="Images/Number_Format_8.jpg" width="419" height="242" /></div></td>
+      </tr>
+      <tr>
+        <td valign="top"><div align="center" class="imageCaption">Number Suffix Set as % </div></td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Next, we'll see how to utilize the new number scale formatting properties provided in FusionMaps v3. </p>    </td>
+  </tr>
+</table>
+</body>
+</html>

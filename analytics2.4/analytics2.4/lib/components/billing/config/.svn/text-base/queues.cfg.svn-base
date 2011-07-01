@@ -1,0 +1,20 @@
+--- 
+store: 
+  type: mysql
+  host: 192.168.1.4
+  database: ap4r_development
+  username: root
+  password: sqlworx@ch
+drb: 
+  host: 192.168.1.2
+  port: 6438
+  acl: allow all
+dispatchers:
+  -
+    targets: queue.cfg
+    threads: 100
+#carriers:
+#  - 
+#    source_uri: druby://another.host.local:6438
+#    threads: 1
+

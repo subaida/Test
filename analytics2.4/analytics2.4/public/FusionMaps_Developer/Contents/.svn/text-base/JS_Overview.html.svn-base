@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and JavaScript &gt; How it Works? </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>FusionMaps offers tremendous integration capabilities with JavaScript. It seamlessly binds with JavaScript/AJAX  to let you do the following:</p>
+      <ol>
+        <li>You can register your map with JavaScript. Whenever the map is now loaded or rendered, you can trap the events in JavaScript.</li>
+        <li>You can update the map at client side, without incurring any page refreshes, by providing it ready-made XML data from JavaScript functions. Using this method, you can integrate FusionMaps with your AJAX applications. Your AJAX wrappers can get the data from server, process it, convert it into XML and then update the maps already present on the page. </li>
+        <li>Update the map at client side by providing it direct URL to the XML data provider page. The map would itself download the new data, parse it and then render - all without involving any page refreshes.</li>
+      </ol>
+      <p>Using a combination of FusionMaps and JavaScript, you can offer a seamless experience to your end users. Here, we'll discuss how to integrate both these technologies to yield the best results. </p>
+      <p class="highlightBlock">This section assumes that you already know how FusionMaps works and the XML data structure it accepts. If you do not already know this, please read the relevant sections of documentation, as examples in this section are based on concepts explained in those sections. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">The first step </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Before we start with any of our examples, you first need to make sure that you've the following things ready with you:</p>
+      <ol>
+        <li><strong>Map SWF Files </strong>- Present in Download <span class="codeInline">Package &gt; Maps </span></li>
+        <li><strong>FusionMaps JavaScript Class </strong>File (<span class="codeInline">FusionMaps.js</span>) -  Present in <span class="codeInline">Download Package &gt; JSClass </span></li>
+      </ol>
+    <p>Let's now create a basic example, where we see how to register the map with JavaScript and track the rendered event of map. </p>
+    <p class="highlightBlock">Code examples discussed in this section are present in<span class="codeInline">Download Package &gt; Code &gt; JavaScript</span> folder. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Registering with JavaScript and tracking the rendered event </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">For this example, create a simple HTML page<span class="codeInline"> BasicExample.html</span> with the following code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;HTML&gt;<br />
+      &lt;HEAD&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;TITLE&gt;FusionMaps &amp; JavaScript - Basic Example&lt;/TITLE&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;Javascript&quot; SRC=&quot;../JSClass/FusionMaps.js&quot;&gt;&lt;/SCRIPT&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//FC_Rendered method is called whenever a FusionMaps map on the page<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//has finished initial rendering. To this function, the map passes its <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//own DOM Id.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function FC_Rendered(DOMId){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//If it's our required map</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (DOMId==&quot;map1Id&quot;){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Simply alert </span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.alert(&quot;Look Ma! I am World Map and I've finished loading and rendering.&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/SCRIPT&gt;<br />
+&lt;/HEAD&gt;<br />
+&lt;BODY&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div id=&quot;map1div&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FusionMaps<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;script language=&quot;JavaScript&quot;&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map1 = new FusionMaps(&quot;../Maps/FCMap_World.swf&quot;, &quot;map1Id&quot;, &quot;750&quot;, &quot;400&quot;, &quot;0&quot;, &quot;1&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map1.setDataXML(&quot;&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;&lt;data&gt;	&lt;entity id='NA' value='515' /&gt;&lt;entity id='SA' value='373' /&gt;&lt;entity id='AS' value='3875' /&gt;&lt;entity id='EU' value='727' /&gt;&lt;entity id='AF' value='885' /&gt;&lt;entity id='AU' value='32' /&gt;&lt;/data&gt;&lt;/map&gt;&quot;);<br />
+map1.render(&quot;map1div&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/script&gt;
+<br />
+&lt;/BODY&gt;<br />
+&lt;/HTML&gt;<br /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above code, we are first creating a World Map using <span class="codeInline">FusionMaps</span> JavaScript class. We set the DOM Id of the map as <span class="codeInline">map1Id</span>. It is this ID using which the map will now be recognized in the HTML page. You need to make sure that each map on the page gets a different Id, else the browser would start behaving weirdly. </p>
+      <p>To register the map with JavaScript, we set the <span class="codeInline">registerWithJS </span>parameter to 1. It's the last parameter in <span class="codeInline">FusionMaps </span>constructor function. </p>
+      <p class="codeInline">var map1 = new FusionMaps(&quot;../Maps/FCMap_World.swf&quot;, &quot;map1Id&quot;, &quot;750&quot;, &quot;400&quot;, &quot;0&quot;, <strong>&quot;1&quot;</strong>);</p>
+    <p>Now, we've provided a basic XML data document to map using its <span class="codeInline">setDataXML</span> method. Finally, we render the map.</p>
+    <p>If you now switch to <span class="codeInline">&lt;SCRIPTS&gt;</span> section of HTML<span class="codeInline"> &lt;HEAD&gt;</span>, you'll find the following function:  </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;<br />
+      &nbsp;&nbsp;&nbsp;<span class="codeComment">//FC_Rendered method is called whenever a FusionMaps map on the page<br />
+&nbsp;&nbsp;&nbsp;//has finished initial rendering. To this function, the map passes its <br />
+&nbsp;&nbsp;&nbsp;//own DOM Id.</span><br />
+      &nbsp;&nbsp;&nbsp;function FC_Rendered(DOMId){<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//If it's our required map</span><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (DOMId==&quot;map1Id&quot;){<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Simply alert </span><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.alert(&quot;Look Ma! I am World Map and I've finished loading and rendering.&quot;);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+      &nbsp;&nbsp;&nbsp;}<br />
+    &lt;/SCRIPT&gt;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>The above function <span class="codeInline">FC_Rendered()</span> gets invoked whenever a FusionMaps map (on the page) has finished rendering for the first time. To this function, the map passes its own DOM Id, so that we can cross refer to it.</p>
+      <p>In our example, when the World Map (with DOM Id <span class="codeInline">map1ID</span>) has finished rendering, it calls this function too. In this function, we check if it was invoked by our required World Map. To do so, we match the DOM Id passed to this id with the DOM Id of our World Map. This is useful when you've multiple maps on page and you want to track loading of each of those maps. </p>
+      <p>Finally, in this function, we output a message to the user that the map has been loaded. In your applications, you can put in application logic here (or AJAX code) to get data or build data and then update the map, which we'll soon see. </p>
+      <p>Now that you're famililar with the basic concepts of FusionMaps and JavaScript, we'll next see how to change the data of a map at client side using <span class="codeInline">setDataXML</span> method. </p></td>
+  </tr>
+</table>
+</body>
+</html>

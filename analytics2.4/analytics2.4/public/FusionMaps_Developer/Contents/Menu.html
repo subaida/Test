@@ -1,0 +1,1169 @@
+<html>
+
+<head>
+	<title>FusionMaps v3 Documentation</title>
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="JS/dtree.js"></script>
+</head>
+
+<body leftMargin='20'>
+
+<div class="dtree">
+	<script type="text/javascript">
+		<!--
+		//Numbering
+		//Basic - 1 - 2000
+		//Gallery items: 5000-6000
+		//Map SS: 7000-8000
+		//Marker XML: 10000-11000
+		//id, pid, name, url, title, target, icon, iconOPne, open,
+
+		d = new dTree('d');
+		d.config.target="right";		
+		d.config.folderLinks = false;
+		
+// ----------------- INTRODUCTION ------------------//
+		d.add(0,-1,'FusionMaps v3','','FusionMaps v3 Documentation');
+		d.add(1,0,'Introduction','','Introduction & Installation','','','',true);
+		d.add(100,1,'What is FusionMaps?','FusionMaps.html');
+		d.add(101,1,'List of Maps','MapsList.html');
+		d.add(102,1,'System Requirements','SysReq.html');
+		d.add(103,1,'Installation','Installation.html');
+		d.add(104,1,'Download Contents','DownloadC.html','Folder Structure of what\'s present in your download package');
+		d.add(105,1,'Upgrading from Evaluation','UpgradingEval.html','If you\'re upgrading from FusionMaps Evaluation to a licensed version.');		
+
+// ------------------- Live Examples ------------------- //
+		d.add(2,0,'Live Examples','','Live Examples of FusionMaps');
+		d.add(201,2,'Customer Satisfaction Index','../LiveExamples/CustomerIndex.html','US Map showing Customer Satisfaction Index by County');
+		d.add(202,2,'Worldwide Office Locations','../LiveExamples/OfficeLocations.html','World Map showing Office Locations using Markers');
+		d.add(203,2,'Hits By Country','../LiveExamples/HitsByCountry.html','Hits by Country');
+		d.add(204,2,'Sales Data (Europe)','../LiveExamples/EuropeSales.html','Sales information for Europe');
+		d.add(205,2,'Custom Font for each entity','../LiveExamples/IndividualFont.html','Custom font property for each entity. ');
+		
+// --------------- MAP GALLERY -------------------- //
+		//Array Index reserved for gallery
+		//6 - Top Level
+		//1500-1600 - For 2nd level
+		//1600+ - For end levels
+		d.add(5000,0,'Map Gallery','');
+		d.add(5001,5000,'World & Continents','');
+		d.add(5002,5001,'World Map','../Gallery/World.html');
+		d.add(5014,5001,'World Map (Countries)','../Gallery/Newworld.html');
+		d.add(5003,5001,'World Map (8 Regions)','../Gallery/World8.html');
+		d.add(5004,5001,'Europe','../Gallery/Europe.html');
+		d.add(5005,5001,'North America','../Gallery/NA.html');
+		d.add(5006,5001,'Central America','../Gallery/CentralAmerica.html');				
+		d.add(5007,5001,'South America','../Gallery/SA.html');		
+		d.add(5008,5001,'Asia','../Gallery/Asia.html');
+		d.add(5009,5001,'Africa','../Gallery/Africa.html');		
+		d.add(5010,5001,'Middle East','../Gallery/MiddleEast.html');
+		d.add(5011,5001,'Oceania','../Gallery/Oceania.html');		
+		d.add(5012,5001,'Asia (no Mid-east)','../Gallery/Asia3.html');		
+		d.add(5013,5001,'North America (no Central)','../Gallery/NorthAmericawithoutCentral.html');		
+		//Left space 5015-5029
+		
+		d.add(5030,5000,'USA & States','');
+		d.add(5031,5030,'USA','../Gallery/USA.html');
+		d.add(5032,5030,'Alaska','../Gallery/Alaska.html');
+		d.add(5033,5030,'Alabama','../Gallery/Alabama.html');
+		d.add(5034,5030,'Arizona','../Gallery/Arizona.html');
+		d.add(5035,5030,'Arkansas','../Gallery/Arkansas.html');
+		d.add(5036,5030,'California','../Gallery/California.html');
+		d.add(5037,5030,'Colorado','../Gallery/Colorado.html');
+		d.add(5038,5030,'Connecticut','../Gallery/Connecticut.html');
+		d.add(5039,5030,'Delaware','../Gallery/Delaware.html');
+		d.add(5040,5030,'District of Columbia','../Gallery/DistrictofColumbia.html');		
+		d.add(5041,5030,'Florida','../Gallery/Florida.html');
+		d.add(5042,5030,'Georgia','../Gallery/Georgia.html');
+		d.add(5043,5030,'Hawaii','../Gallery/Hawaii.html');
+		d.add(5044,5030,'Idaho','../Gallery/Idaho.html');
+		d.add(5045,5030,'Illinois','../Gallery/Illinois.html');
+		d.add(5046,5030,'Indiana','../Gallery/Indiana.html');		
+		d.add(5047,5030,'Iowa','../Gallery/Iowa.html');
+		d.add(5048,5030,'Kentucky','../Gallery/Kentucky.html');				
+		d.add(5049,5030,'Kansas','../Gallery/Kansas.html');
+		d.add(5050,5030,'Louisiana','../Gallery/Louisiana.html');		
+		d.add(5051,5030,'Maine','../Gallery/Maine.html');
+		d.add(5052,5030,'Maryland','../Gallery/Maryland.html');
+		d.add(5053,5030,'Massachusetts','../Gallery/Massachusetts.html');
+		d.add(5054,5030,'Michigan','../Gallery/Michigan.html');
+		d.add(5055,5030,'Minnesota','../Gallery/Minnesota.html');		
+		d.add(5056,5030,'Mississippi','../Gallery/Mississippi.html');		
+		d.add(5057,5030,'Missouri','../Gallery/Missouri.html');		
+		d.add(5058,5030,'Montana','../Gallery/Montana.html');
+		d.add(5059,5030,'Nebraska','../Gallery/Nebraska.html');
+		d.add(5060,5030,'Nevada','../Gallery/Nevada.html');
+		d.add(5061,5030,'New Hampshire','../Gallery/NewHampshire.html');
+		d.add(5062,5030,'New Jersey','../Gallery/NewJersey.html');		
+		d.add(5063,5030,'New Mexico','../Gallery/NewMexico.html');		
+		d.add(5064,5030,'New York','../Gallery/NewYork.html');
+		d.add(5065,5030,'North Carolina','../Gallery/NorthCarolina.html');		
+		d.add(5066,5030,'North Dakota','../Gallery/NorthDakota.html');		
+		d.add(5067,5030,'Ohio','../Gallery/Ohio.html');		
+		d.add(5068,5030,'Oklahoma','../Gallery/Oklahoma.html');		
+		d.add(5069,5030,'Oregon','../Gallery/Oregon.html');		
+		d.add(5070,5030,'Pennsylvania','../Gallery/Pennsylvania.html');		
+		d.add(5071,5030,'Rhode Island','../Gallery/RhodeIsland.html');		
+		d.add(5072,5030,'South Carolina','../Gallery/SouthCarolina.html');		
+		d.add(5073,5030,'South Dakota','../Gallery/SouthDakota.html');		
+		d.add(5074,5030,'Tennessee','../Gallery/Tennessee.html');		
+		d.add(5075,5030,'Texas','../Gallery/Texas.html');		
+		d.add(5076,5030,'Utah','../Gallery/Utah.html');		
+		d.add(5077,5030,'Virginia','../Gallery/Virginia.html');		
+		d.add(5078,5030,'Vermont','../Gallery/Vermont.html');				
+		d.add(5079,5030,'Washington','../Gallery/Washington.html');
+		d.add(5080,5030,'West Virginia','../Gallery/WestVirginia.html');		
+		d.add(5081,5030,'Wisconsin','../Gallery/Wisconsin.html');		
+		d.add(5082,5030,'Wyoming','../Gallery/Wyoming.html');	
+		//Reserved space: 5082-5099
+		
+		d.add(5100,5000,'USA Regions','');
+		d.add(5101,5100,'All Regions','../Gallery/USARegion.html');	
+		d.add(5102,5100,'North East Region','../Gallery/USANorthEastRegion.html');	
+		d.add(5103,5100,'North West Region','../Gallery/USANorthWestRegion.html');	
+		d.add(5104,5100,'Central Region','../Gallery/USACentralRegion.html');	
+		d.add(5105,5100,'South East Region','../Gallery/USASouthEastRegion.html');	
+		d.add(5106,5100,'South West Region','../Gallery/USASouthWestRegion.html');	
+		//Reserved space: 5107-5129
+		
+		d.add(5130,5000,'Europe (Countries)','');		
+		d.add(5131,5130,'Europe (All Countries)','../Gallery/Europewithcountries.html');
+		d.add(5132,5130,'Albania','../Gallery/Albania.html');
+		d.add(5133,5130,'Andorra','../Gallery/Andorra.html');
+		d.add(5134,5130,'Austria','../Gallery/Austria.html');
+		d.add(5135,5130,'Belarus','../Gallery/Belarus.html');
+		d.add(5136,5130,'Belgium','../Gallery/Belgium.html');
+		d.add(5137,5130,'Bosnia - Herzegovina','../Gallery/BosniaHerzegovina.html');
+		d.add(5138,5130,'Bulgaria','../Gallery/Bulgaria.html');
+		d.add(5139,5130,'Croatia','../Gallery/Croatia.html');
+		d.add(5140,5130,'Cyprus','../Gallery/Cyprus.html');
+		d.add(5141,5130,'Cyprus (Regions)','../Gallery/Cyprus2.html');
+		d.add(5142,5130,'Czech Republic','../Gallery/CzechRepublic.html');
+		d.add(5143,5130,'Denmark','../Gallery/Denmark.html');						
+		d.add(5144,5130,'Denmark (Regions)','../Gallery/DenmarkRegion.html');						
+		d.add(5145,5130,'England','../Gallery/England.html');
+		d.add(5146,5130,'Estonia','../Gallery/Estonia.html');
+		d.add(5147,5130,'Finland','../Gallery/Finland.html');
+		d.add(5148,5130,'France','../Gallery/France.html');
+		d.add(5149,5130,'France (Departments)','../Gallery/FranceDepartment.html');
+		d.add(5150,5130,'Germany','../Gallery/Germany.html');
+		d.add(5151,5130,'Greece','../Gallery/Greece.html');
+		d.add(5152,5130,'Hungary','../Gallery/Hungary.html');
+		d.add(5153,5130,'Hungary (Region)','../Gallery/Hungary.html');
+		d.add(5154,5130,'Iceland','../Gallery/Iceland.html');
+		d.add(5155,5130,'Ireland','../Gallery/Ireland.html');
+		d.add(5156,5130,'Italy','../Gallery/Italy.html');
+		d.add(5157,5130,'Latvia','../Gallery/Latvia.html');
+		d.add(5158,5130,'Liechtenstein','../Gallery/Liechtenstein.html');
+		d.add(5159,5130,'Lithuania','../Gallery/Lithuania.html');
+		d.add(5160,5130,'Luxembourg','../Gallery/Luxembourg.html');
+		d.add(5161,5130,'Macedonia','../Gallery/Macedonia.html');
+		d.add(5162,5130,'Malta','../Gallery/Malta.html');		
+		d.add(5163,5130,'Moldova','../Gallery/Moldova.html');
+		d.add(5164,5130,'Monaco','../Gallery/Monaco.html');
+		d.add(5165,5130,'Montenegro','../Gallery/Montenegro.html');
+		d.add(5166,5130,'Netherland','../Gallery/Netherlands.html');
+		d.add(5167,5130,'Norway','../Gallery/Norway.html');
+		d.add(5168,5130,'Norway (Regions)','../Gallery/NorwayRegion.html');
+		d.add(5169,5130,'Poland','../Gallery/Poland.html');
+		d.add(5170,5130,'Poland (Counties)','../Gallery/PolandCounties.html');
+		d.add(5171,5130,'Portugal','../Gallery/Portugal.html');
+		d.add(5172,5130,'Romania','../Gallery/Romania.html');
+		d.add(5173,5130,'San Marino','../Gallery/SanMarino.html');
+		d.add(5174,5130,'Scotland','../Gallery/Scotland.html');
+		d.add(5175,5130,'Serbia','../Gallery/Serbia.html');
+		d.add(5176,5130,'Slovakia','../Gallery/Slovakia.html');
+		d.add(5177,5130,'Slovenia','../Gallery/Slovenia.html');
+		d.add(5178,5130,'Spain (Autonomous)','../Gallery/Spain.html');
+		d.add(5179,5130,'Spain (Provinces)','../Gallery/SpainP.html');
+		d.add(5180,5130,'Sweden','../Gallery/Sweden.html');
+		d.add(5181,5130,'Switzerland','../Gallery/Switzerland.html');
+		d.add(5182,5130,'Turkey','../Gallery/Turkey.html');
+		d.add(5183,5130,'UK','../Gallery/UK.html');
+		d.add(5184,5130,'Ukraine','../Gallery/Ukraine.html');
+		d.add(5185,5130,'Vatican City','../Gallery/VaticanCity.html');
+		//Reserved: 5185-5249
+		
+		d.add(5250,5000,'Europe (Regions)','');
+		d.add(5251,5250,'All Regions','../Gallery/EuropeRegion.html');
+		d.add(5252,5250,'East Region','../Gallery/EastEuropeanRegion.html');
+		d.add(5253,5250,'West Region','../Gallery/WestEuropeanRegion.html');
+		d.add(5254,5250,'Central Region','../Gallery/CentralEuropeanRegion.html');
+		d.add(5255,5250,'North Region','../Gallery/NorthEuropeanRegion.html');
+		d.add(5256,5250,'South Region','../Gallery/SouthEuropeanRegion.html');
+		//Reserver 5257-5239
+		
+		d.add(5240,5000,'United Kingdom','');
+		d.add(5241,5240,'UK','../Gallery/UK.html');
+		d.add(5242,5240,'UK (with Islands)','../Gallery/UK7.html');
+		d.add(5243,5240,'England (Regions)','../Gallery/EnglandRegion.html');
+		d.add(5244,5240,'Scotland (Regions)','../Gallery/ScotlandRegion.html');
+		d.add(5245,5240,'Wales','../Gallery/Wales.html');
+		d.add(5246,5240,'North Ireland','../Gallery/NorthIreland.html');
+		//Reserved: 5247 - 5269
+		
+		d.add(5270,5000,'North America','');
+		d.add(5271,5270,'Antigua','../Gallery/Antigua.html');
+		d.add(5272,5270,'Bahamas','../Gallery/Bahamas.html');		
+		d.add(5273,5270,'Barbados','../Gallery/Barbados.html');
+		d.add(5275,5270,'Canada','../Gallery/Canada.html');
+		d.add(5276,5270,'Cayman Island','../Gallery/CaymanIslands.html');		
+		d.add(5277,5270,'Cuba','../Gallery/Cuba.html');
+		d.add(5278,5270,'Dominica','../Gallery/Dominica.html');		
+		d.add(5279,5270,'Dominican Republic','../Gallery/DominicanRepublic.html');
+		d.add(5280,5270,'Greenland','../Gallery/Greenland.html');
+		d.add(5281,5270,'Grenada','../Gallery/Grenada.html');
+		d.add(5282,5270,'Haiti','../Gallery/Haiti.html');
+		d.add(5283,5270,'Jamaica','../Gallery/Jamaica.html');
+		d.add(5284,5270,'Mexico','../Gallery/Mexico.html');
+		d.add(5286,5270,'Puerto Rico','../Gallery/PuertoRico.html');
+		d.add(5288,5270,'St. Kitts & Nevis','../Gallery/SaintKittsandNevis.html');
+		d.add(5289,5270,'St. Lucia','../Gallery/SaintLucia.html');
+		d.add(5290,5270,'St. Vincent & The Grenadines','../Gallery/SaintVincentandtheGrenadines.html');
+		d.add(5291,5270,'Trinidad & Tobago','../Gallery/TrinidadandTobago.html');
+		//Reserved: 5291-5329
+		
+		d.add(5330,5000,'South America','');
+		d.add(5331,5330,'Argentina','../Gallery/Argentina.html');
+		d.add(5332,5330,'Bolivia','../Gallery/Bolivia.html');
+		d.add(5333,5330,'Brazil','../Gallery/Brazil.html');
+		d.add(5334,5330,'Brazil (Regions)','../Gallery/BrazilRegion.html');
+		d.add(5335,5330,'Chile','../Gallery/Chile.html');
+		d.add(5336,5330,'Colombia','../Gallery/Colombia.html');
+		d.add(5337,5330,'Ecuador','../Gallery/Ecuador.html');
+		d.add(5338,5330,'Falkland Island','../Gallery/FalklandIsland.html');
+		d.add(5339,5330,'French Guiana','../Gallery/FrenchGuiana.html');
+		d.add(5340,5330,'Guyana','../Gallery/Guyana.html');		
+		d.add(5341,5330,'Paraguay','../Gallery/Paraguay.html');
+		d.add(5342,5330,'Peru','../Gallery/Peru.html');
+		d.add(5343,5330,'Suriname','../Gallery/Suriname.html');
+		d.add(5344,5330,'Uruguay','../Gallery/Uruguay.html');
+		d.add(5345,5330,'Venezuela','../Gallery/Venezuela.html');
+		//Reserved: 5345 - 5379		
+		
+		d.add(5380,5000,'Central America','');
+		d.add(5381,5380,'Central America (with Caribbean)','../Gallery/CentralAmericawithCaribbeans.html');
+		d.add(5382,5380,'Central America (with Virgin Is.)','../Gallery/CentralAmerica2.html');
+		d.add(5383,5380,'Belize','../Gallery/Belize.html');
+		d.add(5384,5380,'Costa Rica','../Gallery/CostaRica.html');
+		d.add(5385,5380,'El Salvador','../Gallery/ElSalvador.html');
+		d.add(5386,5380,'Guatemala','../Gallery/Guatemala.html');
+		d.add(5387,5380,'Honduras','../Gallery/Honduras.html');
+		d.add(5388,5380,'Nicaragua','../Gallery/Nicaragua.html');
+		d.add(5389,5380,'Panama','../Gallery/Panama.html');
+		//Reserved: 5389-5419
+		
+		d.add(5420,5000,'Canada - Provinces & Territories','');
+		d.add(5421,5420,'Alberta','../Gallery/Alberta.html');
+		d.add(5422,5420,'British Columbia','../Gallery/BritishColumbia.html');
+		d.add(5423,5420,'Manitoba','../Gallery/Manitoba.html');
+		d.add(5424,5420,'New Brunswick','../Gallery/NewBrunswick.html');
+		d.add(5425,5420,'New Foundland & Labrador','../Gallery/NewfoundlandandLabrador.html');
+		d.add(5426,5420,'Northwest Territories','../Gallery/NorthwestTerritories.html');
+		d.add(5427,5420,'Nova Scotia','../Gallery/NovaScotia.html');
+		d.add(5428,5420,'Nunavut','../Gallery/Nunavut.html');
+		d.add(5229,5420,'Ontario','../Gallery/Ontario.html');
+		d.add(5430,5420,'Prince Edward Island','../Gallery/PrinceEdwardIsland.html');
+		d.add(5431,5420,'Quebec','../Gallery/Quebec.html');
+		d.add(5432,5420,'Saskatchewan','../Gallery/Saskatchewan.html');
+		d.add(5433,5420,'Yukon Territory','../Gallery/YukonTerritory.html');
+
+		//Reserveed: 5430-5459
+		d.add(5460,5000,'Asia','');
+		d.add(5461,5460,'Armenia','../Gallery/Armenia.html');
+		d.add(5462,5460,'Azerbaijan','../Gallery/Azerbaijan.html');
+		d.add(5463,5460,'Bangladesh','../Gallery/Bangladesh.html');
+		d.add(5464,5460,'Bhutan','../Gallery/Bhutan.html');
+		d.add(5465,5460,'Brunei','../Gallery/Brunei.html');
+		d.add(5466,5460,'Burma','../Gallery/Burma.html');
+		d.add(5467,5460,'Cambodia','../Gallery/Cambodia.html');
+		d.add(5468,5460,'China','../Gallery/China.html');
+		d.add(5469,5460,'China - 2','../Gallery/China2.html');
+		d.add(5470,5460,'East Timor','../Gallery/EastTimor.html');
+		d.add(5471,5460,'Georgia','../Gallery/Georgia.html');
+		d.add(5472,5460,'Hong Kong','../Gallery/HongKong.html');
+		d.add(5473,5460,'India','../Gallery/India.html');
+		d.add(5474,5460,'Indonesia','../Gallery/Indonesia.html');
+		d.add(5475,5460,'Japan','../Gallery/Japan.html');
+		d.add(5476,5460,'Kazakhstan','../Gallery/Kazakhstan.html');
+		d.add(5477,5460,'Laos','../Gallery/Laos.html');
+		d.add(5478,5460,'Macau','../Gallery/Macau.html');
+		d.add(5479,5460,'Malaysia','../Gallery/Malaysia.html');
+		d.add(5480,5460,'Mongolia','../Gallery/Mongolia.html');
+		d.add(5481,5460,'Nepal','../Gallery/Nepal.html');
+		d.add(5482,5460,'North Korea','../Gallery/NorthKorea.html');
+		d.add(5483,5460,'Philippines','../Gallery/Philippines.html');
+		d.add(5484,5460,'Russia','../Gallery/Russia.html');
+		d.add(5485,5460,'Singapore','../Gallery/Singapore.html');
+		d.add(5486,5460,'South Korea','../Gallery/SouthKorea.html');
+		d.add(5487,5460,'Sri Lanka','../Gallery/Srilanka.html');
+		d.add(5488,5460,'Taiwan','../Gallery/Taiwan.html');
+		d.add(5489,5460,'Thailand','../Gallery/Thailand.html');
+		d.add(5490,5460,'Tibet','../Gallery/Tibet.html');
+		d.add(5491,5460,'Vietnam','../Gallery/Vietnam.html');
+		//Reserved: 5491-5519	
+
+		d.add(5520,5000,'Middle East','');		
+		d.add(5521,5520,'Afghanistan','../Gallery/Afganistan.html');
+		d.add(5522,5520,'Bahrain','../Gallery/Bahrain.html');
+		d.add(5523,5520,'Iran','../Gallery/Iran.html');
+		d.add(5524,5520,'Iraq','../Gallery/Iraq.html');
+		d.add(5525,5520,'Israel','../Gallery/Israel.html');
+		d.add(5526,5520,'Jordan','../Gallery/Jordan.html');
+		d.add(5527,5520,'Kuwait','../Gallery/Kuwait.html');
+		d.add(5528,5520,'Kyrgyzstan','../Gallery/Kyrgyzstan.html');
+		d.add(5529,5520,'Lebanon','../Gallery/Lebanon.html');
+		d.add(5530,5520,'Oman','../Gallery/Oman.html');
+		d.add(5531,5520,'Pakistan','../Gallery/Pakistan.html');
+		d.add(5532,5520,'Qatar','../Gallery/Qatar.html');
+		d.add(5533,5520,'Saudi Arabia','../Gallery/SaudiArabia.html');
+		d.add(5534,5520,'Syria','../Gallery/Syria.html');
+		d.add(5535,5520,'Tajikistan','../Gallery/Tajikistan.html');
+		d.add(5536,5520,'Turkmenistan','../Gallery/Turkmenistan.html');
+		d.add(5537,5520,'United Arab Emirates','../Gallery/UAE.html');
+		d.add(5538,5520,'Uzbekistan','../Gallery/Uzbekistan.html');
+		d.add(5539,5520,'Yemen','../Gallery/Yemen.html');
+		//Reserved: 5539 - 5559
+				
+		d.add(5560,5000,'Oceania','');
+		d.add(5561,5560,'Australia','../Gallery/Australia.html');
+		d.add(5562,5560,'Australia (w/ Capital)','../Gallery/Australia2.html');
+		d.add(5563,5560,'Fiji','../Gallery/Fiji.html');
+		d.add(5564,5560,'Kiribati','../Gallery/Kiribati.html');
+		d.add(5565,5560,'Marshall Islands','../Gallery/MarshallIsland.html');
+		d.add(5566,5560,'Micronesia','../Gallery/Micronesia.html');
+		d.add(5567,5560,'Nauru','../Gallery/Nauru.html');
+		d.add(5568,5560,'New Caledonia','../Gallery/NewCaledonia.html');
+		d.add(5569,5560,'New Zealand','../Gallery/NewZealand.html');
+		d.add(5570,5560,'Palau','../Gallery/Palau.html');
+		d.add(5571,5560,'Papua New Guinea','../Gallery/PapuaNewGuinea.html');
+		d.add(5572,5560,'Samoa','../Gallery/Samoa.html');
+		d.add(5573,5560,'Solomon Islands','../Gallery/SolomonIsland.html');
+		d.add(5574,5560,'Tonga','../Gallery/Tonga.html');
+		d.add(5575,5560,'Tuvalu','../Gallery/Tuvalu.html');
+		d.add(5576,5560,'Vanuatu','../Gallery/Vanuatu.html');
+		//Reserved: 5576 - 5589
+		
+		d.add(5590,5000,'Africa','');
+		d.add(5591,5590,'Algeria','../Gallery/Algeria.html');
+		d.add(5592,5590,'Angola','../Gallery/Angola.html');
+		d.add(5593,5590,'Benin','../Gallery/Benin.html');
+		d.add(5594,5590,'Botswana','../Gallery/Botswana.html');
+		d.add(5595,5590,'Burkina Faso','../Gallery/BurkinaFaso.html');
+		d.add(5596,5590,'Burundi','../Gallery/Burundi.html');
+		d.add(5597,5590,'Cameroon','../Gallery/Cameroon.html');
+		d.add(5598,5590,'Cape Verde','../Gallery/CapeVerde.html');
+		d.add(5599,5590,'Central African Republic','../Gallery/CentralAfricanRepublic.html');
+		d.add(5600,5590,'Chad','../Gallery/Chad.html');
+		d.add(5601,5590,'Comoros','../Gallery/Comoros.html');
+		d.add(5602,5590,'Congo','../Gallery/Congo.html');
+		d.add(5603,5590,'Cote Divoire','../Gallery/CoteDivoire.html');
+		d.add(5604,5590,'Democratic Republic of the Congo','../Gallery/DemocraticRepublicofCongo.html');
+		d.add(5605,5590,'Djibouti','../Gallery/Djibouti.html');
+		d.add(5606,5590,'Egypt','../Gallery/Egypt.html');
+		d.add(5607,5590,'Equatorial Guinea','../Gallery/EquatorialGuinea.html');
+		d.add(5608,5590,'Eritrea','../Gallery/Eritrea.html');
+		d.add(5609,5590,'Ethiopia','../Gallery/Ethiopia.html');
+		d.add(5610,5590,'Gabon','../Gallery/Gabon.html');
+		d.add(5611,5590,'Gambia','../Gallery/Gambia.html');
+		d.add(5612,5590,'Ghana','../Gallery/Ghana.html');
+		d.add(5613,5590,'Guinea','../Gallery/Guinea.html');
+		d.add(5614,5590,'Guinea-Bissau','../Gallery/GuineaBissua.html');
+		d.add(5615,5590,'Kenya','../Gallery/Kenya.html');
+		d.add(5616,5590,'Lesotho','../Gallery/Lesotho.html');
+		d.add(5617,5590,'Liberia','../Gallery/Liberia.html');
+		d.add(5618,5590,'Libya','../Gallery/Libya.html');
+		d.add(5619,5590,'Madagascar','../Gallery/Madagascar.html');
+		d.add(5620,5590,'Madagascar (Region)','../Gallery/MadagascarRegions.html');
+		d.add(5621,5590,'Malawi','../Gallery/Malawi.html');
+		d.add(5622,5590,'Mali','../Gallery/Mali.html');
+		d.add(5623,5590,'Mauritania','../Gallery/Mauritania.html');
+		d.add(5624,5590,'Mauritius','../Gallery/Mauritius.html');
+		d.add(5625,5590,'Morocco','../Gallery/Morocco.html');
+		d.add(5626,5590,'Mozambique','../Gallery/Mozambique.html');
+		d.add(5627,5590,'Namibia','../Gallery/Namibia.html');
+		d.add(5628,5590,'Niger','../Gallery/Niger.html');
+		d.add(5629,5590,'Nigeria','../Gallery/Nigeria.html');
+		d.add(5630,5590,'Rwanda','../Gallery/Rwanda.html');
+		d.add(5631,5590,'Sao Tome and Principe','../Gallery/SaoTomeandPrincipe.html');
+		d.add(5632,5590,'Senegal','../Gallery/Senegal.html');
+		d.add(5633,5590,'Seychelles','../Gallery/Seychelles.html');
+		d.add(5634,5590,'Sierra Leone','../Gallery/SierraLeone.html');
+		d.add(5635,5590,'Somalia','../Gallery/Somalia.html');
+		d.add(5636,5590,'South Africa','../Gallery/SouthAfrica.html');
+		d.add(5637,5590,'Sudan','../Gallery/Sudan.html');
+		d.add(5638,5590,'Swaziland','../Gallery/Swaziland.html');
+		d.add(5639,5590,'Tanzania','../Gallery/Tanzania.html');
+		d.add(5640,5590,'Togo','../Gallery/Togo.html');
+		d.add(5641,5590,'Tunisia','../Gallery/Tunisia.html');
+		d.add(5642,5590,'Uganda','../Gallery/Uganda.html');
+		d.add(5643,5590,'Western Sahara','../Gallery/WesternSahara.html');
+		d.add(5644,5590,'Zambia','../Gallery/Zambia.html');
+		d.add(5645,5590,'Zimbabwe','../Gallery/Zimbabwe.html');
+// -------------------- FusionMaps AND XML ------------------//
+		d.add(3,0,'FusionMaps and XML','');
+		d.add(301,3,'XML Overview','XMLOverview.html','Overview of FusionMaps XML');
+		d.add(302,3,'XML Attributes','XML.html','XML Attributes valid for all FusionMaps maps');
+		d.add(303,3,'&lt;entity&gt; Attributes','XMLEntity.html','Attributes for <entity> element');
+
+
+// -------------------- How to use FusionMaps? ------------------//
+		d.add(4,0,'How to use FusionMaps?',''); //Reserves 400-420 for sub-child
+		d.add(401,4,'How to use FusionMaps?','BasicUsage.html','Overview of how to use FusionMaps');
+		d.add(402,4,'Using the GUI','GUI.html','Using the visual GUI to create maps');
+		d.add(403,4,'dataXML Method','DataXML.html','dataXML method of providing data to FusionMaps');
+		d.add(404,4,'Custom Labels & Tool-tips','CustomLabels.html','Setting custom labels and tool-tips on the map');
+		d.add(405,4,'Defining range based data','ColorRange.html','Using color range to define range based data');
+		d.add(406,4,'Defining Custom IDs','CustomID.html','Using color range to define range based data');
+		d.add(407,4,'Markers - Overview','MarkerOv.html','What are Markers on the map?');
+		d.add(408,4,'Markers - Usage','MarkerUsage.html','How to define and apply markers on the map?');
+		d.add(409,4,'Markers - XML Structure','MarkerXML.html','XML Structure and Attributes to control markers');
+		d.add(410,4,'Markers - Custom Shapes & Icons','MarkerShapes.html','Using Custom Shapes and Image icons for markers');
+		d.add(411,4,'Markers - Connectors','MarkerConnectors.html','Using Marker Connectors');
+
+//------------------Using with ASP-------------------//
+		d.add(5,0,'Using with ASP','');
+		d.add(501,5,'Using dataXML Method','CodeASPDXML.html');		
+		d.add(502,5,'Using dataURL Method','CodeASPDURL.html');
+        d.add(503,5,'Using Data from Form','CodeASPForm.html');
+
+		d.add(504,5,'Plotting data from Database','');
+			d.add(505,504,'Goal','CodeASPDB_Goal.html');		
+			d.add(506,504,'Database Structure','CodeASPDB_Structure.html');	
+			d.add(507,504,'Data to be plotted','CodeASPDB_Plot.html');	
+			d.add(508,504,'US Population Map','CodeASPDB_USMap.html');		
+			d.add(509,504,'Drilldown Map','CodeASPDB_DrillMap.html');	
+
+//--------------------Using with PHP----------------------//
+	
+		d.add(6,0,'Using with PHP','');		
+		d.add(601,6,'Using dataXML Method','CodePHPDXML.html');	
+		d.add(602,6,'Using dataURL Method','CodePHPDURL.html');	
+		d.add(603,6,'Using Data from Form','CodePHPForm.html');	
+		d.add(604,6,'Plotting data from Database','');	
+			d.add(605,604,'Goal','CodePHPDB_Goal.html');	
+			d.add(606,604,'Database Structure','CodePHPDB_Structure.html');	
+			d.add(607,604,'Data to be plotted','CodePHPDB_Plot.html');	
+			d.add(608,604,'US Population Map','CodePHPDB_USMap.html');	
+			d.add(609,604,'Drilldown Map','CodePHPDB_DrillMap.html');	
+
+//------------------Using with ASP.net VB-------------------//
+		d.add(7,0,'Using with ASP.NET (VB.NET)','');
+		d.add(701,7,'Using dataXML Method','CodeASPVBDXML.html');
+		d.add(702,7,'Using dataURL Method','CodeASPVBDURL.html');
+        d.add(703,7,'Using Data from Form','CodeASPVBForm.html');
+		d.add(704,7,'Plotting data from Database','');
+			d.add(705,704,'Goal','CodeASPVBDB_Goal.html');		
+			d.add(706,704,'Database Structure','CodeASPVBDB_Structure.html');	
+			d.add(707,704,'Data to be plotted','CodeASPVBDB_Plot.html');	
+			d.add(708,704,'US Population Map','CodeASPVBDB_USMap.html');		
+			d.add(709,704,'Drilldown Map','CodeASPVBDB_DrillMap.html');	
+			
+//------------------Using with ASP.net c#-------------------//
+		d.add(8,0,'Using with ASP.NET (C#)','');
+		d.add(801,8,'Using dataXML Method','CodeASPCSDXML.html');
+		d.add(802,8,'Using dataURL Method','CodeASPCSDURL.html');
+        d.add(803,8,'Using Data from Form','CodeASPCSForm.html');
+		d.add(804,8,'Plotting data from Database','');
+			d.add(805,804,'Goal','CodeASPCSDB_Goal.html');		
+			d.add(806,804,'Database Structure','CodeASPCSDB_Structure.html');	
+			d.add(807,804,'Data to be plotted','CodeASPCSDB_Plot.html');	
+			d.add(808,804,'US Population Map','CodeASPCSDB_USMap.html');		
+			d.add(809,804,'Drilldown Map','CodeASPCSDB_DrillMap.html');	
+			
+// -------------------- Map Specification Sheets -------------- //	   
+		d.add(7000,0,'Map Specification Sheets');
+		d.add(7001,7000,'World & Continents','');
+		d.add(7002,7001,'World Map','MapSS/WorldMap.html');		
+		d.add(7014,7001,'World Map (Countries)','MapSS/NewWorldMap.html');
+		d.add(7003,7001,'World Map (8 Regions)','MapSS/World8.html');
+		d.add(7004,7001,'Europe','MapSS/Europe.html');
+		d.add(7005,7001,'North America','MapSS/NorthAmerica.html');
+		d.add(7006,7001,'Central America','MapSS/CentralAmerica.html');				
+		d.add(7007,7001,'South America','MapSS/SouthAmerica.html');		
+		d.add(7008,7001,'Asia','MapSS/Asia.html');
+		d.add(7009,7001,'Africa','MapSS/Africa.html');		
+		d.add(7010,7001,'Middle East','MapSS/MiddleEast.html');
+		d.add(7011,7001,'Oceania','MapSS/Oceania.html');		
+		d.add(7012,7001,'Asia (no Mid-east)','MapSS/Asia3.html');		
+		d.add(7013,7001,'North America (no Central)','MapSS/NorthAmericawithoutCentral.html');		
+		//Left space 7015-7029
+		
+		d.add(7030,7000,'USA & States','');
+		d.add(7031,7030,'USA','MapSS/USA.html');
+		d.add(7032,7030,'Alaska','MapSS/Alaska.html');
+		d.add(7033,7030,'Alabama','MapSS/Alabama.html');
+		d.add(7034,7030,'Arizona','MapSS/Arizona.html');
+		d.add(7035,7030,'Arkansas','MapSS/Arkansas.html');
+		d.add(7036,7030,'California','MapSS/California.html');
+		d.add(7037,7030,'Colorado','MapSS/Colorado.html');
+		d.add(7038,7030,'Connecticut','MapSS/Connecticut.html');
+		d.add(7039,7030,'Delaware','MapSS/Delaware.html');
+		d.add(7040,7030,'District of Columbia','MapSS/DistrictofColumbia.html');		
+		d.add(7041,7030,'Florida','MapSS/Florida.html');
+		d.add(7042,7030,'Georgia','MapSS/Georgia.html');
+		d.add(7043,7030,'Hawaii','MapSS/Hawaii.html');
+		d.add(7044,7030,'Idaho','MapSS/Idaho.html');
+		d.add(7045,7030,'Illinois','MapSS/Illinois.html');
+		d.add(7046,7030,'Indiana','MapSS/Indiana.html');		
+		d.add(7047,7030,'Iowa','MapSS/Iowa.html');
+		d.add(7048,7030,'Kentucky','MapSS/Kentucky.html');				
+		d.add(7049,7030,'Kansas','MapSS/Kansas.html');
+		d.add(7050,7030,'Louisiana','MapSS/Louisiana.html');		
+		d.add(7051,7030,'Maine','MapSS/Maine.html');
+		d.add(7052,7030,'Maryland','MapSS/Maryland.html');
+		d.add(7053,7030,'Massachusetts','MapSS/Massachusetts.html');
+		d.add(7054,7030,'Michigan','MapSS/Michigan.html');
+		d.add(7055,7030,'Minnesota','MapSS/Minnesota.html');		
+		d.add(7056,7030,'Mississippi','MapSS/Mississippi.html');		
+		d.add(7057,7030,'Missouri','MapSS/Missouri.html');		
+		d.add(7058,7030,'Montana','MapSS/Montana.html');
+		d.add(7059,7030,'Nebraska','MapSS/Nebraska.html');
+		d.add(7060,7030,'Nevada','MapSS/Nevada.html');
+		d.add(7061,7030,'New Hampshire','MapSS/NewHampshire.html');
+		d.add(7062,7030,'New Jersey','MapSS/NewJersey.html');		
+		d.add(7063,7030,'New Mexico','MapSS/NewMexico.html');		
+		d.add(7064,7030,'New York','MapSS/NewYork.html');
+		d.add(7065,7030,'North Carolina','MapSS/NorthCarolina.html');		
+		d.add(7066,7030,'North Dakota','MapSS/NorthDakota.html');		
+		d.add(7067,7030,'Ohio','MapSS/Ohio.html');		
+		d.add(7068,7030,'Oklahoma','MapSS/Oklahoma.html');		
+		d.add(7069,7030,'Oregon','MapSS/Oregon.html');		
+		d.add(7070,7030,'Pennsylvania','MapSS/Pennsylvania.html');		
+		d.add(7071,7030,'Rhode Island','MapSS/RhodeIsland.html');		
+		d.add(7072,7030,'South Carolina','MapSS/SouthCarolina.html');		
+		d.add(7073,7030,'South Dakota','MapSS/SouthDakota.html');		
+		d.add(7074,7030,'Tennessee','MapSS/Tennessee.html');		
+		d.add(7075,7030,'Texas','MapSS/Texas.html');		
+		d.add(7076,7030,'Utah','MapSS/Utah.html');		
+		d.add(7077,7030,'Virginia','MapSS/Virginia.html');		
+		d.add(7078,7030,'Vermont','MapSS/Vermont.html');				
+		d.add(7079,7030,'Washington','MapSS/Washington.html');
+		d.add(7080,7030,'West Virginia','MapSS/WestVirginia.html');		
+		d.add(7081,7030,'Wisconsin','MapSS/Wisconsin.html');		
+		d.add(7082,7030,'Wyoming','MapSS/Wyoming.html');	
+		//Reserved space: 7082-7099
+		
+		d.add(7100,7000,'USA Regions','');
+		d.add(7101,7100,'All Regions','MapSS/USARegion.html');	
+		d.add(7102,7100,'North East Region','MapSS/USANorthEastRegion.html');	
+		d.add(7103,7100,'North West Region','MapSS/USANorthWestRegion.html');	
+		d.add(7104,7100,'Central Region','MapSS/USACentralRegion.html');	
+		d.add(7105,7100,'South East Region','MapSS/USASouthEastRegion.html');	
+		d.add(7106,7100,'South West Region','MapSS/USASouthWestRegion.html');	
+		//Reserved space: 7107-7129
+		
+		d.add(7130,7000,'Europe (Countries)','');		
+		d.add(7131,7130,'Europe (All Countries)','MapSS/Europewithcountries.html');
+		d.add(7132,7130,'Albania','MapSS/Albania.html');
+		d.add(7133,7130,'Andorra','MapSS/Andorra.html');
+		d.add(7134,7130,'Austria','MapSS/Austria.html');
+		d.add(7135,7130,'Belarus','MapSS/Belarus.html');
+		d.add(7136,7130,'Belgium','MapSS/Belgium.html');
+		d.add(7137,7130,'Bosnia - Herzegovina','MapSS/BosniaHerzegovina.html');
+		d.add(7138,7130,'Bulgaria','MapSS/Bulgaria.html');
+		d.add(7139,7130,'Croatia','MapSS/Croatia.html');
+		d.add(7140,7130,'Cyprus','MapSS/Cyprus.html');
+		d.add(7141,7130,'Cyprus (Regions)','MapSS/Cyprus2.html');
+		d.add(7142,7130,'Czech Republic','MapSS/CzechRepublic.html');
+		d.add(7143,7130,'Denmark','MapSS/Denmark.html');						
+		d.add(7144,7130,'Denmark (Regions)','MapSS/DenmarkRegion.html');						
+		d.add(7145,7130,'England','MapSS/England.html');
+		d.add(7146,7130,'Estonia','MapSS/Estonia.html');
+		d.add(7147,7130,'Finland','MapSS/Finland.html');
+		d.add(7148,7130,'France','MapSS/France.html');
+		d.add(7149,7130,'France (Departments)','MapSS/FranceDepartment.html');
+		d.add(7150,7130,'Germany','MapSS/Germany.html');
+		d.add(7151,7130,'Greece','MapSS/Greece.html');
+		d.add(7152,7130,'Hungary','MapSS/Hungary.html');
+		d.add(7153,7130,'Hungary (Region)','MapSS/Hungary.html');
+		d.add(7154,7130,'Iceland','MapSS/Iceland.html');
+		d.add(7155,7130,'Ireland','MapSS/Ireland.html');
+		d.add(7156,7130,'Italy','MapSS/Italy.html');
+		d.add(7157,7130,'Latvia','MapSS/Latvia.html');
+		d.add(7158,7130,'Liechtenstein','MapSS/Liechtenstein.html');
+		d.add(7159,7130,'Lithuania','MapSS/Lithuania.html');
+		d.add(7160,7130,'Luxembourg','MapSS/Luxembourg.html');
+		d.add(7161,7130,'Macedonia','MapSS/Macedonia.html');
+		d.add(7162,7130,'Malta','MapSS/Malta.html');		
+		d.add(7163,7130,'Moldova','MapSS/Moldova.html');
+		d.add(7164,7130,'Monaco','MapSS/Monaco.html');
+		d.add(7165,7130,'Montenegro','MapSS/Montenegro.html');
+		d.add(7166,7130,'Netherland','MapSS/Netherland.html');
+		d.add(7167,7130,'Norway','MapSS/Norway.html');
+		d.add(7168,7130,'Norway (Regions)','MapSS/NorwayRegion.html');
+		d.add(7169,7130,'Poland','MapSS/Poland.html');
+		d.add(7170,7130,'Poland (Counties)','MapSS/PolandCounties.html');
+		d.add(7171,7130,'Portugal','MapSS/Portugal.html');
+		d.add(7172,7130,'Romania','MapSS/Romania.html');
+		d.add(7173,7130,'San Marino','MapSS/SanMarino.html');
+		d.add(7174,7130,'Scotland','MapSS/Scotland.html');
+		d.add(7175,7130,'Serbia','MapSS/Serbia.html');
+		d.add(7176,7130,'Slovakia','MapSS/Slovakia.html');
+		d.add(7177,7130,'Slovenia','MapSS/Slovenia.html');
+		d.add(7178,7130,'Spain (Autonomous)','MapSS/Spain.html');
+		d.add(7179,7130,'Spain (Provinces)','MapSS/SpainProvinces.html');
+		d.add(7180,7130,'Sweden','MapSS/Sweden.html');
+		d.add(7181,7130,'Switzerland','MapSS/Switzerland.html');
+		d.add(7182,7130,'Turkey','MapSS/Turkey.html');
+		d.add(7183,7130,'UK','MapSS/UK.html');
+		d.add(7184,7130,'Ukraine','MapSS/Ukraine.html');
+		d.add(7185,7130,'Vatican City','MapSS/VaticanCity.html');
+		//Reserved: 7185-7249
+		
+		d.add(7250,7000,'Europe (Regions)','');
+		d.add(7251,7250,'All Regions','MapSS/EuropeRegion.html');
+		d.add(7252,7250,'East Region','MapSS/EastEuropeanRegion.html');
+		d.add(7253,7250,'West Region','MapSS/WestEuropeanRegion.html');
+		d.add(7254,7250,'Central Region','MapSS/CentralEuropeanRegion.html');
+		d.add(7255,7250,'North Region','MapSS/NorthEuropeanRegion.html');
+		d.add(7256,7250,'South Region','MapSS/SouthEuropeanRegion.html');
+		//Reserver 7257-7239
+		
+		d.add(7240,7000,'United Kingdom','');
+		d.add(7241,7240,'UK','MapSS/UK.html');
+		d.add(7242,7240,'UK (with Islands)','MapSS/UK7.html');
+		d.add(7243,7240,'England (Regions)','MapSS/EnglandRegion.html');
+		d.add(7244,7240,'Scotland (Regions)','MapSS/ScotlandRegion.html');
+		d.add(7245,7240,'Wales','MapSS/Wales.html');
+		d.add(7246,7240,'North Ireland','MapSS/NorthIreland.html');
+		//Reserved: 7247 - 7269
+		
+		d.add(7270,7000,'North America','');
+		d.add(7271,7270,'Antigua','MapSS/Antigua.html');
+		d.add(7272,7270,'Bahamas','MapSS/Bahamas.html');		
+		d.add(7273,7270,'Barbados','MapSS/Barbados.html');
+		d.add(7275,7270,'Canada','MapSS/Canada.html');
+		d.add(7276,7270,'Cayman Island','MapSS/CaymanIslands.html');		
+		d.add(7277,7270,'Cuba','MapSS/Cuba.html');
+		d.add(7278,7270,'Dominica','MapSS/Dominica.html');		
+		d.add(7279,7270,'Dominican Republic','MapSS/DominicanRepublic.html');
+		d.add(7280,7270,'Greenland','MapSS/Greenland.html');
+		d.add(7281,7270,'Grenada','MapSS/Grenada.html');
+		d.add(7282,7270,'Haiti','MapSS/Haiti.html');
+		d.add(7283,7270,'Jamaica','MapSS/Jamaica.html');
+		d.add(7284,7270,'Mexico','MapSS/Mexico.html');
+		d.add(7286,7270,'Puerto Rico','MapSS/PuertoRico.html');
+		d.add(7288,7270,'St. Kitts & Nevis','MapSS/SaintKittsandNevis.html');
+		d.add(7289,7270,'St. Lucia','MapSS/SaintLucia.html');
+		d.add(7290,7270,'St. Vincent & The Grenadines','MapSS/SaintVincentandtheGrenadines.html');
+		d.add(7291,7270,'Trinidad & Tobago','MapSS/TrinidadandTobago.html');
+		//Reserved: 7291-7329
+		
+		d.add(7330,7000,'South America','');
+		d.add(7331,7330,'Argentina','MapSS/Argentina.html');
+		d.add(7332,7330,'Bolivia','MapSS/Bolivia.html');
+		d.add(7333,7330,'Brazil','MapSS/Brazil.html');
+		d.add(7334,7330,'Brazil (Regions)','MapSS/BrazilRegion.html');
+		d.add(7335,7330,'Chile','MapSS/Chile.html');
+		d.add(7336,7330,'Colombia','MapSS/Colombia.html');
+		d.add(7337,7330,'Ecuador','MapSS/Ecuador.html');
+		d.add(7338,7330,'Falkland Island','MapSS/FalklandIsland.html');
+		d.add(7339,7330,'French Guiana','MapSS/FrenchGuiana.html');
+		d.add(7340,7330,'Guyana','MapSS/Guyana.html');		
+		d.add(7341,7330,'Paraguay','MapSS/Paraguay.html');
+		d.add(7342,7330,'Peru','MapSS/Peru.html');
+		d.add(7343,7330,'Suriname','MapSS/Suriname.html');
+		d.add(7344,7330,'Uruguay','MapSS/Uruguay.html');
+		d.add(7345,7330,'Venezuela','MapSS/Venezuela.html');
+		//Reserved: 7345 - 7379		
+		
+		d.add(7380,7000,'Central America','');
+		d.add(7381,7380,'Central America (with Caribbean)','MapSS/CentralAmericawithCaribbeans.html');
+		d.add(7382,7380,'Central America (with Virgin Is.)','MapSS/CentralAmerica2.html');
+		d.add(7383,7380,'Belize','MapSS/Belize.html');
+		d.add(7384,7380,'Costa Rica','MapSS/CostaRica.html');
+		d.add(7385,7380,'El Salvador','MapSS/ElSalvador.html');
+		d.add(7386,7380,'Guatemala','MapSS/Guatemala.html');
+		d.add(7387,7380,'Honduras','MapSS/Honduras.html');
+		d.add(7388,7380,'Nicaragua','MapSS/Nicaragua.html');
+		d.add(7389,7380,'Panama','MapSS/Panama.html');
+		//Reserved: 7389-7419
+		
+		d.add(7420,7000,'Canada - Provinces & Territories','');
+		d.add(7421,7420,'Alberta','MapSS/Alberta.html');
+		d.add(7422,7420,'British Columbia','MapSS/BritishColumbia.html');
+		d.add(7423,7420,'Manitoba','MapSS/Manitoba.html');
+		d.add(7424,7420,'New Brunswick','MapSS/NewBrunswick.html');
+		d.add(7425,7420,'New Foundland & Labrador','MapSS/NewfoundlandnLabrador.html');
+		d.add(7426,7420,'Northwest Territories','MapSS/NorthwestTerritories.html');
+		d.add(7427,7420,'Nova Scotia','MapSS/NovaScotia.html');
+		d.add(7428,7420,'Nunavut','MapSS/Nunavut.html');
+		d.add(7429,7420,'Ontario','MapSS/Ontario.html');
+		d.add(7430,7420,'Prince Edward Island','MapSS/PrinceEdwardIsland.html');
+		d.add(7431,7420,'Quebec','MapSS/Quebec.html');
+		d.add(7432,7420,'Saskatchewan','MapSS/Saskatchewan.html');
+		d.add(7433,7420,'Yukon Territory','MapSS/YukonTerritory.html');
+
+		//Reserveed: 7430-7459
+		d.add(7460,7000,'Asia','');
+		d.add(7461,7460,'Armenia','MapSS/Armenia.html');
+		d.add(7462,7460,'Azerbaijan','MapSS/Azerbaijan.html');
+		d.add(7463,7460,'Bangladesh','MapSS/Bangladesh.html');
+		d.add(7464,7460,'Bhutan','MapSS/Bhutan.html');
+		d.add(7465,7460,'Brunei','MapSS/Brunei.html');
+		d.add(7466,7460,'Burma','MapSS/Burma.html');
+		d.add(7467,7460,'Cambodia','MapSS/Cambodia.html');
+		d.add(7468,7460,'China','MapSS/China.html');
+		d.add(7469,7460,'China - 2','MapSS/China2.html');
+		d.add(7470,7460,'East Timor','MapSS/EastTimor.html');
+		d.add(7471,7460,'Georgia','MapSS/Georgia.html');
+		d.add(7472,7460,'Hong Kong','MapSS/HongKong.html');
+		d.add(7473,7460,'India','MapSS/India.html');
+		d.add(7474,7460,'Indonesia','MapSS/Indonesia.html');
+		d.add(7475,7460,'Japan','MapSS/Japan.html');
+		d.add(7476,7460,'Kazakhstan','MapSS/Kazakhstan.html');
+		d.add(7477,7460,'Laos','MapSS/Laos.html');
+		d.add(7478,7460,'Macau','MapSS/Macau.html');
+		d.add(7479,7460,'Malaysia','MapSS/Malaysia.html');
+		d.add(7480,7460,'Mongolia','MapSS/Mongolia.html');
+		d.add(7481,7460,'Nepal','MapSS/Nepal.html');
+		d.add(7482,7460,'North Korea','MapSS/NorthKorea.html');
+		d.add(7483,7460,'Philippines','MapSS/Philippines.html');
+		d.add(7484,7460,'Russia','MapSS/Russia.html');
+		d.add(7485,7460,'Singapore','MapSS/Singapore.html');
+		d.add(7486,7460,'South Korea','MapSS/SouthKorea.html');
+		d.add(7487,7460,'Sri Lanka','MapSS/Srilanka.html');
+		d.add(7488,7460,'Taiwan','MapSS/Taiwan.html');
+		d.add(7489,7460,'Thailand','MapSS/Thailand.html');
+		d.add(7490,7460,'Tibet','MapSS/Tibet.html');
+		d.add(7491,7460,'Vietnam','MapSS/Vietnam.html');
+		//Reserved: 7491-7519	
+
+		d.add(7520,7000,'Middle East','');		
+		d.add(7521,7520,'Afghanistan','MapSS/Afghanistan.html');
+		d.add(7522,7520,'Bahrain','MapSS/Bahrain.html');
+		d.add(7523,7520,'Iran','MapSS/Iran.html');
+		d.add(7524,7520,'Iraq','MapSS/Iraq.html');
+		d.add(7525,7520,'Israel','MapSS/Israel.html');
+		d.add(7526,7520,'Jordan','MapSS/Jordan.html');
+		d.add(7527,7520,'Kuwait','MapSS/Kuwait.html');
+		d.add(7528,7520,'Kyrgyzstan','MapSS/Kyrgyzstan.html');
+		d.add(7529,7520,'Lebanon','MapSS/Lebanon.html');
+		d.add(7530,7520,'Oman','MapSS/Oman.html');
+		d.add(7531,7520,'Pakistan','MapSS/Pakistan.html');
+		d.add(7532,7520,'Qatar','MapSS/Qatar.html');
+		d.add(7533,7520,'Saudi Arabia','MapSS/SaudiArabia.html');
+		d.add(7534,7520,'Syria','MapSS/Syria.html');
+		d.add(7535,7520,'Tajikistan','MapSS/Tajikistan.html');
+		d.add(7536,7520,'Turkmenistan','MapSS/Turkmenistan.html');
+		d.add(7537,7520,'United Arab Emirates','MapSS/UAE.html');
+		d.add(7538,7520,'Uzbekistan','MapSS/Uzbekistan.html');
+		d.add(7539,7520,'Yemen','MapSS/Yemen.html');
+		//Reserved: 7539 - 7559
+				
+		d.add(7560,7000,'Oceania','');
+		d.add(7561,7560,'Australia','MapSS/Australia.html');
+		d.add(7562,7560,'Australia (w/ Capital)','MapSS/Australia2.html');
+		d.add(7563,7560,'Fiji','MapSS/Fiji.html');
+		d.add(7564,7560,'Kiribati','MapSS/Kiribati.html');
+		d.add(7565,7560,'Marshall Islands','MapSS/MarshallIsland.html');
+		d.add(7566,7560,'Micronesia','MapSS/Micronesia.html');
+		d.add(7567,7560,'Nauru','MapSS/Nauru.html');
+		d.add(7568,7560,'New Caledonia','MapSS/NewCaledonia.html');
+		d.add(7569,7560,'New Zealand','MapSS/NewZealand.html');
+		d.add(7570,7560,'Palau','MapSS/Palau.html');
+		d.add(7571,7560,'Papua New Guinea','MapSS/PapuaNewGuinea.html');
+		d.add(7572,7560,'Samoa','MapSS/Samoa.html');
+		d.add(7573,7560,'Solomon Islands','MapSS/SolomonIsland.html');
+		d.add(7574,7560,'Tonga','MapSS/Tonga.html');
+		d.add(7575,7560,'Tuvalu','MapSS/Tuvalu.html');
+		d.add(7576,7560,'Vanuatu','MapSS/Vanuata.html');
+		//Reserved: 7576 - 7589
+		
+		d.add(7590,7000,'Africa','');
+		d.add(7591,7590,'Algeria','MapSS/Algeria.html');
+		d.add(7592,7590,'Angola','MapSS/Angola.html');
+		d.add(7593,7590,'Benin','MapSS/Benin.html');
+		d.add(7594,7590,'Botswana','MapSS/Botswana.html');
+		d.add(7595,7590,'Burkina Faso','MapSS/BurkinaFaso.html');
+		d.add(7596,7590,'Burundi','MapSS/Burundi.html');
+		d.add(7597,7590,'Cameroon','MapSS/Cameroon.html');
+		d.add(7598,7590,'Cape Verde','MapSS/CapeVerde.html');
+		d.add(7599,7590,'Central African Republic','MapSS/CentralAfricanRepublic.html');
+		d.add(7600,7590,'Chad','MapSS/Chad.html');
+		d.add(7601,7590,'Comoros','MapSS/Comoros.html');
+		d.add(7602,7590,'Congo','MapSS/Congo.html');
+		d.add(7603,7590,'Cote Divoire','MapSS/CoteDivoire.html');
+		d.add(7604,7590,'Democratic Republic of the Congo','MapSS/DemocraticRepublicoftheCongo.html');
+		d.add(7605,7590,'Djibouti','MapSS/Djibouti.html');
+		d.add(7606,7590,'Egypt','MapSS/Egypt.html');
+		d.add(7607,7590,'Equatorial Guinea','MapSS/EquatorialGuinea.html');
+		d.add(7608,7590,'Eritrea','MapSS/Eritrea.html');
+		d.add(7609,7590,'Ethiopia','MapSS/Ethiopia.html');
+		d.add(7610,7590,'Gabon','MapSS/Gabon.html');
+		d.add(7611,7590,'Gambia','MapSS/Gambia.html');
+		d.add(7612,7590,'Ghana','MapSS/Ghana.html');
+		d.add(7613,7590,'Guinea','MapSS/Guinea.html');
+		d.add(7614,7590,'Guinea-Bissau','MapSS/GuineaBissau.html');
+		d.add(7615,7590,'Kenya','MapSS/Kenya.html');
+		d.add(7616,7590,'Lesotho','MapSS/Lesotho.html');
+		d.add(7617,7590,'Liberia','MapSS/Liberia.html');
+		d.add(7618,7590,'Libya','MapSS/Libya.html');
+		d.add(7619,7590,'Madagascar','MapSS/Madagascar.html');
+		d.add(7620,7590,'Madagascar (Region)','MapSS/MadagascarRegions.html');
+		d.add(7621,7590,'Malawi','MapSS/Malawi.html');
+		d.add(7622,7590,'Mali','MapSS/Mali.html');
+		d.add(7623,7590,'Mauritania','MapSS/Mauritania.html');
+		d.add(7624,7590,'Mauritius','MapSS/Mauritius.html');
+		d.add(7625,7590,'Morocco','MapSS/Morocco.html');
+		d.add(7626,7590,'Mozambique','MapSS/Mozambique.html');
+		d.add(7627,7590,'Namibia','MapSS/Namibia.html');
+		d.add(7628,7590,'Niger','MapSS/Niger.html');
+		d.add(7629,7590,'Nigeria','MapSS/Nigeria.html');
+		d.add(7630,7590,'Rwanda','MapSS/Rwanda.html');
+		d.add(7631,7590,'Sao Tome and Principe','MapSS/SaoTomeandPrincipe.html');
+		d.add(7632,7590,'Senegal','MapSS/Senegal.html');
+		d.add(7633,7590,'Seychelles','MapSS/Seychelles.html');
+		d.add(7634,7590,'Sierra Leone','MapSS/SierraLeone.html');
+		d.add(7635,7590,'Somalia','MapSS/Somalia.html');
+		d.add(7636,7590,'South Africa','MapSS/SouthAfrica.html');
+		d.add(7637,7590,'Sudan','MapSS/Sudan.html');
+		d.add(7638,7590,'Swaziland','MapSS/Swaziland.html');
+		d.add(7639,7590,'Tanzania','MapSS/Tanzania.html');
+		d.add(7640,7590,'Togo','MapSS/Togo.html');
+		d.add(7641,7590,'Tunisia','MapSS/Tunisia.html');
+		d.add(7642,7590,'Uganda','MapSS/Uganda.html');
+		d.add(7643,7590,'Western Sahara','MapSS/WesternSahara.html');
+		d.add(7644,7590,'Zambia','MapSS/Zambia.html');
+		d.add(7645,7590,'Zimbabwe','MapSS/Zimbabwe.html');
+
+// --------------------- MARKER XML --------------------- //
+		d.add(10000,0,'Marker XML');
+		d.add(10001,10000,'What is it?','MarkerXMLOverview.html','What is Marker XML and what you can do with it?');
+		d.add(10002,10000,'Afghanistan','../MarkerXML/AfghanistanData.xml','');
+		d.add(10003,10000,'Alabama','../MarkerXML/AlabamaData.xml');
+		d.add(10004,10000,'Alaska','../MarkerXML/AlaskaData.xml');
+		d.add(10005,10000,'Albania','../MarkerXML/AlbaniaData.xml');
+		d.add(10006,10000,'Alberta','../MarkerXML/AlbertaData.xml','');
+		d.add(10007,10000,'Algeria','../MarkerXML/AlgeriaData.xml','');
+		d.add(10008,10000,'Andorra','../MarkerXML/AndorraData.xml');
+		d.add(10009,10000,'Angola','../MarkerXML/AngolaData.xml','');
+		d.add(10010,10000,'Antigua','../MarkerXML/AntiguaData.xml');
+		d.add(10011,10000,'Argentina','../MarkerXML/ArgentinaData.xml');
+		d.add(10012,10000,'Arizona','../MarkerXML/ArizonaData.xml');
+		d.add(10013,10000,'Arkansas','../MarkerXML/ArkansasData.xml');
+		d.add(10014,10000,'Armenia','../MarkerXML/ArmeniaData.xml');
+		d.add(10015,10000,'(Asia) Georgia','../MarkerXML/AsiaGeorgiaData.xml');
+		d.add(10016,10000,'Australia','../MarkerXML/AustraliaData.xml');
+		d.add(10017,10000,'Austria','../MarkerXML/AustriaData.xml');
+		d.add(10018,10000,'Azerbaijan','../MarkerXML/AzerbaijanData.xml');
+		d.add(10019,10000,'Bahamas','../MarkerXML/BahamasData.xml');
+		d.add(10020,10000,'Bahrain','../MarkerXML/BahrainData.xml');
+		d.add(10021,10000,'Bangladesh','../MarkerXML/BangladeshData.xml');
+		d.add(10022,10000,'Barbados','../MarkerXML/BarbadosData.xml');
+		d.add(10023,10000,'Belarus','../MarkerXML/BelarusData.xml');
+		d.add(10024,10000,'Belgium','../MarkerXML/BelgiumData.xml');
+		d.add(10025,10000,'Belize','../MarkerXML/BelizeData.xml');
+		d.add(10026,10000,'Benin','../MarkerXML/BeninData.xml','');
+		d.add(10027,10000,'Bhutan','../MarkerXML/BhutanData.xml','');
+		d.add(10028,10000,'Bolivia','../MarkerXML/BoliviaData.xml');
+		d.add(10029,10000,'Bosnia-Herzegovina','../MarkerXML/Bosnia-HerzegovinaData.xml');
+		d.add(10030,10000,'Botswana','../MarkerXML/BotswanaData.xml','');
+		d.add(10031,10000,'Brazil','../MarkerXML/BrazilData.xml');
+		d.add(10032,10000,'British Columbia','../MarkerXML/BritishColumbiaData.xml');
+		d.add(10033,10000,'Brunei','../MarkerXML/BruneiData.xml','');
+		d.add(10034,10000,'Bulgaria','../MarkerXML/BulgariaData.xml');
+		d.add(10035,10000,'Burkina Faso','../MarkerXML/BurkinaFasoData.xml','');
+		d.add(10036,10000,'Burma','../MarkerXML/BurmaData.xml','');
+		d.add(10037,10000,'Burundi','../MarkerXML/BurundiData.xml','');
+		d.add(10038,10000,'California','../MarkerXML/CaliforniaData.xml');
+		d.add(10039,10000,'Cambodia','../MarkerXML/CambodiaData.xml','');
+		d.add(10040,10000,'Cameroon','../MarkerXML/CameroonData.xml','');
+		d.add(10041,10000,'Canada','../MarkerXML/CanadaData.xml');
+		d.add(10042,10000,'Cape Verde','../MarkerXML/CapeVerdeData.xml','');
+		d.add(10043,10000,'Cayman Islands','../MarkerXML/CaymanIslandsData.xml','');
+		d.add(10044,10000,'Central African Republic','../MarkerXML/CentralAfricanRepublicData.xml','');
+		d.add(10045,10000,'Chad','../MarkerXML/ChadData.xml','');
+		d.add(10046,10000,'Chile','../MarkerXML/ChileData.xml');
+		d.add(10047,10000,'China','../MarkerXML/ChinaData.xml');
+		d.add(10048,10000,'Colombia','../MarkerXML/ColombiaData.xml');
+		d.add(10049,10000,'Colorado','../MarkerXML/ColoradoData.xml');
+		d.add(10050,10000,'Comoros','../MarkerXML/ComorosData.xml','');
+		d.add(10051,10000,'Congo','../MarkerXML/CongoData.xml','');
+		d.add(10052,10000,'Connecticut','../MarkerXML/ConnecticutData.xml');
+		d.add(10053,10000,'Costa Rica','../MarkerXML/CostaRicaData.xml');
+		d.add(10054,10000,'Cote Divoire','../MarkerXML/CoteDivoireData.xml','');
+		d.add(10055,10000,'Croatia','../MarkerXML/CroatiaData.xml');
+		d.add(10056,10000,'Cuba','../MarkerXML/CubaData.xml');
+		d.add(10057,10000,'Cyprus','../MarkerXML/CyprusData.xml');
+		d.add(10058,10000,'Czech Republic','../MarkerXML/CzechRepublicData.xml');
+		d.add(10059,10000,'Delaware','../MarkerXML/DelawareData.xml');
+		d.add(10060,10000,'Democratic Republic of Congo','../MarkerXML/DemocraticRepublicofCongoData.xml','');
+		d.add(10061,10000,'Denmark','../MarkerXML/DenmarkData.xml');
+		d.add(10062,10000,'Djibouti','../MarkerXML/DjiboutiData.xml','');
+		d.add(10063,10000,'Dominica','../MarkerXML/DominicaData.xml');
+		d.add(10064,10000,'Dominican Republic','../MarkerXML/DominicanRepublicData.xml');
+		d.add(10065,10000,'East Timor','../MarkerXML/EastTimorData.xml','');
+		d.add(10066,10000,'Ecuador','../MarkerXML/EcuadorData.xml');
+		d.add(10067,10000,'Egypt','../MarkerXML/EgyptData.xml');
+		d.add(10068,10000,'El Salvador','../MarkerXML/ElSalvadorData.xml');
+		d.add(10069,10000,'England','../MarkerXML/EnglandData.xml');
+		d.add(10070,10000,'Equatorial Guinea','../MarkerXML/EquatorialGuineaData.xml','');
+		d.add(10071,10000,'Eritrea','../MarkerXML/EritreaData.xml','');
+		d.add(10072,10000,'Estonia','../MarkerXML/EstoniaData.xml');
+		d.add(10073,10000,'Ethiopia','../MarkerXML/EthiopiaData.xml','');
+		d.add(10074,10000,'Falkland Island','../MarkerXML/FalklandIslandData.xml','');
+		d.add(10075,10000,'Fiji','../MarkerXML/FijiData.xml','');
+		d.add(10076,10000,'Finland','../MarkerXML/FinlandData.xml');
+		d.add(10077,10000,'Florida','../MarkerXML/FloridaData.xml');
+		d.add(10078,10000,'France','../MarkerXML/FranceData.xml');
+		d.add(10079,10000,'French Guiana','../MarkerXML/FrenchGuianaData.xml','');
+		d.add(10080,10000,'Gabon','../MarkerXML/GabonData.xml','');
+		d.add(10081,10000,'Gambia','../MarkerXML/GambiaData.xml','');
+		d.add(10082,10000,'Georgia','../MarkerXML/GeorgiaData.xml');
+		d.add(10083,10000,'Germany','../MarkerXML/GermanyData.xml');
+		d.add(10084,10000,'Ghana','../MarkerXML/GhanaData.xml','');
+		d.add(10085,10000,'Greece','../MarkerXML/GreeceData.xml');
+		d.add(10086,10000,'Greenland','../MarkerXML/GreenlandData.xml');
+		d.add(10087,10000,'Grenada','../MarkerXML/GrenadaData.xml');
+		d.add(10088,10000,'Guatemala','../MarkerXML/GuatemalaData.xml');
+		d.add(10089,10000,'Guinea Bissau','../MarkerXML/GuineaBissauData.xml','');
+		d.add(10090,10000,'Guinea','../MarkerXML/GuineaData.xml','');
+		d.add(10091,10000,'Guyana','../MarkerXML/GuyanaData.xml','');
+		d.add(10092,10000,'Haiti','../MarkerXML/HaitiData.xml');
+		d.add(10093,10000,'Hawaii','../MarkerXML/HawaiiData.xml');
+		d.add(10094,10000,'Honduras','../MarkerXML/HondurasData.xml');
+		d.add(10095,10000,'Hong Kong','../MarkerXML/HongKongData.xml','');
+		d.add(10096,10000,'Hungary','../MarkerXML/HungaryData.xml');
+		d.add(10097,10000,'Iceland','../MarkerXML/IcelandData.xml');
+		d.add(10098,10000,'Idaho','../MarkerXML/IdahoData.xml');
+		d.add(10099,10000,'Illinois','../MarkerXML/IllinoisData.xml');
+		d.add(10100,10000,'India','../MarkerXML/IndiaData.xml');
+		d.add(10101,10000,'Indiana','../MarkerXML/IndianaData.xml');
+		d.add(10102,10000,'Indonesia','../MarkerXML/IndonesiaData.xml');
+		d.add(10103,10000,'Iowa','../MarkerXML/IowaData.xml');
+		d.add(10104,10000,'Iraq','../MarkerXML/IraqData.xml');
+		d.add(10105,10000,'Ireland','../MarkerXML/IrelandData.xml');
+		d.add(10106,10000,'Israel','../MarkerXML/IsraelData.xml');
+		d.add(10107,10000,'Italy','../MarkerXML/ItalyData.xml');
+		d.add(10108,10000,'Jamaica','../MarkerXML/JamaicaData.xml');
+		d.add(10109,10000,'Japan','../MarkerXML/JapanData.xml');
+		d.add(10110,10000,'Jordan','../MarkerXML/JordanData.xml','');
+		d.add(10111,10000,'Kansas','../MarkerXML/KansasData.xml');
+		d.add(10112,10000,'Kazakhstan','../MarkerXML/KazakhstanData.xml','');
+		d.add(10113,10000,'Kentucky','../MarkerXML/KentuckyData.xml');
+		d.add(10114,10000,'Kenya','../MarkerXML/KenyaData.xml');
+		d.add(10115,10000,'Kiribati','../MarkerXML/KiribatiData.xml','');
+		d.add(10116,10000,'Kuwait','../MarkerXML/KuwaitData.xml','');
+		d.add(10117,10000,'Kyrgyzstan','../MarkerXML/KyrgyzstanData.xml','');
+		d.add(10118,10000,'Laos','../MarkerXML/LaosData.xml','');
+		d.add(10119,10000,'Latvia','../MarkerXML/LatviaData.xml');
+		d.add(10120,10000,'Lebanon','../MarkerXML/LebanonData.xml','');
+		d.add(10121,10000,'Lesotho','../MarkerXML/LesothoData.xml','');
+		d.add(10122,10000,'Liberia','../MarkerXML/LiberiaData.xml','');
+		d.add(10123,10000,'Libya','../MarkerXML/LibyaData.xml','');
+		d.add(10124,10000,'Liechtenstein','../MarkerXML/LiechtensteinData.xml');
+		d.add(10125,10000,'Lithuania','../MarkerXML/LithuaniaData.xml');
+		d.add(10126,10000,'Louisiana','../MarkerXML/LouisianaData.xml');
+		d.add(10127,10000,'Luxembourg','../MarkerXML/LuxembourgData.xml');
+		d.add(10128,10000,'Macau','../MarkerXML/MacauData.xml','');
+		d.add(10129,10000,'Macedonia','../MarkerXML/MacedoniaData.xml','');
+		d.add(10130,10000,'Madagascar','../MarkerXML/MadagascarData.xml','');
+		d.add(10131,10000,'Maine','../MarkerXML/MaineData.xml');
+		d.add(10132,10000,'Malawi','../MarkerXML/MalawiData.xml','');
+		d.add(10133,10000,'Malaysia','../MarkerXML/MalaysiaData.xml');
+		d.add(10134,10000,'Mali','../MarkerXML/MaliData.xml','');
+		d.add(10135,10000,'Manitoba','../MarkerXML/ManitobaData.xml','');
+		d.add(10136,10000,'Marshall Island','../MarkerXML/MarshallIslandData.xml','');
+		d.add(10137,10000,'Maryland','../MarkerXML/MarylandData.xml');
+		d.add(10138,10000,'Massachusetts','../MarkerXML/MassachusettsData.xml');
+		d.add(10139,10000,'Mauritania','../MarkerXML/MauritaniaData.xml','');
+		d.add(10140,10000,'Mauritius','../MarkerXML/MauritiusData.xml','');
+		d.add(10141,10000,'Mexico','../MarkerXML/MexicoData.xml');
+		d.add(10142,10000,'Michigan','../MarkerXML/MichiganData.xml');
+		d.add(10143,10000,'Micronesia','../MarkerXML/MicronesiaData.xml','');
+		d.add(10144,10000,'Minnesota','../MarkerXML/MinnesotaData.xml');
+		d.add(10145,10000,'Mississippi','../MarkerXML/MississippiData.xml');
+		d.add(10146,10000,'Missouri','../MarkerXML/MissouriData.xml');
+		d.add(10147,10000,'Moldova','../MarkerXML/MoldovaData.xml');
+		d.add(10148,10000,'Monaco','../MarkerXML/MonacoData.xml','');
+		d.add(10149,10000,'Mongolia','../MarkerXML/MongoliaData.xml','');
+		d.add(10150,10000,'Montana','../MarkerXML/MontanaData.xml');
+		d.add(10151,10000,'Montenegro','../MarkerXML/MontenegroData.xml');
+		d.add(10152,10000,'Morocco','../MarkerXML/MoroccoData.xml','');
+		d.add(10153,10000,'Mozambique','../MarkerXML/MozambiqueData.xml');
+		d.add(10154,10000,'Namibia','../MarkerXML/NamibiaData.xml','');
+		d.add(10155,10000,'Nauru','../MarkerXML/NauruData.xml','');
+		d.add(10156,10000,'Nebraska','../MarkerXML/NebraskaData.xml');
+		d.add(10157,10000,'Nepal','../MarkerXML/NepalData.xml','');
+		d.add(10158,10000,'Netherland','../MarkerXML/NetherlandData.xml');
+		d.add(10159,10000,'Nevada','../MarkerXML/NevadaData.xml');
+		d.add(10160,10000,'New Brunswick','../MarkerXML/NewBrunswickData.xml','');
+		d.add(10161,10000,'New Caledonia','../MarkerXML/NewCaledoniaData.xml','');
+		d.add(10162,10000,'New Foundland &amp; Labrador ','../MarkerXML/NewfoundlandandLabradorData.xml','');
+		d.add(10163,10000,'New Hampshire','../MarkerXML/NewHampshireData.xml');
+		d.add(10164,10000,'New Jersey','../MarkerXML/NewJerseyData.xml');
+		d.add(10165,10000,'New Mexico','../MarkerXML/NewMexicoData.xml');
+		d.add(10166,10000,'New York','../MarkerXML/NewYorkData.xml');
+		d.add(10167,10000,'New Zealand','../MarkerXML/NewZealandData.xml');
+		d.add(10168,10000,'Nicaragua','../MarkerXML/NicaraguaData.xml');
+		d.add(10169,10000,'Niger','../MarkerXML/NigerData.xml','');
+		d.add(10170,10000,'Nigeria','../MarkerXML/NigeriaData.xml','');
+		d.add(10171,10000,'North Carolina','../MarkerXML/NorthCarolinaData.xml');
+		d.add(10172,10000,'North Dakota','../MarkerXML/NorthDakotaData.xml');
+		d.add(10173,10000,'North Ireland','../MarkerXML/NorthIrelandData.xml');
+		d.add(10174,10000,'North Korea','../MarkerXML/NorthKoreaData.xml');
+		d.add(10175,10000,'North West Territories','../MarkerXML/NorthWestTerritoriesData.xml','');
+		d.add(10176,10000,'Norway','../MarkerXML/NorwayData.xml');
+		d.add(10177,10000,'Norway (Region)','../MarkerXML/NorwayRegionData.xml');
+		d.add(10178,10000,'Nova Scotia','../MarkerXML/NovaScotiaData.xml','');
+		d.add(10179,10000,'Nunavut','../MarkerXML/NunavutData.xml','');
+		d.add(10180,10000,'Ohio','../MarkerXML/OhioData.xml');
+		d.add(10181,10000,'Oklahoma','../MarkerXML/OklahomaData.xml');
+		d.add(10182,10000,'Oman','../MarkerXML/OmanData.xml','');
+		d.add(10183,10000,'Ontario','../MarkerXML/OntarioData.xml');
+		d.add(10184,10000,'Oregon','../MarkerXML/OregonData.xml');
+		d.add(10185,10000,'Pakistan','../MarkerXML/PakistanData.xml','');
+		d.add(10186,10000,'Palau','../MarkerXML/PalauData.xml','');
+		d.add(10187,10000,'Panama','../MarkerXML/PanamaData.xml','');
+		d.add(10188,10000,'Papua New Guinea','../MarkerXML/PapuaNewGuineaData.xml','');
+		d.add(10189,10000,'Paraguay','../MarkerXML/ParaguayData.xml');
+		d.add(10190,10000,'Pennsylvania','../MarkerXML/PennsylvaniaData.xml');
+		d.add(10191,10000,'Peru','../MarkerXML/PeruData.xml');
+		d.add(10192,10000,'Philippines','../MarkerXML/PhilippinesData.xml','');
+		d.add(10193,10000,'Poland','../MarkerXML/PolandData.xml');
+		d.add(10194,10000,'Portugal','../MarkerXML/PortugalData.xml');
+		d.add(10195,10000,'Prince Edward Island','../MarkerXML/PrinceEdwardIslandData.xml','');
+		d.add(10196,10000,'Puerto Rico','../MarkerXML/PuertoRicoData.xml');
+		d.add(10197,10000,'Qatar','../MarkerXML/QatarData.xml','');
+		d.add(10198,10000,'Quebec','../MarkerXML/QuebecData.xml');
+		d.add(10199,10000,'Rhode Island','../MarkerXML/RhodeIslandData.xml');
+		d.add(10200,10000,'Romania','../MarkerXML/RomaniaData.xml');
+		d.add(10201,10000,'Russia','../MarkerXML/RussiaData.xml');
+		d.add(10202,10000,'Rwanda','../MarkerXML/RwandaData.xml','');
+		d.add(10203,10000,'St. Kitts & Nevis ','../MarkerXML/SaintKittsandNevisData.xml');
+		d.add(10204,10000,'St. Lucia','../MarkerXML/SaintLuciaData.xml');
+		d.add(10205,10000,'St. Vincent & the Grenadlines','../MarkerXML/SaintVincentAndTheGrenadlinesData.xml');
+		d.add(10206,10000,'Samoa','../MarkerXML/SamoaData.xml','');
+		d.add(10207,10000,'San Marino','../MarkerXML/SanMarinoData.xml');
+		d.add(10208,10000,'Sao Tome and Principe','../MarkerXML/SaoTomeandPrincipeData.xml','');
+		d.add(10209,10000,'Saskatchewan','../MarkerXML/SaskatchewanData.xml','');
+		d.add(10210,10000,'Saudi Arabia','../MarkerXML/SaudiArabiaData.xml','');
+		d.add(10211,10000,'Scotland','../MarkerXML/ScotlandData.xml');
+		d.add(10212,10000,'Senegal','../MarkerXML/SenegalData.xml','');
+		d.add(10213,10000,'Serbia','../MarkerXML/SerbiaData.xml','');
+		d.add(10214,10000,'Sierra Leone','../MarkerXML/SierraLeoneData.xml','');
+		d.add(10215,10000,'Singapore','../MarkerXML/SingaporeData.xml','');
+		d.add(10216,10000,'Slovakia','../MarkerXML/SlovakiaData.xml');
+		d.add(10217,10000,'Slovenia','../MarkerXML/SloveniaData.xml');
+		d.add(10218,10000,'Solomon Islands','../MarkerXML/SolomonIslandsData.xml','');
+		d.add(10219,10000,'Somalia','../MarkerXML/SomaliaData.xml','');
+		d.add(10220,10000,'South Africa','../MarkerXML/SouthAfricaData.xml');
+		d.add(10221,10000,'South Carolina','../MarkerXML/SouthCarolinaData.xml');
+		d.add(10222,10000,'South Dakota','../MarkerXML/SouthDakotaData.xml');
+		d.add(10223,10000,'South Korea','../MarkerXML/SouthKoreaData.xml');
+		d.add(10224,10000,'Spain','../MarkerXML/SpainData.xml');
+		d.add(10225,10000,'Spain (Province)','../MarkerXML/SpainProvinceData.xml');
+		d.add(10226,10000,'Sri Lanka','../MarkerXML/SrilankaData.xml','');
+		d.add(10227,10000,'Sudan','../MarkerXML/SudanData.xml','');
+		d.add(10228,10000,'Suriname','../MarkerXML/SurinameData.xml');
+		d.add(10229,10000,'Swaziland','../MarkerXML/SwazilandData.xml','');
+		d.add(10230,10000,'Sweden','../MarkerXML/SwedenData.xml');
+		d.add(10231,10000,'Switzerland','../MarkerXML/SwitzerlandData.xml');
+		d.add(10232,10000,'Syria','../MarkerXML/SyriaData.xml','');
+		d.add(10233,10000,'Taiwan','../MarkerXML/TaiwanData.xml');
+		d.add(10234,10000,'Tajikistan','../MarkerXML/TajikistanData.xml','');
+		d.add(10235,10000,'Tanzania','../MarkerXML/TanzaniaData.xml','');
+		d.add(10236,10000,'Tennessee','../MarkerXML/TennesseeData.xml');
+		d.add(10237,10000,'Texas','../MarkerXML/TexasData.xml');
+		d.add(10238,10000,'Thailand','../MarkerXML/ThailandData.xml','');
+		d.add(10239,10000,'Togo','../MarkerXML/TogoData.xml','');
+		d.add(10240,10000,'Tonga','../MarkerXML/TongaData.xml','');
+		d.add(10241,10000,'Trinidad &amp; Tobago','../MarkerXML/TrinidadandTobagoData.xml','');
+		d.add(10242,10000,'Tunisia','../MarkerXML/TunisiaData.xml','');
+		d.add(10243,10000,'Turkey','../MarkerXML/TurkeyData.xml');
+		d.add(10244,10000,'Turkmenistan','../MarkerXML/TurkmenistanData.xml','');
+		d.add(10245,10000,'Tuvalu','../MarkerXML/TuvaluData.xml','');
+		d.add(10246,10000,'UAE','../MarkerXML/UAEData.xml');
+		d.add(10247,10000,'Uganda','../MarkerXML/UgandaData.xml','');
+		d.add(10248,10000,'UK','../MarkerXML/UKData.xml');
+		d.add(10249,10000,'Ukraine','../MarkerXML/UkraineData.xml');
+		d.add(10250,10000,'Uruguay','../MarkerXML/UruguayData.xml');
+		d.add(10251,10000,'USA','../MarkerXML/USAData.xml');
+		d.add(10252,10000,'Utah','../MarkerXML/UtahData.xml');
+		d.add(10253,10000,'Uzbekistan','../MarkerXML/UzbekistanData.xml','');
+		d.add(10254,10000,'Vanuata','../MarkerXML/VanuataData.xml','');
+		d.add(10255,10000,'Vatican City','../MarkerXML/VaticanCityData.xml','');
+		d.add(10256,10000,'Venezuela','../MarkerXML/VenezuelaData.xml');
+		d.add(10257,10000,'Vermont','../MarkerXML/VermontData.xml');
+		d.add(10258,10000,'Vietnam','../MarkerXML/VietnamData.xml','');
+		d.add(10259,10000,'Virginia','../MarkerXML/VirginiaData.xml');
+		d.add(10260,10000,'Wales','../MarkerXML/WalesData.xml');
+		d.add(10261,10000,'Washington','../MarkerXML/WashingtonData.xml');
+		d.add(10262,10000,'Western Sahara','../MarkerXML/WesternSaharaData.xml','');
+		d.add(10263,10000,'West Virginia','../MarkerXML/WestVirginiaData.xml');
+		d.add(10264,10000,'Wisconsin','../MarkerXML/WisconsinData.xml');
+		d.add(10265,10000,'World (with Countries)','../MarkerXML/WorldwithCountriesData.xml','');
+		d.add(10266,10000,'Wyoming','../MarkerXML/WyomingData.xml');
+		d.add(10267,10000,'Yemen','../MarkerXML/YemenData.xml','');
+		d.add(10268,10000,'Yukon Territory','../MarkerXML/YukonTerritoryData.xml','');
+		d.add(10269,10000,'Zambia','../MarkerXML/ZambiaData.xml','');
+		d.add(10270,10000,'Zimbabwe','../MarkerXML/ZimbabweData.xml','');
+		
+// -------------------- STYLES ---------------------		
+		d.add(9,0,'FusionMaps & STYLES','');
+		d.add(901,9,'Overview','Styles/Styles.html');
+		d.add(902,9,'How to Use?','Styles/HowToUse.html');
+		d.add(903,9,'Font Style Type','Styles/Font.html');
+		d.add(904,9,'Animation Style Type','Styles/Animation.html');
+		d.add(905,9,'Shadow Style Type','Styles/Shadow.html');
+		d.add(906,9,'Glow Style Type','Styles/Glow.html');
+		d.add(907,9,'Bevel Style Type','Styles/Bevel.html');
+		d.add(908,9,'Blur Style Type','Styles/Blur.html');		
+
+// -------------------- Drill Down Maps ---------------------		
+		d.add(10,0,'Drill Down Maps','Using FusionMaps to create Drill-down charts');
+		d.add(1001,10,'Simple Example','DrillDown/Simple.html','Basic Example of Using FusionMaps to create drill down maps');
+		d.add(1002,10,'Links in frames','DrillDown/Frames.html');
+		d.add(1003,10,'Links in pop-up windows','DrillDown/PopUps.html');
+		d.add(1004,10,'Full Map as a hotspot','DrillDown/ClickURL.html');
+		d.add(1005,10,'JavaScript functions as links','DrillDown/JavaScript.html');
+
+// -------------------- FusionCharts and JavaScript ---------------------		
+		d.add(11,0,'FusionMaps and JavaScript');
+		d.add(1101,11,'Overview','JS_Overview.html','Overview of using FusionMaps with JavaScript and AJAX');
+		d.add(1102,11,'setDataXML() Method','JS_setDataXML.html','Explanation of setDataXML() JavaScript method');
+		d.add(1103,11,'setDataURL() Method','JS_setDataURL.html','Explanation of setDataURL() JavaScript method');
+		d.add(1104,11,'print() Method','JS_print.html','Printing maps using JavaScript');
+		d.add(1105,11,'saveAsImage() Method','JS_saveAsImage.html','Invoking map saving routine from JavaScript');
+		d.add(1106,11,'Capturing rollover','JS_Hover.html','Capturing roll over/out events in map in JavaScript');
+
+// -------------------- Saving Maps as Image ---------------------		
+		d.add(12,0,'Saving Map as Image','Saving maps generated by FusionMaps as images');
+		d.add(1201,12,'Overview','SAIOverview.html','Overview of how FusionMaps exports maps to images');
+		d.add(1202,12,'Setting it up','SAISetting.html','Setting it up');
+		d.add(1203,12,'Invoking from JavaScript','JS_saveAsImage.html','Invoking the Save as Image functionality using JavaScript.');
+		
+//----------------- For Flash Developers ---------------------
+		d.add(13,0,'For Flash Developers');
+		d.add(1301,13,'Overview','Flash_Overview.html','Overview of using FusionMaps in your Flash Movies');
+		d.add(1302,13,'Loading Multiple Maps','Flash_Multiple.html','Loading multiple maps in same movie.');
+		d.add(1303,13,'Advanced Example','Flash_Advanced.html','Advanced example to demonstrate a few other features.');
+		d.add(1304,13,'Handling Click Events','Flash_Click.html','Handling click events from the map in your Flash movie');		
+		d.add(1305,13,'More Events','Flash_Events.html','Handling additional events generated by maps.');		
+		d.add(1306,13,'FAQs','Flash_FAQ.html','Frequently asked Questions about using FusionMaps in Flash');
+
+//----------------- Advanced Topics ---------------------
+		d.add(14,0,'Advanced Topics');
+		d.add(1401,14,'Number Formatting','Number_Basics.html');
+		d.add(1402,14,'Number Scaling','Number_Scaling.html');
+		d.add(1403,14,'Input Number Format','Number_Input.html');
+		
+// -------------------- Debugging ---------------------		
+		d.add(15,0,'Debugging your Maps','');
+		d.add(1501,15,'Basic Troubleshooting','Debug/Basic.html','Troubleshooting / Problem Solving');
+		d.add(1502,15,'Using Debug Window','Debug/Window.html');
+		
+		d.add(16,0,'Licensing Information', 'Licensing.html');
+		d.add(17,0,'Support Information', 'Support.html');
+
+		document.write(d);
+
+		//-->
+	</script>
+	<p><a href="javascript: d.openAll();">Expand all</a> | <a href="javascript: d.closeAll();">Collapse all</a></p>
+</div>
+</body>
+
+</html>

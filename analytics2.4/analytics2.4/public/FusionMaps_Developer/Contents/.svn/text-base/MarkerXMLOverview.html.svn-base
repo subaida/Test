@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">Marker XML &gt; What is it? </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>As you're already aware, FusionMaps lets you create your custom defined markers on the map, using the visual GUI. You can define as many markers for each map and then apply them.</p>
+      <p>For your ease, we've created marker definitions of important cities for most maps in the suite. The XML files for each marker definition can either be accessed using the menu on the left, or they can be found in <span class="codeInline">Download Package &gt; MarkerXML</span> folder. </p>
+      <p>A typical marker XML file looks as under:</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;map&gt; <br />
+&lt;markers&gt;<br />
+&lt;shapes&gt;<br />
+&lt;shape id='myCustomShape' type='circle' fillColor='FFFFFF,333333' fillPattern='radial' showBorder='0' radius='4'/&gt;<br />
+&lt;/shapes&gt;<br />
+<strong>&lt;definition&gt;<br />
+&lt;marker id='AL' x='485.4' y='284.19' label='Montgomery' labelPos='right'  /&gt;<br />
+&lt;marker id='AK' x='155.69' y='396.45' label='Juneau'  /&gt;<br />
+&lt;marker id='AZ' x='163.79' y='265.98' label='Phoenix'  /&gt;<br />
+&lt;marker id='AR' x='412.58' y='255.87' label='Little Rock' labelPos='bottom'  /&gt;<br />
+&lt;marker id='CA' x='55.57' y='197.21' label='Sacremento' labelPos='bottom'  /&gt;<br />
+&lt;marker id='CO' x='246.72' y='179.01' label='Denver'  /&gt;<br />
+&lt;marker id='CT' x='654.3' y='143.61' label='Hartford' labelPos='bottom'  /&gt;<br />
+&lt;marker id='DE' x='619.91' y='187.1' label='Dover' labelPos='right'  /&gt;<br />
+&lt;marker id='GA' x='514.73' y='270.03' label='Atlanta'  /&gt;<br />
+&lt;marker id='HI' x='212.33' y='366.11' label='Honululu'  /&gt;<br />
+&lt;marker id='ID' x='113.22' y='116.3' label='Boise' labelPos='bottom'  /&gt;<br />
+&lt;marker id='IL' x='447.98' y='176.98' label='Springfield'  /&gt;<br />
+&lt;marker id='IN' x='485.4' y='176.98' label='Indianapolis' labelPos='bottom'  /&gt;<br />
+&lt;marker id='IA' x='396.4' y='144.62' label='Des Moines'  /&gt;<br />
+&lt;marker id='KS' x='356.96' y='188.11' label='Topeka'  /&gt;<br />
+&lt;marker id='KY' x='495.51' y='204.29' label='Frankfort' labelPos='bottom'  /&gt;<br />
+&lt;marker id='LA' x='425.73' y='315.54' label='Baton Rouge' labelPos='left'  /&gt;<br />
+&lt;marker id='ME' x='688.68' y='89' label='Augusta' labelPos='bottom'  /&gt;<br />
+&lt;marker id='MD' x='606.76' y='186.09' label='Annapolis' labelPos='bottom'  /&gt;<br />
+&lt;marker id='MA' x='673.51' y='133.5' label='Boston'  /&gt;<br />
+&lt;marker id='MI' x='505.63' y='117.31' label='Lansing' labelPos='right'  /&gt;<br />
+&lt;marker id='MN' x='398.42' y='91.02' label='St.Paul' labelPos='bottom'  /&gt;<br />
+&lt;marker id='MS' x='435.84' y='286.21' label='Jackson' labelPos='bottom'  /&gt;<br />
+&lt;marker id='MO' x='409.55' y='201.26' label='Jefferson City' labelPos='bottom'  /&gt;<br />
+&lt;marker id='MT' x='156.71' y='65.73' label='Helena' labelPos='bottom'  /&gt;<br />
+&lt;marker id='NE' x='355.94' y='160.8' label='Lincoln'  /&gt;<br />
+&lt;marker id='NV' x='71.75' y='186.09' label='CarsonCity' labelPos='right'  /&gt;<br />
+&lt;marker id='NH' x='671.49' y='113.27' label='Concord' labelPos='left'  /&gt;<br />
+&lt;marker id='VT' x='652.27' y='106.19' label='Montpelier'  /&gt;<br />
+&lt;marker id='NJ' x='628' y='171.93' label='Trenton' labelPos='right'  /&gt;<br />
+&lt;marker id='NM' x='237.61' y='247.78' label='Santa Fe'  /&gt;<br />
+&lt;marker id='NY' x='637.1' y='125.4' label='Albany' labelPos='bottom'  /&gt;<br />
+&lt;marker id='NC' x='575.41' y='237.67' label='Raleigh' labelPos='right'  /&gt;<br />
+&lt;marker id='ND' x='303.35' y='55.62' label='Bismarck' labelPos='bottom'  /&gt;<br />
+&lt;marker id='OH' x='525.85' y='172.94' label='Columbus'  /&gt;<br />
+&lt;marker id='OK' x='345.83' y='239.69' label='Oklahoma City'  /&gt;<br />
+&lt;marker id='OR' x='29.27' y='86.97' label='Salem' labelPos='right'  /&gt;<br />
+&lt;marker id='PA' x='599.68' y='163.84' label='Harrisburg'  /&gt;<br />
+&lt;marker id='RI' x='669.47' y='143.61' label='Providence' labelPos='right'  /&gt;<br />
+&lt;marker id='SC' x='549.11' y='263.96' label='Columbia' labelPos='right'  /&gt;<br />
+&lt;marker id='SD' x='308.41' y='95.06' label='Pierre'  /&gt;<br />
+&lt;marker id='TN' x='476.3' y='231.6' label='Nashville' labelPos='right'  /&gt;<br />
+&lt;marker id='TX' x='341.79' y='308.46' label='Austin' labelPos='left'  /&gt;<br />
+&lt;marker id='UT' x='164.8' y='160.8' label='Salt Lake City'  /&gt;<br />
+&lt;marker id='VA' x='598.67' y='216.43' label='Richmond' labelPos='left'  /&gt;<br />
+&lt;marker id='WA' x='25.23' y='53.6' label='Olympia'  /&gt;<br />
+&lt;marker id='WV' x='552.15' y='188.11' label='Charleston' labelPos='bottom' /&gt;<br />
+&lt;marker id='WI' x='444.94' y='119.34' label='Madison'  /&gt;<br />
+&lt;marker id='WY' x='257.84' y='148.67' label='Cheyenne'  /&gt;<br />
+&lt;marker id='FL' x='508.66' y='317.56' label='Tallahassee'  /&gt;<br />
+&lt;/definition&gt;<br />
+&lt;application&gt;<br />
+&lt;marker id='AL' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='AK' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='AZ' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='AR' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='CA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='CO' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='CT' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='DE' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='GA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='HI' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='ID' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='IL' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='IN' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='IA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='KS' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='KY' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='LA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='ME' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MD' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MI' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MN' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MS' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MO' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='MT' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NE' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NV' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NH' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='VT' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NJ' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NM' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NY' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='NC' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='ND' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='OH' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='OK' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='OR' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='PA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='RI' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='SC' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='SD' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='TN' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='TX' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='UT' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='VA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='WA' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='WV' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='WI' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='WY' shapeId='myCustomShape'  /&gt;<br />
+&lt;marker id='FL' shapeId='myCustomShape'  /&gt;<br />
+&lt;/application&gt;<br />
+&lt;/markers&gt;</strong><br />
+&lt;/map&gt;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see above, all the markers have been defined and applied in each XML. </p>
+      <p>If you wish to now show a marker in your map, you have two options:</p>
+      <ul>
+        <li>If you never wish to use that particular marker, you can delete both the definition and application of the marker.</li>
+        <li>If you think that you might need it for some future map, just delete  the application. The definition will continue to persist, but since you've removed the application, it won't show on the map. </li>
+      </ul>
+      <p>For more information on how to use markers, customize them and  connect them using connectors, please see the section <span class="codeInline">How to use FusionCharts &gt; Markers</span>. </p></td>
+  </tr>
+</table>
+</body>
+</html>

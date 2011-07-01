@@ -1,0 +1,233 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Publisher Reports Analytics</title>
+ <script language="JavaScript" src="/FusionMaps_Developer/JSClass/FusionMaps.js"></script>
+ <script type="text/javascript">
+	window.onload=function(){ 
+			<%if @XML_traffic_continent!=nil && @XML_traffic_continent!=""%>
+				<%if @XML_traffic_continent[:xml_string]!=nil && @XML_traffic_continent[:xml_string]!=""%>
+					var map_traffic = new FusionMaps("/FusionMaps_Developer/Maps/<%if @continent_code.to_s=='NA'%>FCMap_NorthAmerica.swf<%elsif @continent_code.to_s=='SA'%>FCMap_SouthAmerica.swf<%elsif @continent_code.to_s=='EU'%>FCMap_Europe.swf<%elsif @continent_code.to_s=='AS'%>FCMap_Asia.swf<%elsif @continent_code.to_s=='AF'%>FCMap_Africa.swf<%elsif @continent_code.to_s=='OC'%>FCMap_Oceania.swf<%elsif @continent_code.to_s=='ME'%>FCMap_MiddleEast.swf<%elsif @continent_code.to_s=='CA'%>FCMap_CentralAmerica.swf<%end%>", "Map1Id","100%", "100%","0", "0");
+      map_traffic.setDataXML("<%=@XML_traffic_continent[:xml_string]%>");
+	  map_traffic.setTransparent(true);
+      map_traffic.render("traffic_continent_div");
+	  			<%end%>
+			<%end%>
+	}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"></td>
+            <td width="98%"></td>
+            <td width="1%"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><span class="heading">Traffic Source Summary <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                 <td width="38%" align="left"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_report/<%=encrypt(session[:report_adclient])%>/<%=session[:report_start_on]%>/<%=session[:report_end_on]%>/<%=session[:duration]%>/<%=session[:filled]%>">Publisher Home</a> &gt; <span class="nav_link">Traffic Source Summary</span> </td>
+                 <td width="60%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span>&nbsp; </td>
+                 <td width="2%" align="right"><a href="#" onclick="printWindow()"><img alt="Print" title="Print" src="/images/analytic/print.png" width="16" height="16" border="0" /></a></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td  align="center" height="550" width="100%">
+					<div id="traffic_continent_div" align="center" style="height:100%; width:70%"><div class="nodata_indicator">&nbsp;</div></div>					</td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+	<tr>
+		<td>
+			<table width="100%" border="0" align="RIGHT">
+  				<tr>
+     				 <td width="50%" align="left">&nbsp;<strong>Export to:</strong><a href="/admin_analytic/generate_Csv?heading=traffic_source_(country wise)"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+     				 <td align="right">
+						  <%if  @countrydata_pages.current.previous !=nil%>
+								<%= link_to '<< First',{:page => @countrydata_pages.first } ,{:class=>'paginate' }%> 
+						  <%else%>
+								&lt;&lt;&nbsp;First
+						  <%end%>	
+						  &nbsp;&nbsp;
+						  <%if  @countrydata_pages.current.previous !=nil%>
+								<%= link_to '< Prev', { :page => @countrydata_pages.current.previous },{:class=>'paginate'}  %> 
+						  <%else%>
+								&lt;&nbsp;Prev
+						  <%end%>
+						  &nbsp;&nbsp;
+						  <span class="pagination"><%= pagination_links(@countrydata_pages,:window_size => 5)%></span>
+						   <%if @countrydata_pages.current.next !=nil%>
+								&nbsp;&nbsp;
+								<%= link_to 'Next >', { :page => @countrydata_pages.current.next},{:class=>'paginate'} %>
+						   <%else%>
+								Next&nbsp;&gt;
+						   <%end%>
+						  &nbsp;&nbsp;
+						  <%if @countrydata_pages.last !=nil && @countrydata_pages.current.next !=nil %>
+								<%= link_to 'Last >>', { :page => @countrydata_pages.last},{:class=>'paginate'}%>
+						  <%else%>
+								Last&nbsp;&gt;&gt;                   
+						  <%end%>					 </td>
+				  </tr>
+			</table>		</td>
+	</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th>Country Name</th>  
+                  <th>Impressions </th>  
+                  <th>Clicks</th>
+                  <th>CTR (%)</th>
+                  <th>eCPM ($)</th>
+                  <th>Revenue Earned ($)</th>
+				  <th>Total Impressions</th>
+				  <th>Unfilled Impressions</th>
+                  <th>Fill Rate (%)</th>   
+             </tr>  
+         </thead>  
+         <tbody>  
+		 	<%begin%>  
+		 	 <%session[:csv_string]=nil%>  
+		 	 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	 <%csv << ["Country Name", "Impressions","Clicks","CTR","eCPM","Revenue Earned","Total Impressions","Unfilled Impressions","Fill Rate"]%>    
+		 	 <%for country_summary in @countrydata%>
+			 	<%if (country_summary.traffic_acquired==nil && country_summary.sum_clicks==nil) || (country_summary.traffic_acquired=='' && country_summary.sum_clicks=='') || (country_summary.traffic_acquired=='0' && country_summary.sum_clicks=='0') || (country_summary.traffic_acquired==0 && country_summary.sum_clicks==0)%>
+				<%else%>
+			 	 <%countryName=@countryHash["#{country_summary.country_code}"]%>
+				 <%csv<<["#{(countryName=='' || countryName==nil) ? 'Unknown' : countryName}","#{country_summary.sum_region==nil ? 0 : country_summary.sum_region}","#{country_summary.sum_clicks==nil ? 0 : country_summary.sum_clicks}","#{country_summary.sum_ctr==nil ? 0.00 : country_summary.sum_ctr}%","$#{country_summary.sum_ecpm==nil ? 0.00 : country_summary.sum_ecpm}","$#{country_summary.sum_revenue==nil ? 0.00 : country_summary.sum_revenue}","#{country_summary.traffic_acquired==nil ? 0 : country_summary.traffic_acquired}","#{country_summary.unfilled==nil ? 0 : country_summary.unfilled}","#{country_summary.fr_percentage==nil ? 0.00 :sprintf('%.2f',country_summary.fr_percentage)}%"]%>
+             <tr>  
+                <td><%=(countryName=='' || countryName==nil) ? 'Unknown' : countryName%></td>  
+				<td><%=country_summary.sum_region==nil ? 0 :country_summary.sum_region%></td>  
+				<td><%=country_summary.sum_clicks==nil ? 0 :country_summary.sum_clicks%></td>
+				<td><%=country_summary.sum_ctr==nil ? 0.00 :country_summary.sum_ctr%></td>
+				<td><%=country_summary.sum_ecpm==nil ? 0.00 :country_summary.sum_ecpm%></td>
+				<td><%=country_summary.sum_revenue==nil ? 0.00 :country_summary.sum_revenue%></td>
+				<td><%=country_summary.traffic_acquired==nil ? 0 :country_summary.traffic_acquired%></td>
+				<td><%=country_summary.unfilled==nil ? 0 :country_summary.unfilled%></td>
+				<td><%=country_summary.fr_percentage==nil ? 0.00 :sprintf('%.2f',country_summary.fr_percentage)%></td>  
+             </tr> 
+			 <%end%>
+			  <%end%>
+			  <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in publisher traffic country view #{e}"%>
+			 <%end%> 
+         </tbody>  
+    </table>  
+	</div>
+</div></td>
+</tr>
+</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"country",label:"Country",sortable:true,resizeable:true},
+             {key:"traffic",label:"Impressions",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},
+			 {key:"ctr",label:"CTR (%)",formatter:formatFloat,sortable:true},   
+             {key:"ecpm",label:"eCPM ($)",formatter:formatFloat,sortable:true},   
+             {key:"revenue",label:"Revenue Earned ($)",formatter:formatFloat,sortable:true},  
+			 {key:"traffic_acquired",label:"Total Impressions",formatter:formatNumber,sortable:true},  
+			  {key:"unfilled",label:"Unfilled Impressions",formatter:formatNumber,sortable:true},
+             {key:"percentage",label:"Fill Rate (%)",formatter:formatFloat,sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"country"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},
+					{key:"clicks",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"ctr",parser:this.parseNumberFromFloat},   
+                    {key:"ecpm",parser:this.parseNumberFromFloat},   
+                    {key:"revenue",parser:this.parseNumberFromFloat}, 
+					{key:"traffic_acquired", parser:YAHOO.util.DataSource.parseNumber}, 
+					{key:"unfilled", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"<%=session[:filled]=='filled' ? "traffic" : session[:filled]=='unfilled' ? "unfilled" : "traffic_acquired"%>",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });     
+
+</script>
+
+<%rescue Exception=>e%> 
+<%puts "An Error occured in traffic_country:: #{e.to_s}"%>
+<%end%>

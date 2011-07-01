@@ -1,0 +1,286 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "zest_datepicker"%>
+<%= javascript_include_tag :defaults %>
+
+<style type="text/css">
+div.auto_complete ul { 
+  border:1px solid #888;
+  margin:0; 
+  padding:0; 
+  width:100%; 
+  background-color: #ffffff;
+  list-style-type:none; 
+} 
+div.auto_complete ul li { 
+  margin:0; 
+  padding:3px; 
+  color:#0066CC;
+} 
+div.auto_complete ul li.selected { 
+  background-color:#E8E8E8;
+  text-decoration: underline;
+ 
+} 
+div.auto_complete ul strong.highlight { 
+  color: #800; 
+  margin:0; 
+  padding:0; 
+} 
+.cal_height
+{
+margin:1px 6px 0px 6px ;
+}
+</style> 
+</head>
+
+<body>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15">&nbsp;</td>
+            <td height="15"><span class="heading"> Click Log Report </span></td>
+            <td height="15">&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt;<span class="nav_link"> Click Log Report </span></td>
+				<td align="RIGHT"><strong><a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>
+			 </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+			  <tr>
+				<td align="CENTER">
+					<table width="100%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+              <tr>
+                <td width="73%">
+				<form  action="/admin_analytic/click_log_search" method="post" name="report">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                    <tr class="link_strip">
+                      <td align="LEFT">
+                        <div id="div" style="position:relative; display:inline; z-index:10000; float:left;"><strong>Advertiser: </strong>
+                          <%= text_field_with_auto_complete :advertiser, :name, {:value=>@advertiser_name,:maxlength => 32,:size=>20 }, {:method => :get,:skip_style => true} %><input type="hidden" value="<%if @offset==nil or @offset==''%>10<%else%><%=@offset%><%end%>" id="show" name="show">&nbsp;&nbsp;&nbsp;&nbsp;						  </div>
+						  <div id="divAuto" style="position:relative; display:inline; z-index:10000; float:left;"><strong>Adclient: </strong>
+						 <%= text_field_with_auto_complete :adclient, :app_name, {:value=>@adclient_name,:maxlength => 30,:size=>20 }, {:method => :get,:skip_style => true} %>&nbsp;&nbsp;&nbsp;&nbsp;						 </div>
+						<div id="div2" style="position:relative; display:inline; float:left;"><strong>Date:</strong>
+						<input readonly="true" type="text" id="search_date" name="search_date" size = '15' value="<%=@delivery_time%>" onClick="displayDatePicker('search_date', this, 'dmy', '-');"/><img src="/images/analytic/calander.gif" width="22" height="22" align="top" class="cal_height" onClick="displayDatePicker('search_date', document.getElementById('search_date'), 'dmy', '-');" border="0">&nbsp;&nbsp;&nbsp;&nbsp;</div><input type="submit" name="Submit" id="go" value="GO" /></td>
+                    </tr>
+                </table>
+				</form>
+				</td>
+                
+              </tr>
+            </table>				</td>
+			  </tr>
+			</table>			</td>
+            <td height="15"></td>
+          </tr>
+
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+              
+			  <tr>
+			  	<td>
+					<table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;</td>
+            <td align="right" scope="col"><table border="0" align="RIGHT">
+              <tr>
+                <td align="RIGHT">&lt;&lt;&nbsp;<%if @limit<=0%>First&nbsp;&nbsp;&lt;&nbsp;Prev<%else%><a href="javascript:void(0);" id="f" onClick="zPagination(this.id,'<%=@paginate_url%>');">First</a>&nbsp;&nbsp;&lt;&nbsp;<a href="javascript:void(0)" id="p" onClick="zPagination(this.id,'<%=@paginate_url%>');">Prev</a><%end%>&nbsp;&nbsp;<%if @limit + @offset >= @max_limit%>Next&nbsp;&gt;&nbsp;&nbsp;Last<%else%><a href="javascript:void(0)" id="n" onClick="zPagination(this.id,'<%=@paginate_url%>');">Next</a>&nbsp;&gt;&nbsp;&nbsp;<a href="javascript:void(0)" id="l" onclick="zPagination(this.id,'<%=@paginate_url%>');">Last</a><%end%>&nbsp;&gt;&gt;
+                    			</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>			</td></tr>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="2" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>IP Address </th>
+                                <th>Advertiser</th>
+                                <th>Adclient </th>
+								<th>Clicks</th>
+                                <th>Cost ($)</th>
+                                <th>User Agent </th>
+                                <th>Carrier </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+							 <%for data in @click_logs%>
+                              <tr>
+							    <td><%=data['ip']%></td>
+                                <td><%=(@advname["#{data['aid']}"]==nil or @advname["#{data['aid']}"]=='') ? 'Unknown' : @advname["#{data['aid']}"]%></td>
+                                <td><%=(@client_details["#{data['cid']}"]==nil or @client_details["#{data['cid']}"]=='') ? 'Unknown' : @client_details["#{data['cid']}"]%></td>
+								<td><%=data['ck']%></td>
+                                <td><%=sprintf("%.2f",(data['cost']).to_s)%></td>
+                                <td><%=data['ua']%></td>
+								<td><%=data['carr']%></td>
+                              </tr>
+                             <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+				  <tr><td>&nbsp;</td></tr>
+				  <tr>
+				  <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+					  <tr>
+				  <td><strong>Export to: </strong><a href="/admin_analytic/generate_csv_report?type=CL&amp;advertiser_name=<%=@advertiser_name%>&amp;client_name=<%=@adclient_name%>&amp;delivery_time=<%=@delivery_time%>"><img alt="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /></a> </td>
+				  <td align="RIGHT"><strong>Show: </strong><select onchange="update_show(this);"><option value="10" <%if @offset==10%>selected<%end%>>10</option><option value="100" <%if @offset==100%>selected<%elsif @offset==nil or @offset==''%>selected<%end%>>100</option><option value="500" <%if @offset==500%>selected<%end%>>500</option><option value="1000" <%if @offset==1000%>selected<%end%>>1000</option></select></td>
+				  </tr>
+                </table>				</td>
+			  </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value=""/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value=""/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.form_device_summary.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<input type="hidden" id="max_limit" value="<%=@max_limit%>" />
+<input type="hidden" id="limit" value="<%=@limit%>" />
+<input type="hidden" id="offset" value="<%=@offset%>" />
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"ip",label:"IP Address",sortable:true},
+			 {key:"advertisername",label:"Advertiser",sortable:true},   
+             {key:"clientname",label:"Adclient",sortable:true},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},
+			 {key:"totalcost",label:"Cost ($)",sortable:true,formatter:formatFloat},
+			 {key:"useragent",label:"UserAgent ",sortable:true,width:400},
+			 {key:"carriername",label:"Carrier",sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"ip"},   
+			        {key:"advertisername"},
+					{key:"clientname"},
+					{key:"clicks", parser:YAHOO.util.DataSource.parseNumber},
+					{key:"totalcost",parser:this.parseNumberFromFloat},
+					{key:"useragent"},
+					{key:"carriername"}]
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"clicks",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<script type="text/javascript" src="/javascripts/z_pagination.js"></script>
+
+<script type="text/javascript">
+	function update_show(obj)
+	{
+		document.getElementById('show').value=obj.value;
+		document.getElementById('offset').value=obj.value;
+		document.forms["report"].submit();
+	}
+</script>
+
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - click log view Exception :: #{e.to_s}"
+%>
+<%end%>

@@ -1,0 +1,171 @@
+<%begin%> 
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="chart_title" <%if @adminreport_name=='ctr' || @adminreport_name=='ecpm'%>colspan="2"<%end%>>Top <%=session[:limit]%> Publisher</td>
+    <%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%><td  class="chart_title">Overall Publisher</td><%end%>
+  </tr>
+  <tr>
+    <td><span id="indicator_div"></span></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="23%" height="300" <%if @adminreport_name=='ctr' || @adminreport_name=='ecpm'%>colspan="2"<%end%>><div id="campaign_div" align="center"><div class="nodata_td">&nbsp;</div></div></td>
+     <%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%><td width="24%"><div id="overall_div" align="center"><div class="nodata_td">&nbsp;</div></div></td><%end%>
+  </tr>
+  <tr>
+    <td width="23%"  colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td  colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+         
+          <tr>
+            <td width="1%">&nbsp;</td>
+           <td width="44%" align="left"><span class="report_text"><strong>Export to: <a href="/admin_analytic/admin_publisher_performance?csv=true"><img src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a></strong></span></td>
+           
+            <td width="55%" align="right">
+				<%if  @instPublisherData_pages!=nil%>
+					<%if  @instPublisherData_pages.current.previous !=nil%>
+							<%= link_to_remote('<< First',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_publisher_performance', :page =>@instPublisherData_pages.first,:report_type=>@adminreport_name,:update=>true}},{:class=>"paginate"})%>
+					<%else%>
+							&lt;&lt;&nbsp;First 
+					<%end%>
+					&nbsp;&nbsp; 
+					<%if  @instPublisherData_pages.current.previous !=nil%>
+							<%= link_to_remote('< Prev',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_publisher_performance', :page =>@instPublisherData_pages.current.previous,:report_type=>@adminreport_name,:update=>true }},{:class=>"paginate"})%>
+					<%else%>
+							&lt;&nbsp;Prev
+					<%end%>
+					&nbsp;&nbsp;
+					<span class="pagination"><%=pagination_links_remote(@instPublisherData_pages,{:window_size => 5},{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url=>{:action=>'admin_publisher_performance',:report_type=>@adminreport_name,:update=>true}})%> </span>
+					<%if @instPublisherData_pages.current.next !=nil%>
+							&nbsp;&nbsp;
+							<%= link_to_remote('Next >',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_publisher_performance', :page =>@instPublisherData_pages.current.next,:report_type=>@adminreport_name,:update=>true }},{:class=>"paginate"})%>
+					<%else%>
+							Next&nbsp;&gt
+					<%end%>
+					&nbsp;&nbsp;               
+					<%if @instPublisherData_pages.last !=nil && @instPublisherData_pages.current.next !=nil %>
+							<%= link_to_remote('Last >>',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_publisher_performance', :page =>@instPublisherData_pages.last,:report_type=>@adminreport_name,:update=>true }},{:class=>"paginate"})%>
+					<%else%>
+							Last&nbsp;&gt;&gt;
+					<%end%>               
+				<%end%>
+			</td>
+          </tr>
+		  <tr>
+		  	  <td colspan="3" height="5"></td>
+		  </tr>
+		   <tr>
+            <td colspan="3"><div align="center" class=" yui-skin-sam"  >
+      <div id="markup" class="yui-b">
+        
+        <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Publisher Name</th>
+              <th>Impressions</th>
+              <th>Clicks</th>
+              <th>CTR( %) </th>
+			  <th>eCPM ($) </th>
+              <th>Earning ($) </th>
+             <%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%> <th>Percentage - Traffic (%) </th><%end%>
+            </tr>
+          </thead>
+          <tbody>
+		  <%if @instPublisherData!=nil%>
+            <%session[:csv_string] = FasterCSV.generate do |csv|
+							   		csv << ["Publisher Name", "Impressions","Clicks","CTR","eCPM","Earning"]
+							   		for @publisher in @instPublisherData
+									csv << ["#{(@publisher.pub_name==nil || @publisher.pub_name=="") ? 'NA' : @publisher.pub_name}","#{(@publisher.impressions==nil || @publisher.impressions=="") ? 0 : @publisher.impressions}","#{(@publisher.clicks==nil || @publisher.clicks=="") ? 0 : @publisher.clicks}","#{(@publisher.ctr==nil || @publisher.ctr=="") ? 0.00 : sprintf('%.2f',@publisher.ctr)}%","$#{(@publisher.ecpm==nil || @publisher.ecpm=="") ? 0.00 : sprintf('%.2f',@publisher.ecpm)}","$#{(@publisher.revenue==nil || @publisher.revenue=="") ? 0.00 : sprintf('%.2f',@publisher.revenue)}"]
+									%>
+            <tr> 
+              <td><a href="/admin_analytic/publisher_home?pub_id=<%=encrypt(@publisher.pub_id)%>&analytic=refresh" title="click to view to publisher report" alt="click to view to publisher report"><%=(@publisher.pub_name==nil || @publisher.pub_name=="") ? 'NA' : @publisher.pub_name%></a></td>
+              <td><%=(@publisher.impressions==nil || @publisher.impressions=="") ? 0 : @publisher.impressions%></td>
+              <td><%=(@publisher.clicks==nil || @publisher.clicks=="") ? 0 : @publisher.clicks%></td>
+              <td><%=(@publisher.ctr==nil || @publisher.ctr=="") ? 0.00 : sprintf('%.2f',@publisher.ctr)%></td>
+			  <td><%=(@publisher.ecpm==nil || @publisher.ecpm=="") ? 0.00 : sprintf('%.2f',@publisher.ecpm)%></td>
+              <td><%=(@publisher.revenue==nil || @publisher.revenue=="") ? 0.00 : sprintf('%.2f',@publisher.revenue)%></td>
+              <%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%><td><%=(@publisher.percentage==nil || @publisher.percentage=="") ? 0.00 : sprintf('%.2f',@publisher.percentage)%></td><%end%>
+            </tr>
+            <%end
+			end%>
+			<%end%>
+          </tbody>
+        </table>
+      </div>
+    </div></td>
+          </tr
+        ></table></td>
+  </tr>
+</table>
+<% @publisher_report = session[:adminxml_string]%>
+<script type="text/javascript">
+<%if @publisher_report!=nil && @publisher_report!=""%>
+		 <%if @publisher_report[:summary]!=nil && @publisher_report[:summary]!=""%>
+		 		<%if @adminreport_name=='ctr' || @adminreport_name=='ecpm'%>
+				var myChart_pub_performance = new FusionCharts("/FusionCharts_Developer/Charts/Column2D.swf", "myChartId", "800", "300", "0", "0");
+				<%else%>
+				var myChart_pub_performance = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+				<%end%>
+				myChart_pub_performance.setDataXML("<%=@publisher_report[:summary]%>");
+				myChart_pub_performance.setTransparent(true);
+				myChart_pub_performance.render("campaign_div");
+		<%end%>
+		<%if @publisher_report[:overall]!=nil && @publisher_report[:overall]!="" && @adminreport_name!='ctr' && @adminreport_name!='ecpm'%>
+				var myChart_pub_performance_overall = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+				myChart_pub_performance_overall.setDataXML("<%=@publisher_report[:overall]%>");
+				myChart_pub_performance_overall.setTransparent(true);
+				myChart_pub_performance_overall.render("overall_div");
+		<%end%>
+	<%end%>
+
+</script>
+
+<script type="text/javascript">
+  	formatFloat = function(elCell, oRecord, oColumn, oData) {
+	 var value = oData;
+ 	elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ 	};
+	formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+   		YAHOO.example.EnhanceFromMarkup = new function() {   
+		  var myColumnDefs = [   
+             {key:"publisher_name",label:"Publisher Name",sortable:true,resizeable:true},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true,resizeable:true},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true,resizeable:true},
+			 {key:"ctr",label:"CTR (%)",formatter:formatFloat,sortable:true,resizeable:true},
+			 {key:"ecpm",label:"eCPM ($)",formatter:formatFloat,sortable:true,resizeable:true},
+			 {key:"revenue",label:"Earning ($)",formatter:formatFloat,sortable:true,resizeable:true}
+			 <%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%>,{key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true,resizeable:true}<%end%>];   
+		this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+            fields: [{key:"publisher_name"},   
+                     {key:"impressions", parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"clicks", parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"ctr",parser:this.parseNumberFromFloat},  
+					 {key:"ecpm",parser:this.parseNumberFromFloat},  
+					 {key:"revenue",parser:this.parseNumberFromFloat}<%if @adminreport_name!='ctr' && @adminreport_name!='ecpm'%>,  
+					 {key:"percentage",parser:this.parseNumberFromFloat}<%end%>
+             ]   
+         };  
+		 this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"<%=session[:adminreport_name]%>",dir:"desc"}
+				 }   
+         );   
+     };  
+ </script>			
+
+
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in updateChart view and error is #{e.to_s}"%>
+<%end%>
+
+
+

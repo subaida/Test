@@ -1,0 +1,700 @@
+<%begin%>
+<%bundle :name => "advertiser_analytics_home_bundle" do%>
+	<%= stylesheet_link_tag "zestadz-datepicker" %>
+	<%= javascript_include_tag "analytic-datepicker"%>
+	<script language="JavaScript" src="/FusionMaps_Developer/JSClass/FusionMaps.js"></script>
+<%end%>
+<script type="text/javascript" src="/javascripts/prototype.js"></script>
+<script type="text/javascript" src="/javascripts/ajax.js"></script>
+<script type="text/javascript" src="/javascripts/effects.js"></script>
+<script type="text/JavaScript" language="javascript">
+var flag='true';
+document.getElementsByClassName = function(className, parentElement) {
+  if (Prototype.BrowserFeatures.XPath) {
+    var q = ".//*[contains(concat(' ', @class, ' '), ' " + className + " ')]";
+    return document._getElementsByXPath(q, parentElement);
+  } else {
+    var children = null;
+	if(document.body.getElementsByTagName('*').length==0){
+		children=($(parentElement) || document.body).childNodes;
+	}
+	else{
+ 		children=($(parentElement) || document.body).getElementsByTagName('*');
+	}
+    var elements = [], child;
+    for (var i = 0, length = children.length; i < length; i++) {
+      child = children[i];
+      if (Element.hasClassName(child, className))
+        elements.push(Element.extend(child));
+    }
+    return elements;
+  }
+}
+
+
+
+
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('adv_start_on').value= start_date;
+		document.getElementById('adv_end_on').value= end_date;	
+	}
+}
+
+function change2mouseover(obj)
+{	
+	if (obj.className=='panels_active' && flag=='true')
+	{
+		obj.className='panels_hover';
+	}
+}
+function change2active(obj)
+{	
+	if (obj.className=='panels_hover')
+	{
+		obj.className='panels_active';
+	}
+	
+}
+
+
+function change2visited(obj)
+{
+	new Effect[Element.visible('menuDiv') ? 'BlindUp' : 'BlindUp']('menuDiv', {duration: 0.25});
+	//document.getElementById('duration').disabled=false;
+	if (flag=='true')
+	{
+		var obj1=document.getElementsByClassName('panels_visited')[0];
+		obj1.className='panels_active';
+		obj.className='panels_visited';
+		var array=new Array()
+		array=document.getElementsByClassName('panels_active')
+		for(i=0; i < array.length;i++)
+		{
+			array[i].disabled="disabled";
+		}
+		//document.getElementsByClassName('panels_visited')[0].disabled="disabled";
+		//document.getElementById('go').disabled="disabled";
+	}
+}
+
+function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('adv_start_on').value=document.getElementById('start_on').value;
+		document.getElementById('adv_end_on').value=document.getElementById('end_on').value;
+	}
+}
+
+function getAdlist() 
+{	
+	campaign_id=document.getElementById('campaign_id').value;
+	new Ajax.Updater("get_adlist","/advertiser_analytic/get_adlist?campaign_id="+campaign_id,{asynchronous:true, evalScripts:true});
+	//eval(new Ajax.Request("/advertiser_analytic/get_adlist?campaign_id="+campaign_id, {asynchronous:false}));
+	//return false;
+}
+
+
+//--- pop-up window 
+
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+
+//Update the summary chart
+
+function updateChart(chart)
+{	
+	if(flag=='true')
+	{
+		document.getElementById('container').style.display="block";
+		document.getElementById('showText').style.display="none";
+		new Ajax.Updater('update_chart', "/advertiser_analytic/advertiser_update_chart?report_type="+chart, {asynchronous:true, evalScripts:true,onComplete:function(request){document.getElementById('indicator').style.display='none';document.getElementById('update_chart').style.display='block';enableAction();setTimeout(flag='true',20);}, onLoading:function(request){flag='false';document.getElementById('update_chart').style.display='none';document.getElementById('indicator').style.display='block';}});
+	}
+
+}
+
+function showText()
+{	
+	if (flag=='true')
+	{
+		//document.getElementById('container').style.display="none";
+		new Ajax.Updater('showText', '/advertiser_analytic/advertiser_update_text', {asynchronous:true, evalScripts:true,onComplete:function(){enableAction();setTimeout("flag='true';document.getElementById('container').style.display='none';Element.hide('indicator_showtext');document.getElementById('showText').style.display='block';",20);},onLoading:function(){flag='false';Element.show('indicator_showtext');}});
+	}
+}
+
+function enableAction()
+{
+	array=document.getElementsByClassName('panels_active')
+	for(i=0;i< array.length;i++)
+	{
+		array[i].disabled="";
+	}
+	//document.getElementById('go').disabled="";
+}
+function indicatorHide(div_id)
+{	
+	var obj=document.getElementsByClassName(div_id);
+	if (obj !=null)
+	{	for(i=0; i < obj.length;i++)
+		{
+			obj[i].className=obj[i].id;
+		}
+	}
+}
+
+</script>
+
+<%begin%>
+
+<%@report = session[:advxml_string] =="" ? '' : session[:advxml_string]%>
+<script type="text/javascript">
+	window.onload=function(){ 
+
+			 <%if @report!=nil && @report!=""%>
+					 <%if @report[:summary]!=nil && @report[:summary]!=""%>
+						<%if session[:advreport_type]=='imp vs clicks'%>
+							var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/MSLine.swf", "myChartId", "100%", "100%", "0", "0");
+						<%else%>
+							var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId",  "100%", "100%", "0", "0");
+						<%end%>
+						myChart_summary.setDataXML("<%=@report[:summary]%>");
+						myChart_summary.setTransparent(true);
+						myChart_summary.render("update_chart");
+					<%end%>
+					<%if @report[:continent_traffic]!=nil && @report[:continent_traffic]!=""%>
+						var map = new FusionMaps("/FusionMaps_Developer/Maps/FCMap_World8.swf", "Map1Id","100%", "100%","0", "0");
+						map.setDataXML("<%=@report[:continent_traffic]%>");
+						map.setTransparent(true);
+						map.render("continent_traffic_div");
+					<%end%>
+					<%if @report[:handset]!=nil && @report[:handset]!=""%>
+						var myChart_handsets = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+						myChart_handsets.setDataXML("<%=@report[:handset]%>");
+						myChart_handsets.setTransparent(true);
+						myChart_handsets.render("handset_div");
+					<%end%>
+					<%if @report[:carrier]!=nil && @report[:carrier]!=""%>
+						var myChart_handsets = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId","100%", "100%", "0", "0");
+						myChart_handsets.setDataXML("<%=@report[:carrier]%>");
+						myChart_handsets.setTransparent(true);
+						myChart_handsets.render("carrier_div");
+					<%end%>
+					<%if @report[:device_property]!=nil && @report[:device_property]!=""%>
+						var myChart_device_property = new FusionCharts("/FusionCharts_Developer/Charts/Bar2D.swf", "myChartId", "100%", "100%", "0", "0");
+						myChart_device_property.setDataXML("<%=@report[:device_property]%>");
+						myChart_device_property.setTransparent(true);
+						myChart_device_property.render("device_property_div");
+					<%end%>
+					<%if @report[:adwise]!=nil && @report[:adwise]!=""%>
+						var myChart_adwise_traffic = new FusionCharts("/FusionCharts_Developer/Charts/Bar2D.swf", "myadwiseId","100%", "100%", "0", "0");					
+						myChart_adwise_traffic.setDataXML("<%=@report[:adwise]%>");
+						myChart_adwise_traffic.setTransparent(true);
+						myChart_adwise_traffic.render("ad_wise_div");
+					<%end%>
+				<%end%>
+				setTimeout("indicatorHide('nodata_indicator')",500);
+			}
+	function noData()
+	{
+		alert('No Data to display.');
+	}
+	function resetDate(obj)
+	{
+		document.getElementById('duration').selectedIndex = 0;
+	}
+		</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="1%">&nbsp;</td>
+    <td width="98%"><span class="heading">Advertiser Analytics </span></td>
+    <td width="1%">&nbsp;</td>
+  </tr>
+ <%if (@camp_list==nil) or (@camp_list!=nil and @camp_list.size==0)%>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><table width="100%" border="0" class="infobar">
+      <tr>
+        <td style="color:#FF0000;">&nbsp;No active campaign defined.</td>
+      </tr>
+    </table></td>
+    <td>&nbsp;</td>
+  </tr>
+   <%elsif (@ad_list==nil) or (@ad_list!=nil and @ad_list.size==0)%>
+   <%if (session[:advreport_camp_id].to_s!='SMS' and session[:advreport_camp_id].to_s!='WAP')%>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><table width="100%" border="0" class="infobar">
+      <tr>
+        <td  style="color:#FF0000;">&nbsp;Selected campaign does not have any active AD defined.</td>
+      </tr>
+    </table></td>
+    <td>&nbsp;</td>
+  </tr>
+  <%end%>
+  <%end%>
+  <tr>
+    <td width="1%">&nbsp;</td>
+    <td width="98%">&nbsp;</td>
+    <td width="1%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15">
+	
+	  <!------------------------->
+<form name="adv_analytic" id="adv_analytic" action="/advertiser_analytic/generate_adv_report" method='post'>	  
+<table width="100%" border="0" cellpadding="5" cellspacing="0" class="subpagetableborder">
+  <tr >
+    <td align="center"  width="100%"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+      <tr>
+        <td width="77%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+          <tr class="link_strip">
+            <td align="LEFT"><strong>Choose Campaign:</strong></strong>&nbsp;
+          <select name="campaign_id" id="campaign_id" onchange="getAdlist();" style="width:120px;">
+              <%if (@camp_list==nil) || (@camp_list!=nil and @camp_list.size==0)%>
+             		 <option value="">No campaign defined</option>
+              <%else%>
+			  		<option value="<%=encrypt('WAP')%>" <%if session[:advreport_camp_id].to_s=='WAP'%>selected="selected"<%end%>>ALL - WAP</option>
+					<option value="<%=encrypt('SMS')%>" <%if session[:advreport_camp_id].to_s=='SMS'%>selected="selected"<%end%>>ALL - SMS</option>
+				   <%for camp in @camp_list %>
+						<option value="<%=encrypt(camp.id)%>"<%if session[:advreport_camp_id].to_i==camp.id.to_i%> selected="selected"<%end%>><%=truncate(camp.campaign_name,25)%></option>
+				  <%end%>
+              <%end%>
+            </select>   
+			&nbsp;&nbsp;&nbsp; &nbsp;<strong>Choose AD:&nbsp; </strong>
+			<div id="get_adlist" style="display:inline;">
+			  <select name="ad_id" id="ad_id" style="width:110px;">
+			  	<%if session[:advreport_camp_id]!='SMS' and session[:advreport_camp_id]!='WAP'%>
+					<%if (@ad_list==nil) || (@ad_list!=nil and @ad_list.size==0)%>
+						<option value="">No AD defined</option>
+					<%else%>
+						<option value="<%=encrypt('All')%>">All</option>
+						<%for ad in @ad_list %>
+						<option value="<%=encrypt(ad.id)%>"<%if session[:advreport_ad_id].to_i==ad.id.to_i%> selected="selected"<%end%> ><%=ad.name%></option>
+						<%end%>
+               		<%end%>
+				<%else%>
+					<option value="<%=encrypt('All')%>">All</option>
+				<%end%>
+              </select>
+			</div>
+          <strong>&nbsp;&nbsp;&nbsp;&nbsp;Choose Duration :</strong>&nbsp;
+           	<select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" <%if (@camp_list==nil) or (@camp_list!=nil and @camp_list.size==0)%>disabled="disabled"<%end%> style="width:110px;" >
+				<option value="1" <%if session[:duration]=='1'%>selected="selected"<%end%>>Yesterday</option>
+				<option value="6" <%if session[:duration]=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                <option value="29" <%if session[:duration]=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                <option value="89" <%if session[:duration]=='89'%>selected="selected"<%end%>>Last 90 days</option>
+			    <option value="179" <%if session[:duration]=='179'%>selected="selected"<%end%>>Last 180 days</option>
+                <option value="364" <%if session[:duration]=='364'%>selected="selected"<%end%>>Last 365 days</option>
+                <option value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+              </select>
+           <input type="submit" name="Submit" id="go" value="GO" <%if (@camp_list==nil) or (@camp_list!=nil and @camp_list.size==0)%>disabled="disabled"<%end%>/>
+          &nbsp;&nbsp;</td>
+          </tr>
+        </table></td>
+        <td width="23%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="34">
+          <tr class="link_strip">
+            <td align="LEFT" width="23%"><strong>Range</strong> :
+                    <%if session[:advreport_start_on]!=nil && session[:advreport_start_on]!="" %>
+                <%=session[:advreport_start_on]%>
+                <%else%>
+                <%=@startdate%>
+                <%end%>
+              &nbsp;<strong>to</strong>&nbsp;
+                <%if  session[:advreport_end_on]!=nil && session[:advreport_end_on]!=""%>
+                <%=session[:advreport_end_on]%>
+                <%else%>
+                <%=@enddate%>
+                <%end%>    <div id="get_dateRange">
+				<input type="hidden" name="from" value="<%=@history%>" />
+                <input  type="hidden" id="adv_start_on" name="adv_start_on" readonly='true' value="<%if  session[:advreport_start_on]!=nil %><%=session[:advreport_start_on]%><%else%><%=@startdate%><%end%>"/>
+                <input type="hidden" id="adv_end_on"  name="adv_end_on" readonly='true' value="<%if session[:advreport_end_on]!=nil %><%=session[:advreport_end_on]%><%else%><%=@enddate%><%end%>" />
+				
+				<input type="hidden" id="statistics" name="statistics" value="impressions" readonly='true' />
+              </div>			   </td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr >
+    <td align="center" >
+        <table align="center" border="0" cellpadding="5" cellspacing="0" width="100%">
+			
+            <tr>
+              <td width="15%" align="center" valign="middle"  >		  
+				<div align="center" class="panels_visited" style="cursor:hand;"  onclick="change2visited(this);updateChart('impressions');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);"  valign="middle"><strong> <%=@impressions==nil ? 0 : number_with_delimiter(@impressions)%> Impressions</strong><br>
+				    Click to view chart </div>                </td>
+              <td width="15%" align="center" valign="middle">
+			  <div class="panels_active" align="center"  valign="middle" onclick="change2visited(this);updateChart('clicks');" onmouseover="change2mouseover(this);" id="div5" onmouseout="change2active(this);"> <strong><%=@clicks==nil ? 0 : number_with_delimiter(@clicks)%> Clicks</strong><br>
+			    Click to view chart </div>			</td>
+              <td width="15%" align="center" valign="middle">
+			  <div class="panels_active" align="center"  valign="middle" onclick="change2visited(this);updateChart('ctr');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);" ><strong> CTR  <%=@ctr==nil ? 0 : sprintf('%.2f',@ctr)%>% </strong><br>
+			    Click to view chart </div>			  </td>
+              <td width="15%" align="center" valign="middle">
+			  <div class="panels_active" align="center"  valign="middle" onclick="change2visited(this);updateChart('imp vs clicks');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);"><strong>Impressions Vs Clicks</strong><br>
+			    Click to view chart</div>			  </td>
+              <td width="15%" align="center" valign="middle">
+			  <div  class="panels_active" align="center"  valign="middle" onclick="change2visited(this);updateChart('amount_spent');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);"> <strong>Spent  $<%=@amount_spent==nil ? 0 : number_with_delimiter(sprintf('%.2f',@amount_spent))%></strong><br>
+			    Click to view chart</div>			  </td>			  
+			  <td width="15%" align="center" valign="middle">
+			  <div class="panels_active" align="center"  valign="middle" onClick="showText();change2visited(this);" onMouseOver="change2mouseover(this);" id="div2" onMouseOut="change2active(this);"> <strong>Tabular Report</strong> <br>
+			    Click to view report</div>			  </td>
+            </tr>
+        </table></td>
+  </tr>
+</table></form>	</td>
+    <td height="10"></td>
+  </tr>
+  
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+  
+  <tr>
+    <td height="15"></td>
+    <td height="15" align="center">
+						
+						  <table width="100%" border="0" cellpadding="0" cellspacing="0" height="225">
+                            <tr>
+                              <td width="1%">&nbsp;</td>
+                              <td align="CENTER" width="96%" height="100%" valign="MIDDLE">
+							
+		<img id="indicator" style="display:none;" src="/images/indicator.gif" height="32" width="32" alt="In progress..." />
+							 </div>
+							 <div align="center" valign="middle" id="update_chart" style="width:90%; height:100%;display:block;" ><div id="nodata_linechart_b" class="nodata_indicator">&nbsp;</div></div>								</td>
+                              <td width="3%">&nbsp;</td>
+                            </tr>
+                          </table>	</td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15" align="LEFT">
+	<span id="indicator_showtext" style="display:none;"><div align="center"><img src="/images/indicator.gif" height="32" width="32" alt="In progress..." /></div></span>
+	<div id="showText"></div>
+	<div id="container">  <div id="content"> <div id="main_content">      <div>
+<script type="text/javascript"> dashboard = new goog.analytics.Dashboard({"DashboardInfo":{"Modules":{"LEFT":[{"Compare":false,"Handle":"obj1.dashval.getval","Id":"TrafficSourcesReport_module"},{"Compare":false,"Handle":"obj1.dashval1.getval1","Id":"CarrierReport_module"},{"Compare":false,"Handle":"obj2.dashval2.getval2","Id":"DeviceReport_module"},{"Compare":false,"Handle":"obj2.dashval3.getval3","Id":"HandsetsReport_module"}],"RIGHT":[{"Compare":false,"Handle":"obj1.dashval4.getval4","Id":"DeviceReport_module"},{"Compare":false,"Handle":"obj2.dashval5.getval5","Id":"AdWiseOverviewReport_module"}]}}}); </script>
+
+
+ <script type="text/javascript">
+      var dragger = new _IG_Drag();
+
+      dragger._onDragStart = function(object) {
+        dashboard._beginDrag(object._IG_DragSurrogateView.id);
+      };
+
+      dragger._onDragTargetHit = function(object, old_object) {
+        dashboard._draggedOver(object.id);
+        dragger._cacheTargets();
+      };
+
+      dragger._onDragEnd = function(source, target) {
+        dashboard._endDrag();
+      };
+    </script>
+
+
+<div class="report_section dashboard" id="dashboardLayout"><div class="subsections"><div class="section section_1">
+
+<ul class="dashboard_modules" id="f_modules_col_1">
+
+<li>
+	<div id="TrafficSourcesReport_module"> <div class="dashboard_module"> <h2> <b> <span id="TrafficSourcesReport_module_title"> Traffic Sources Overview </span> </b> </h2> <div id="TrafficSourcesReport"> <div class="graph">  
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" width="100%" height="165">
+				
+				<div align="center" id="continent_traffic_div"  style="width:98%; height:100%;"><div id="nodata_mapchart" class="nodata_indicator">&nbsp;</div></div>			</td>
+              </tr>
+		</table>	</td>
+  </tr>
+</table>
+
+
+
+
+
+  </div> </div> <p><b class="report_text"><a id="TrafficSourcesReport_module_view_report" href="<%if @report!=nil%> <%if @report[:continent_traffic]!=nil && @report[:continent_traffic]!=""%>/advertiser_analytic/advertiser_continent<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></b></p> 
+	</div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("TrafficSourcesReport_module", document.getElementById("TrafficSourcesReport_module_title"), 				document.getElementById("TrafficSourcesReport_module"));
+    dragger._addTarget("TrafficSourcesReport_module", document.getElementById("TrafficSourcesReport_module"));
+  </script>
+  </li> 
+  <li>
+	<div id="HandsetsReport_module"> <div class="dashboard_module"> <h2> <b> <span id="HandsetsReport_module_title"> Handset Overview</span></b></h2> 
+	    <div id="HandsetsReport"> <div class="graph">
+	      <table width="100%" border="0" cellspacing="1" cellpadding="1">
+            <tr>
+              <td scope="col"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+				<%@handsets = session[:advxml_array]%>
+                  <%if @handsets!=nil%>
+                  <%@handsets_summary=@handsets[:handsets_arr]%>
+                  <%if @handsets_summary!=nil%>
+                  <%if @handsets_summary.length>0%>
+                  <%@arr_length=@handsets_summary.length-1%>
+                  <%@total_value=@handsets_summary[@arr_length][3]%>
+                  <%end%>
+                  <%end%>
+                  <%end%>
+                  <td valign="middle" align="center" <%if @handsets_summary!=nil%> <%if @handsets_summary.length>0%>width="35%"<%else%>width="100%" <%end%>width="100%"<%end%> height="160"><div align="center" id="handset_div" style="width:100%; height:100%;"><div id="nodata_piechart" class="nodata_indicator">&nbsp;</div></div></td>
+                  <%if @handsets_summary!=nil%>
+                  <td width="65%" align="CENTER" >
+                      <table align="CENTER" class="subpagetableborder" width="90%" border="0" cellspacing="0" cellpadding="2">
+                        <%for i in 0...@handsets_summary.length %>
+                        <tr <%if i%2==0%> class="cell_dark_bg"<%else%>class="cell_light_bg"<%end%>>
+                          <td align="CENTER" height="20" valign="MIDDLE"><table width="10" border="0" style="background-color:#<%=@handsets_summary[i][2]%>;" cellspacing="0" cellpadding="0" height="10">
+                              <tr>
+                                <td></td>
+                              </tr>
+                          </table></td>
+                          <td align="LEFT" ><%=truncate((@handsets_summary[i][0]).to_s,20)%></td>
+                          <td  class="widget_textnum" align="RIGHT" ><%=sprintf('%.2f',((@handsets_summary[i][1]).to_f*100)/@total_value)%>%</td>
+                          <td align="RIGHT" ><%=number_with_delimiter(@handsets_summary[i][1])%> req&nbsp;</td>
+                        </tr>
+                        
+                        <%end%>
+                      </table>
+                    </td>
+					<%end%>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+	    </div> 
+	    </div> <p><b class="report_text"><a id="HandsetsReport_module_view_report" href="<%if @report!=nil%> <%if @report[:handset]!=nil && @report[:handset]!=""%>/advertiser_analytic/advertiser_handset<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></b></p> </div> </div>
+
+	<script type="text/javascript">
+    dragger._addSource("HandsetsReport_module", document.getElementById("HandsetsReport_module_title"), 				document.getElementById("HandsetsReport_module"));
+    dragger._addTarget("HandsetsReport_module", document.getElementById("HandsetsReport_module"));
+  </script>
+  </li>
+
+
+  <li><div id="CarrierReport_module"> <div class="dashboard_module"> <h2> <b> <span id="CarrierReport_module_title"> Carrier Overview </span></b></h2>    <div id="CarrierReport"> <div class="graph">
+    <table width="100%" border="0" cellspacing="1" cellpadding="1">
+      <tr>
+        <td scope="col"><table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+          <tr>
+		  <%@carriers = session[:advxml_array]%>
+            <%if @carriers!=nil%>
+            <%@carriers_summary=@carriers[:carrier_arr]%>
+            <%if @carriers_summary!=nil%>
+            <%if @carriers_summary.length>0%>
+            <%@arr_length=@carriers_summary.length-1%>
+            <%@total_value=@carriers_summary[@arr_length][3]%>
+            <%end%>
+            <%end%>
+            <%end%>
+            <td valign="middle" align="center"  <%if @carriers_summary!=nil%> <%if @carriers_summary.length>0%>width="35%"<%else%>width="100%" <%end%>width="100%"<%end%> height="160" ><div align="center" id="carrier_div" style="width:100%; height:100%;"><div id="nodata_piechart" class="nodata_indicator">&nbsp;</div></div></td>
+            <%if @carriers_summary!=nil%>
+            <td width="65%" align="CENTER" valign="MIDDLE" >
+                <table  class="subpagetableborder" width="90%" border="0" cellspacing="0" cellpadding="2" >
+                  <%for i in 0...@carriers_summary.length %>
+                  <tr <%if i%2==0%> class="cell_dark_bg"<%else%>class="cell_light_bg"<%end%>>
+                    <td align="CENTER" height="10" valign="MIDDLE"><table width="10" border="0" style="background-color:#<%=@carriers_summary[i][2]%>;" cellspacing="0" cellpadding="0" height="10">
+                        <tr>
+                          <td></td>
+                        </tr>
+                    </table></td>
+                    <td align="LEFT"><%=truncate((@carriers_summary[i][0]).to_s,20,'.')%></td>
+                    <td class="widget_textnum" align="RIGHT"><%=sprintf('%.2f',((@carriers_summary[i][1]).to_f*100)/@total_value)%>%</td>
+                    <td align="RIGHT"><%=number_with_delimiter(@carriers_summary[i][1])%> req&nbsp;</td>
+                  </tr>
+                  
+                  <%end%>
+                </table>
+                  </td>
+				  <%end%> 
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+  </div> 
+  </div> 
+        <p><b class="report_text"><a id="CarrierReport_module_view_report" href="<%if @report!=nil%> <%if @report[:carrier]!=nil && @report[:carrier]!=""%>/advertiser_analytic/advertiser_carrier<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></b></p> 
+  </div> </div>
+
+<script type="text/javascript">
+    dragger._addSource("CarrierReport_module", document.getElementById("CarrierReport_module_title"), document.getElementById("CarrierReport_module"));
+    dragger._addTarget("CarrierReport_module", document.getElementById("CarrierReport_module"));
+  </script></li>
+  <li id="left_after_pad" style="display:none;"></li>
+</ul>
+</div>
+<div class="section section_2"><ul class="dashboard_modules" id="f_modules_col_2">
+<li><div id="DeviceReport_module"> <div class="dashboard_module"> <h2> <b> <span id="DeviceReport_module_title"> Device Properties   </span>  </b> </h2> 
+          <div id="DeviceReport"> <div class="graph">
+            <table width="100%" border="0" cellspacing="1" cellpadding="1">
+              <tr>
+                <td scope="col"><table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+                  <tr>
+				 
+                    <td valign="middle" align="center"  width="100%" height="160" >
+						<div align="center" id="device_property_div" style="width:100%; height:100%;"><div id="nodata_barchart" class="nodata_indicator">&nbsp;</div></div>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+            </table>
+          </div> 
+          </div> <p><b class="report_text"><a href="<%if @report!=nil%><%if @report[:device_property]!=nil && @report[:device_property]!=""%>/advertiser_analytic/advertiser_deviceproperty<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></b></p> 
+</div> </div>
+
+<script type="text/javascript">
+    dragger._addSource("DeviceReport_module", document.getElementById("DeviceReport_module_title"), 
+	document.getElementById("DeviceReport_module"));
+    dragger._addTarget("DeviceReport_module", document.getElementById("DeviceReport_module"));
+  </script></li>
+  
+  <li><div id="AdWiseOverviewReport_module"> <div class="dashboard_module"> <h2> <b> <span id="AdWiseOverviewReport_module_title"> Ad-Wise Traffic Overview    </span>  </b> </h2> 
+          <div id="AdWiseOverviewReport"> <div class="graph">  
+  	
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="165">
+  <tr>
+    <td valign="middle" align="center" height="160">
+
+	  			<div align="center" id="ad_wise_div" style="width:96%; height:100%;"><div id="nodata_barchart" class="nodata_indicator">&nbsp;</div></div>	 			</td>
+  </tr>
+</table>
+
+
+    </div> </div> <p><b class="report_text"><a id="AdWiseOverviewReport_module_view_report" href="<%if @report!=nil%><%if @report[:adwise]!=nil && @report[:adwise]!=""%>/advertiser_analytic/advertiser_adwise<%else%>javascript:noData();<%end%><%else%>javascript:noData();<%end%>">view report</a></b></p> 
+  </div> </div>
+
+<script type="text/javascript">
+    dragger._addSource("AdWiseOverviewReport_module", document.getElementById("AdWiseOverviewReport_module_title"), document.getElementById("AdWiseOverviewReport_module"));
+    dragger._addTarget("AdWiseOverviewReport_module", document.getElementById("AdWiseOverviewReport_module"));
+  </script></li>
+ <li id="right_after_pad" style="display:block;"></li>
+</ul></div></div></div>
+<script type="text/javascript">
+    dragger._addTarget("left_after_pad", document.getElementById("left_after_pad"));
+    dragger._addTarget("right_after_pad", document.getElementById("right_after_pad"));
+  </script></div> </div>  </div> 
+ </div></td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15">&nbsp;</td>
+    <td height="15"></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td height="15"></td>
+    <td height="15"></td>
+  </tr>
+</table>
+
+<!--%session[:advxml_string]=""
+session[:advxml_array]=""%-->
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in advertiser_analytic_controller - advertiser_home view Exception :: #{e.to_s}"
+ %>
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+    <th scope="col"><p>Error Occured in ZestADZ Analytics. Sorry for the inconvenience.</p>
+    <p> Thank you. </p></th>
+  </tr>
+</table>
+<%end%>
+
+<!--POPUP MENU-->
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:advreport_start_on]!=nil %><%=session[:advreport_start_on]%><%else%><%=@startdate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" class="Inputtext" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:advreport_end_on]!=nil %><%=session[:advreport_end_on]%><%else%><%=@enddate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');" class="Inputtext"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2" ><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.adv_analytic.submit();" type="submit" value="submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in Advertiser home view and error is #{e.to_s}"%>
+<%end%>

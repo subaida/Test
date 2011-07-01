@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Office Location Example</title>
+<script language="JavaScript" src="../JSClass/FusionMaps.js"></script>
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+.style2 {font-family: "Courier New", Courier, monospace}
+-->
+</style>
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td valign="top" class="text" align="center">
+	<div id="mapdiv" align="center"> 
+        FusionMaps.	</div>
+        <script type="text/javascript">
+	   var map = new FusionMaps("../Maps/FCMap_World.swf", "Map1Id", "600", "325", "0", "0");
+	   map.setDataURL("IndividualFont.xml");		   
+	   map.render("mapdiv");
+	</script>    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" class="text style1"><p>Apart from customing the font for all labels on the map (using &lt;map&gt; attributes or STYLES), you can additionally control the font properties for each entity using attributes of &lt;entity&gt; element as under:</p>
+    <p class="style2">&lt;entity id='NA'  font='Arial' fontsize='20' fontColor='0372AB' fontBold='1'/&gt; </p></td>
+  </tr>
+</table>
+</body>
+</html>

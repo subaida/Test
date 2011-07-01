@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>FusionMaps v3 - Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<frameset rows="136,*" cols="*" frameborder="NO" border="0" framespacing="0">
+  <frame src="Contents/HeaderPage.html" name="topFrame" scrolling="NO" noresize >
+  <frameset rows="*" cols="250,*" framespacing="0" frameborder="NO" border="0">
+    <frame src="Contents/Menu.html" name="left" scrolling="Auto" frameborder="0" resize="1">
+    <frame src="Contents/FusionMaps.html" name="right" frameborder="NO" >
+  </frameset>
+</frameset>
+<noframes><body>
+You need to enable frames in your browser to see FusionMaps documentation.
+</body></noframes>
+</html>

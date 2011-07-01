@@ -1,0 +1,44 @@
+=====================================
+Zestadz Analytics
+Release 1.0
+Last updated: 25-June-2009
+=====================================
+
+How to setup Analytics
+---------------------------------
+-copy & paste the lastest copy of analytics in server.
+-install ruby version 1.8.6 
+-rails version 1.2.6
+-install all required plugin and mysql.
+
+Tables being used:
+----------------------------
+a. Following are the table used in advertiser section.
+1. campaigns
+2. ads
+3. advertisers
+4. adsdeliveries
+5. campaigns_summaries
+6. adv_carriers
+7. adv_devicesproperties
+8. adv_geolocations
+9. adv_handsets
+10. analytics_transactions
+11. owners
+12. analytics_wurfl_devices
+13. analytics_wurfl_capabilities
+
+b. Following tables are being used in publisher section:
+
+1. adclients
+2. publisher
+3. adsdeliveries
+4. adclients_summaries
+5. pub_channels
+6. pub_geolocations
+7. pub_handsets
+8. pub_keywords
+9. pub_unique_visitors.
+10. pub_urls
+11. analytics_transactions
+12. channel_lists

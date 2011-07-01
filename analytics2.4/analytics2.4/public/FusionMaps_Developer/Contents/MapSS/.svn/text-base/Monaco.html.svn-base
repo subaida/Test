@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 - PowerMaps - Map Specfication Sheet</title>
+<link rel="stylesheet" href="StyleMapSS.css" />
+</head>
+<body topmargin="10" leftmargin="10">
+<p class="pageHeader">Monaco Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:Monaco Map<br />
+    <span class="textbold">SWF Name</span>:FCMap_Monaco.swf<br />
+<span class="textbold">Dimensions (Width x Height)</span>:270x360 pixels<br/>
+<span class="textbold">Selection</span>:</p>
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg"> &nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr>
+    <td valign="bottom"  class="text"><p>EU.MN</p></td>
+    <td valign="bottom"  class="text"><p>MN</p></td>
+    <td valign="bottom"  class="text"><p class="text">Monaco</p></td>
+  </tr>
+</table>
+<p><br />
+</p>
+</body>
+</html>

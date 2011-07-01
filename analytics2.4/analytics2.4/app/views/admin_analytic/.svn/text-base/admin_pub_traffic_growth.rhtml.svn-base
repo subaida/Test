@@ -1,0 +1,500 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "analytic-datepicker"%>
+<script src="/javascripts/prototype.js"></script>
+<script src="/javascripts/effects.js"></script>
+<link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+<script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+<script type="text/javascript" src="/javascripts/yui/datasource-beta.js"></script>
+<script type="text/javascript" src="/javascripts/AutoSuggest.js"></script>
+<script type="text/javascript" src="/javascripts/Common.js"></script>  
+<script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>
+<script type="text/javascript">
+ function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('adminstart_on').value=document.getElementById('start_on').value;
+		document.getElementById('adminend_on').value=document.getElementById('end_on').value;
+	}
+}
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('adminstart_on').value= start_date;
+		document.getElementById('adminend_on').value= end_date;	
+	}
+}
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+function resetDate(obj)
+{
+	document.getElementById('duration').selectedIndex = 0;
+}
+function indicatorHide(div_id)
+{	
+	var obj=document.getElementsByClassName(div_id);
+	if (obj !=null)
+	{	for(i=0; i < obj.length;i++)
+		{
+			obj[i].className=obj[i].id;
+		}
+	}
+}
+ </script>  
+ <%@PubTraffic_xml = session[:xml_string]%>
+  <script type="text/javascript">
+ 	window.onload=function(){
+ 		<%if @PubTraffic_xml!=nil && @PubTraffic_xml!=""%>
+			<%if @PubTraffic_xml[:sesPubTrafficXML]!=nil && @PubTraffic_xml[:sesPubTrafficXML]!=""%>
+					<%if @chartType=='bar'%>
+						var myChart_pubTraffic = new FusionCharts("/FusionCharts_Developer/Charts/Column2D.swf", "myChartId", "900", "350", "0", "0");
+					<%else%>
+						var myChart_pubTraffic = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId",  "1100", "250", "0", "0");
+					<%end%>
+					myChart_pubTraffic.setDataXML("<%=@PubTraffic_xml[:sesPubTrafficXML]%>");
+					myChart_pubTraffic.setTransparent(true);
+					myChart_pubTraffic.render("pubTraffic_div");
+			<%end%>
+		<%end%>      
+		setTimeout("indicatorHide('nodata_indicator')",500);
+	}
+ 	</script>
+<style type="text/css">
+       .current{
+	background-color:#E8E8E8;
+	color:#0066CC;
+	font-size: 13px;
+	text-decoration: underline;
+	cursor: pointer;
+	font-weight: normal;
+}
+       .autoSuggest{
+	background-color : #FFFFFF;
+	color : #004F9D;
+	font-size: 13px;
+	position: absolute !important;
+	border: 1px solid #999999;
+	width:170px;
+	padding: 1px;
+	font-weight: normal;
+	z-index:1000;
+}
+  
+.divAuto {
+	text-align: left;
+	vertical-align: top;
+	display: inline;
+}
+</style> 
+</head>
+
+<body>
+<form  action="/admin_analytic/admin_pub_traffic_growth" method="post" name="form_pub_traffic">
+<%begin%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          
+          <tr>
+            <td width="1%" height="15">&nbsp;</td>
+            <td width="98%" height="15"><span class="heading">Publisher Traffic Growth </span></td>
+            <td width="1%" height="15">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt;  <span class="nav_link">Publisher Traffic Growth</span></td>
+				<td align="RIGHT"><strong align="right"> <a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>
+			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="99%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+              <tr>
+                <td width="77%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                    <tr class="link_strip">
+                      <td align="LEFT"><strong>Publisher :</strong>&nbsp;
+						  <div id="divAuto" style="position:relative; display:inline;">
+								<input type="text" name="publisher_name" id="publisher_name" maxlength="20" value="<%if session[:pub_name]!=nil && session[:pub_name]!=''%><%=session[:pub_name]%><%else%>All<%end%>" autocomplete="off" style="width:142px;"/>
+		 				 </div>
+                          <strong>&nbsp;&nbsp;&nbsp;&nbsp;Choose Duration :</strong>&nbsp;
+                          <select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" style="width:120px;" >
+							<option value="1" <%if session[:duration].to_s=='1'%>selected="selected"<%end%>>Yesterday</option>
+							<option value="6" <%if session[:duration].to_s=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                            <option value="29" <%if session[:duration].to_s=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                            <option value="89" <%if session[:duration].to_s=='89'%>selected="selected"<%end%>>Last 3 Months</option>
+                            <option value="179" <%if session[:duration].to_s=='179'%>selected="selected"<%end%>>Last 6 Months</option>
+                            <option value="364" <%if session[:duration].to_s=='364'%>selected="selected"<%end%>>Last 1 Year</option>
+                            <option value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+                          </select>
+                        &nbsp;
+                        <input type="submit" name="Submit" id="go" value="GO" />
+                        &nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="23%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="34">
+                    <tr class="link_strip">
+                      <td align="LEFT" width="23%"><strong>Range</strong> :
+                        <%if session[:adminstart_on]!=nil or session[:adminstart_on]!='' %>
+                          <%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%>
+                          <%else%>
+                          <%=Time.parse(@startdate).strftime("%d-%b-%Y")%>
+                          <%end%>
+                        &nbsp;<strong>to</strong>
+                        <%if session[:adminend_on]!='' or session[:adminend_on]!=nil %>
+                        <%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%>
+                        <%else%>
+                        <%=Time.parse(@enddate).strftime("%d-%b-%Y")%>
+                        <%end%>
+                        <div id="get_dateRange">
+                          <input type="hidden" name="from" value="<%=@history%>" />
+                          <input  type="hidden" id="adminstart_on" name="adminstart_on" readonly='true' value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=session[:adminstart_on]%><%else%><%=@startdate%><%end%>"/>
+                          <input type="hidden" id="adminend_on"  name="adminend_on" readonly='true' value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=session[:adminend_on]%><%else%><%=@enddate%><%end%>" />
+                          <input type="hidden" id="statistics" name="statistics" value="impressions" readonly='true' />
+                        </div></td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td width="98%">
+              <div id="pubTraffic_div" align="center"><div id="nodata_td" class="nodata_indicator">&nbsp;</div></div>                    </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table align="center" width="100%">
+              <tr>
+                <td><table width="100%" border="0" align="RIGHT">
+                    <tr>
+                      <td width="50%" align="left">&nbsp;<strong>Export to:</strong> <a href="/admin_analytic/generate_Csv?heading=publisher_traffic_growth"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+                      <td align="right"><%if  @pub_traffic_pages.current.previous !=nil%>
+                          <%= link_to '<< First',{:page => @pub_traffic_pages.first } ,{:class=>'paginate' }%>
+                          <%else%>
+                        &lt;&lt;&nbsp;First
+                        <%end%>
+                        &nbsp;&nbsp;
+                        <%if  @pub_traffic_pages.current.previous !=nil%>
+                        <%= link_to '< Prev', { :page => @pub_traffic_pages.current.previous },{:class=>'paginate'}  %>
+                        <%else%>
+                        &lt;&nbsp;Prev
+                        <%end%>
+                        &nbsp;&nbsp; <span class="pagination"><%= pagination_links(@pub_traffic_pages,:window_size => 5)%></span>
+                        <%if @pub_traffic_pages.current.next !=nil%>
+                        &nbsp;&nbsp; <%= link_to 'Next >', { :page => @pub_traffic_pages.current.next},{:class=>'paginate'} %>
+                        <%else%>
+                        Next&nbsp;&gt;
+                        <%end%>
+                        &nbsp;&nbsp;
+                        <%if @pub_traffic_pages.last !=nil && @pub_traffic_pages.current.next !=nil %>
+                        <%= link_to 'Last >>', { :page => @pub_traffic_pages.last},{:class=>'paginate'}%>
+                        <%else%>
+                        Last&nbsp;&gt;&gt;
+                        <%end%>
+                      </td>
+                    </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><div align="center" class=" yui-skin-sam"  >
+                    <div id="markup" class="yui-b">
+                      <%if @chartType=='line'%>
+                      <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Impressions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%session[:csv_string]=nil%>
+                          <%session[:csv_string] = FasterCSV.generate do |csv|%>
+                          <%csv << ["Date", "Impressions"]%>
+                          <%for pub_traffic in @pub_traffic%>
+                          <%csv<<["#{pub_traffic.delivery_date}","#{pub_traffic.sum_impression==nil ? 0 : pub_traffic.sum_impression}"]%>
+                          <tr>
+                            <td><%=pub_traffic.delivery_date%></td>
+                            <td><%=(pub_traffic.sum_impression==nil || pub_traffic.sum_impression=='') ? "0" : "#{pub_traffic.sum_impression}"%></td>
+                          </tr>
+                          <%end%>
+                          <%end%>
+                        </tbody>
+                      </table>
+                      <%else%>
+                      <table align="CENTER" id="accounts1" width="100%" cellpadding="0" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Month</th>
+                            <th>Impressions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%session[:csv_string]=nil%>
+                          <%session[:csv_string] = FasterCSV.generate do |csv|%>
+                          <%csv << ["Month", "Impressions"]%>
+                          <%for pub_traffic in @pub_traffic%>
+                          <%csv<<["#{pub_traffic.month}","#{pub_traffic.sum_impression==nil ? 0 : pub_traffic.sum_impression}"]%>
+                          <tr>
+                            <td><%=pub_traffic.month%></td>
+                            <td><%=(pub_traffic.sum_impression==nil || pub_traffic.sum_impression=='') ? "0" : "#{pub_traffic.sum_impression}"%></td>
+                          </tr>
+                          <%end%>
+                          <%end%>
+                        </tbody>
+                      </table>
+                      <%end%>
+                    </div>
+                </div></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<%
+ rescue Exception=>e
+       puts "DEBUGGER :: ERROR :: in Admin_Campaign_Performance.rb - Admin_Campaign_Performance :: #{e.to_s}"
+     end %>
+</form>
+</body>
+</html>
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@startdate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@enddate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.form_pub_traffic.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<script type="text/javascript">
+	new AutoSuggest('publisher_name', 'autoSuggest','publisher_traffic_growth');
+</script>
+<script type="text/javascript">
+// Define a custom format function
+	var myFormatDate = function(elCell, oRecord, oColumn, oData) {
+	var myYear=oData.split("-")[0];
+	var myMonth=oData.split("-")[1];
+	var myDay=oData.split("-")[2];
+    var oDate = new Date();
+    var sMonth;
+    switch(myMonth) {
+        case '01':
+            sMonth = "Jan";
+            break;
+        case '02':
+            sMonth = "Feb";
+            break;
+        case '03':
+            sMonth = "Mar";
+            break;
+        case '04':
+            sMonth = "Apr";
+            break;
+        case '05':
+            sMonth = "May";
+            break;
+        case '06':
+            sMonth = "Jun";
+            break;
+        case '07':
+            sMonth = "Jul";
+            break;
+        case '08':
+            sMonth = "Aug";
+            break;
+        case '09':
+            sMonth = "Sep";
+            break;
+        case '10':
+            sMonth = "Oct";
+            break;
+        case '11':
+            sMonth = "Nov";
+            break;
+        case '12':
+            sMonth = "Dec";
+            break;
+    }
+    elCell.innerHTML = myDay + "-" + sMonth  + "-" +myYear;
+}
+
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+ <%if @chartType=='line'%>
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"date",label:"Date", formatter:myFormatDate,sortable:true},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"date"},   
+                    {key:"impressions", parser:YAHOO.util.DataSource.parseNumber}]
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"date",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+<%else%>
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"month",label:"Month", sortable:true},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts1"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"month"},   
+                    {key:"impressions", parser:YAHOO.util.DataSource.parseNumber}]
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"month",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+<%end%>
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - admin_pub_traffic_growth view Exception :: #{e.to_s}"
+%>
+<%end%>

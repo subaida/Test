@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; FAQs</h2></td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="header">Can I use zip codes to plot data on map? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">No - FusionMaps doesn't support zip codes. It only supports the entity IDs given in Map Specification Sheet of each entity. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">I want to highlight a particular city and NOT color an entire region. Is that possible? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">No - FusionMaps is not meant for that purpose. FusionMaps lets you show data by entities (regions) by color coding them. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p class="header">Can I have the maps pull data directly from an array or recordset or webservice? </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>No. FusionMaps necessarily needs its data in XML format. If you've your data in arrays, recordsets or as webservices, use your Flash code to retrieve the data from these sources and then convert it into XML at run-time (using string concatenation or XML Object methods). Finally, you can provide the XML to FusionMaps. </p>
+    <p>You do not need to physically write XML files on disk. You can just provide the XML object instance to FusionMaps and it will read the same. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">How do I update the data of a map that has already instantiated and is showing? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>To do so, </p>
+      <ol>
+        <li>First call the <span class="codeInline">remove()</span> method of the map object, so that all objects of the map are removed. </li>
+        <li>Call the <span class="codeInline">reInit()</span> method of the map object, to re-initialize map </li>
+        <li>Set the new XML Data using <span class="codeInline">setXMLData()</span> method</li>
+        <li>Call <span class="codeInline">render() </span>method finally to render the map   </li>
+    </ol></td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="header">Can I just update a specific data item on the map? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">No - you cannot update just a specific data. As of now, you'll need to update the entire map with new XML. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">I'm done working with the map object and would not use it again in the movie. How should I dispose it? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Just call the <span class="codeInline">destroy() </span>method of the map object and our class will take care of the rest. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Can I dynamically resize a map once it's loaded? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">No - you cannot re-set the size of the map once it has loaded. The size of the map can only be set in constructor function. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Can I load FusionMaps maps in Accordion/ScrollPane component? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">At the time of this writing - no. Those components can show only objects that derive from UIObject class. FusionMaps derives from its own custom classes. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

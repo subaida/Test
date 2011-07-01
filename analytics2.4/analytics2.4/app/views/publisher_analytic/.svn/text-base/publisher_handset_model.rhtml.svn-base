@@ -1,0 +1,194 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ Analytics | Handset Summary</title>
+<script type="text/javascript">
+	 window.onload=function(){ 
+		<%if @XML_handset_report !=nil && @XML_handset_report !=""%>
+			<%if @XML_handset_report[:xml_string]!=nil && @XML_handset_report[:xml_string]!=""%>
+				var myChart_handset = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+				myChart_handset.setDataXML("<%=@XML_handset_report[:xml_string]%>");
+				myChart_handset.setTransparent(true);
+				myChart_handset.render("handset_div");
+			<%end%>
+		<%end%>	
+	 }
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"></td>
+            <td width="98%"></td>
+            <td width="1%" ></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><span class="heading">Handsets  Model Summary <%if @handset!=nil && @handset!=""%>&nbsp;&gt;&nbsp;<%=@handset%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                <td width="32%" align="left"><a href="/publisher_analytic/generate_report/<%=encrypt(session[:report_adclient])%>/<%=session[:report_start_on]%>/<%=session[:report_end_on]%>/<%=session[:duration]%>/<%=session[:filled]%>">Publisher Home</a> &gt; <span class="nav_link">Handsets Model Summary</span></td>
+                <td width="64%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span></td>
+                <td width="4%" align="right"><a href="#" onclick="printWindow()"><img alt="Print" title="Print" src="/images/analytic/print.png" align="top" border="0" /></a> </td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+			  	    <td align="center" height="300" width="100%">
+					<div id="handset_div" align="center" style="height:100%; width:70%"><div class="nodata_indicator">&nbsp;</div></div>				</td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+	<tr>
+		<td>
+			<table width="100%" border="0" align="left">
+  <tr>
+    	<td width="50%" align="left"><strong>&nbsp;Export to:</strong> <a href="/publisher_analytic/generate_Csv?&heading=handset_model_report"><img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+    	<td align="right">
+			<%if  @handsetdata_pages.current.previous !=nil%>
+				<%= link_to '<< First',{:page => @handsetdata_pages.first } ,{:class=>'paginate' }%> 
+			<%else%>
+				&lt;&lt;&nbsp;First
+			<%end%>	
+		   	&nbsp;&nbsp;
+		    <%if  @handsetdata_pages.current.previous !=nil%>
+		  		<%= link_to '< Prev', { :page => @handsetdata_pages.current.previous },{:class=>'paginate'}  %> 
+		    <%else%>
+		  		&lt;&nbsp;Prev
+		    <%end%>
+		  	&nbsp;&nbsp;
+			<span class="pagination"><%= pagination_links(@handsetdata_pages,:window_size => 5)%></span>
+		    <%if @handsetdata_pages.current.next !=nil%>
+				&nbsp;&nbsp;
+		   		<%= link_to 'Next >', { :page => @handsetdata_pages.current.next},{:class=>'paginate'} %>
+		    <%else%>
+		   		Next&nbsp;&gt;
+		    <%end%>	
+		    &nbsp;&nbsp;
+		    <%if @handsetdata_pages.last !=nil && @handsetdata_pages.current.next !=nil %>
+		  		<%= link_to 'Last >>', { :page => @handsetdata_pages.last},{:class=>'paginate'}%>
+		    <%else%>
+		  		Last&nbsp;&gt;&gt;                      
+		    <%end%>		  </td>
+  </tr>
+</table>		</td>
+	</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th>Model</th>  
+                  <th>Traffic</th>  
+                 <th>Percentage - Traffic (%)</th>  
+             </tr>  
+         </thead>  
+         <tbody>
+			<%begin%> 
+		 	 <%session[:csv_string]=nil%>  
+		 	 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	 <%csv << ["Model", "Traffic","Percentage - Traffic"]%> 
+		 	 <%for handset_summary in @handsetdata%>
+			 	 <%csv<<["#{(handset_summary.handset_model=='' || handset_summary.handset_model==nil) ? 'Unknown' : handset_summary.handset_model}","#{handset_summary.sum_requests==nil ? 0 : handset_summary.sum_requests}","#{handset_summary.handset_percentage==nil ? 0.00 :sprintf('%.2f',handset_summary.handset_percentage)}%"]%>
+             <tr>  
+                 <td><%=(handset_summary.handset_model=='' || handset_summary.handset_model==nil) ? 'Unknown' : handset_summary.handset_model%></td>  
+                 <td><%=handset_summary.sum_requests==nil ? 0 : handset_summary.sum_requests%></td>  
+                 <td><%=handset_summary.handset_percentage==nil ? 0.00 : sprintf('%.2f',handset_summary.handset_percentage)%></td>  
+             </tr> 
+			 <%end%> 
+			 <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in publisher handset view #{e}"%>
+			 <%end%>
+         </tbody>  
+    </table>  
+	</div>
+</div></td>
+</tr>
+</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"handset",label:"Model",sortable:true},   
+             {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}},   
+             {key:"percentage",label:"Percentage - Traffic(%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"handset"},   
+                     {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"traffic",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e%>
+<%puts"An Exception occured in publisher handset and #{e}"%>
+<%end%>

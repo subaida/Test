@@ -1,0 +1,207 @@
+
+<%begin%>
+<script type="text/javascript">
+	 window.onload=function(){ 
+		<%if @advXML_ad_wise_report!=nil %>
+			<%if @advXML_ad_wise_report[:xml_string]!=nil && @advXML_ad_wise_report[:xml_string]!=""%>
+				var myChart_adwise = new FusionCharts("/FusionCharts_Developer/Charts/Bar2D.swf", "myChartId", "100%", "100%", "0", "0");
+				myChart_adwise.setDataXML("<%=@advXML_ad_wise_report[:xml_string]%>");
+				myChart_adwise.setTransparent(true);
+				myChart_adwise.render("adwise_div");
+			<%end%>
+		<%end%>
+	}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="98%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              
+              <tr>
+                <td height="15" colspan="2"><span class="heading">Ad-Wise Summary </span></td>
+              </tr>
+              <tr>
+                <td height="25" colspan="2">
+					<table width="100%" border="0">
+					  <tr>
+						<td width="32%"><a href="/advertiser_analytic/generate_adv_report/<%=encrypt(session[:advreport_camp_id])%>/<%=encrypt(session[:advreport_ad_id])%>/<%=session[:advreport_start_on]%>/<%=session[:advreport_end_on]%>/<%=session[:duration]%>/<%=session[:advreport_type]%>">Advertiser Home</a> &gt; <span class="nav_link">Ad-Wise Summary </span></td>
+						<td align="RIGHT" width="64%"><span class="subtitle"><%=session[:advreport_start_on]%></span>&nbsp;&nbsp;to&nbsp;&nbsp;<span class="subtitle"><%=session[:advreport_end_on]%></span></td>
+						<td align="RIGHT" width="4%">&nbsp;<a href="#" onclick="printWindow()"><img alt="Print" title="Print" src="/images/analytic/print.png" align="top"  border="0" /></a></td>
+					  </tr>
+					</table>				</td>
+                </tr>
+              
+              <tr>
+                <td height="5" align="center" colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" width="1%">&nbsp;</td>
+                <td align="center"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+                  <tr>
+                    <td valign="MIDDLE" height="225" width="100%" align="CENTER">
+                        <div id="adwise_div" style="height:100%; width:80%"><div class="nodata_indicator">&nbsp;</div></div>                      </td>
+                  </tr>
+                </table></td>
+                </tr>
+              
+           
+              <tr>
+                <td colspan="2"><table align="center" width="100%">
+                  
+				   <tr>
+                    <td><table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;
+		<span class="report_text"><strong>Export to: <a href="/advertiser_analytic/adv_generate_csv?heading=adwise_report"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a> </strong> </span></td>
+                <td align="RIGHT">
+					<%if  @adwise_pages.current.previous !=nil%>
+                    		<%= link_to '< First',{:page => @adwise_pages.first } ,{:class=>'paginate' }%>
+                    <%else%>
+                    		&lt;&lt;&nbsp;First
+                    <%end%>                
+					 &nbsp;&nbsp;
+					<%if  @adwise_pages.current.previous !=nil%>
+                    	<%= link_to '<< Prev', { :page => @adwise_pages.current.previous },{:class=>'paginate'}  %>
+                    <%else%>
+                    		&lt;&nbsp;Prev
+                    <%end%>
+					 &nbsp;&nbsp;
+					<span class="pagination"><%= pagination_links(@adwise_pages,:window_size => 5)%></span>
+					<%if @adwise_pages.current.next !=nil%>
+							 &nbsp;&nbsp;
+                    		<%= link_to 'Next >', { :page => @adwise_pages.current.next},{:class=>'paginate'} %>
+                    <%else%>
+                    		Next&nbsp;&gt;
+                    <%end%>    
+					 &nbsp;&nbsp;         
+					<%if @adwise_pages.last !=nil && @adwise_pages.current.next !=nil %>
+                    		<%= link_to 'Last >>', { :page => @adwise_pages.last},{:class=>'paginate'}%>
+                    <%else%>
+                    		Last&nbsp;&gt;&gt;
+                    <%end%>			     </td>
+          </tr>
+        </table>			</td>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+                            <thead>
+                              <tr>
+							  	<th>Ad Name </th>
+                                <th>Ad Text </th>
+								<th>Ad Picture</th>
+								<th>Imperssions</th>
+								<th>Clicks</th>
+								<th>CTR (%)</th>
+								<th>Amount Spent ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								 <%begin%>  
+								 <%session[:csv_string]=nil%>  
+								 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+								 <%csv << ["Ad Name", "Ad Text","Ad Picture","Impressions","Clicks","CTR","Amount Spent"]%>
+                               <%for adwise in @adwises%>
+							   		<%@ad_detail=Ad.find(adwise.ad_id.to_i)%>
+							   		 <%csv<<["#{@ad_detail.name}","#{(@ad_detail.ad_text==nil || @ad_detail.ad_text=='false') ? 'NA' : @ad_detail.ad_text}","#{@ad_detail.ad_picture==nil ? 'NA' : @ad_detail.ad_picture}","#{adwise.impressions==nil ? 0.00 :sprintf('%.2f',adwise.impressions)}","#{adwise.sum_clicks==nil ? 0 : adwise.sum_clicks}","#{adwise.sum_ctr==nil ? 0.00 : sprintf('%.2f',adwise.sum_ctr)}%","$ #{adwise.sum_amount_spent==nil ? 0.00 : sprintf('%.2f',adwise.sum_amount_spent)}"]%>
+							  <tr>
+							  	<td><%=@ad_detail.name%></td>
+                                <td><%=@ad_detail.ad_text==nil or @ad_detail.ad_text=='false'? 'NA' :@ad_detail.ad_text%></td>
+								<td><%=@ad_detail.ad_picture==nil ? 'NA' : @ad_detail.ad_small!='false' ? image_tag('http://assets.zestadz.com'+@ad_detail.ad_small) : @ad_detail.ad_medium!='false' ? image_tag('http://assets.zestadz.com'+@ad_detail.ad_medium) : @ad_detail.ad_large!='false' ? image_tag('http://assets.zestadz.com'+@ad_detail.ad_large) : @ad_detail.ad_xlarge!='false' ? image_tag('http://assets.zestadz.com'+@ad_detail.ad_xlarge) : 'NA'%></td>
+								<td><%=adwise.impressions==nil ? 0 : adwise.impressions%></td>
+								<td><%=adwise.sum_clicks==nil ? 0 : adwise.sum_clicks%></td>
+								<td><%=adwise.sum_ctr==nil ? 0.00 : sprintf('%.2f',adwise.sum_ctr)%></td>
+								<td><%=adwise.sum_amount_spent==nil ? 0.00 : sprintf('%.2f',adwise.sum_amount_spent)%></td>
+                                </tr>
+                              <%end%>
+							  <%end%> 
+							 <%rescue Exception=>e%>
+							 <%puts"Exception occured in advertiser adwise view #{e}"%>
+							 <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+                </table></td>
+              </tr>
+              
+            </table></td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+        </table></td>
+            <td width="15" align="left" valign="top">&nbsp;</td>
+          </tr>
+      
+    </table></td>
+  </tr>
+</table>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in advertiser_analytic_controller - advertiser_handsets view Exception :: #{e.to_s}"
+%>
+<table width="100%" border="0" cellpadding="5" cellspacing="2" class="infobar">
+  <tr>
+    <td class="textBlueBold" align="left">Error occoured. </td>
+  </tr>
+</table>
+<%end%>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+		 	 {key:"ad_name",label:"Ad Name",sortable:true},
+			 {key:"ad_text",label:"Ad Text",sortable:true},
+			  {key:"ad_picture",label:"Ad Picture",sortable:true},
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},
+			 {key:"ctr",label:"CTR(%)",formatter:formatFloat,sortable:true},
+			 {key:"amt_spent",label:"Amount Spent($)",formatter:formatFloat,sortable:true}
+			 ];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"ad_name"},   
+			 		{key:"ad_text"},
+					{key:"ad_picture"},
+                    {key:"impressions", parser:YAHOO.util.DataSource.parseNumber,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}},
+					{key:"clicks", parser:YAHOO.util.DataSource.parseNumber},  
+					{key:"ctr",parser:this.parseNumberFromFloat},  
+					{key:"amt_spent",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"impressions",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>

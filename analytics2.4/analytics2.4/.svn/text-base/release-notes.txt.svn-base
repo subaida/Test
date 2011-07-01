@@ -1,0 +1,210 @@
+=============================================
+Release 1.1
+Last updated: 08/04/2009
+Deployment Date: 
+=============================================
+Key Features
+-------------
+(i) Advertiser section:
+
+a. Summary chart for Impressions, Clicks, CTR, Impressions Vs Clicks, Amount spent and Tabular report.
+b. Traffic sources chart (continet and country wise).
+c. Devices Properties chart.
+d. Handset chart.
+e. Hourly traffic chart.
+f. Adwise chart.
+g. Carrier chart.
+
+(ii) Publisher section:
+
+a. Summary chart for Impressions, Clicks, CTR, Impressions Vs Clicks, eCPM, Earnings and Tabular report.
+b. Handsets chart.
+c. Visitors chart.
+d. Channel chart.
+e. Traffic source chart (continet and country wise).
+f. Keyword chart.
+g. Hourly traffic.
+i. Url chart.
+
+(iii) Admin section
+
+a.  Campaign Performance.
+b. Publisher Performance.
+c. Advertiser Performance.
+d. Device Summary.
+e. Registration Report.
+f. Advertiser Traffic Growth.
+g. Publisher Traffic Growth.
+i. Monthly Growth: Traffic by Continent.
+
+Controllers:
+---------------
+1. Advertiser controller.
+2. Publisher Controller.
+3. Admin controller.
+4. Login controller.
+
+Components:
+------------------
+1. Advertiser_xml_builder.
+2. Publisher_xml_builder.
+3. Admin_xml_builder.
+4. Admin_xml_builder_old.
+
+DB/Tables
+----------------------
+Analytics uses following tables :
+
+1.  Advertiser section:
+a. campaigns_summaries
+b. adv_geolocations
+c. adv_devicesproperties
+d. adv_handsets
+e. adv_carriers
+f. wurfl_devices
+g. wurfl_capabilities
+
+2. Publisher section:
+a. adclients_summaries
+b. pub_channels
+c. pub_geolocations
+d. pub_handsets
+e. pub_keywords
+f. pub_unique_visitors
+g. pub_urls
+===================================
+Release 1.2
+===================================
+
+New Features:
+----------------------------
+1. Advertiser & Publisher section has been combined.
+a. Asia map has been refined to Asia and Middle East to improve traffic penetration.
+b. Offer carrier and operator traffic for advertiser.
+c. Device properties chart has been modified to bar chart.
+d. Keyword chart has been removed.
+
+Components:
+-----------------
+Following component has been updated.
+
+a.Advertiser_xml_builder
+1. Modified generate_query method to support Carrier and owner information.
+2. Modified to geneate deviceproperties charts as bar-chart.
+3. Modified generate_query method to simplified device properties query.
+
+Controller:
+---------------
+a. Advertiser controller 
+1. Updated security feature.
+2. Included "dashboard_move" method to fix dashboard_move error while drag-n-drop the widget.
+3. Included owner method and view to support owners chart.
+4. Removed keyword chart.
+5. Simplified device properties chart query.
+6. Device properties chart has been updated to bar chart.
+
+b. Publisher controller
+1. Updated security feature.
+2. Included "dashboard_move" method to fix dashboard_move error while drag-n-drop the widget.
+3. Channel query has been tuned to take less time.
+
+c. Admin controller.
+1. updated security feature
+2. included "dashboard_move" method to fix dashboard_move error while drag-n-drop the widget.
+
+d. Login controller.
+1. updated security feature.
+
+e. Home controller.
+1.Included home controller to imporve the navigation.
+
+===================================
+Release 2.3
+===================================
+
+New Features:
+----------------------------
+1. Added new tables advertiser geolocation and hansets to speed up analytics.
+a. Removed handset and geolcation info from campaigns_summaries and adclients_summaries to reduce the volume of data.
+b. Added new tables publisher  geolocation and handset to speed up analytics.
+c. Device properties has been upgrade to have properties itself instead of handset.
+d. Carriers table have been upgrade to have carrier and owner info.
+
+Components:
+-----------------
+Following component has been updated.
+
+a. Advertiser_xml_builder
+1. Modified generate_query method to support Carrier,Geolocation and handset information.
+2. Modified generate_query method to simplified device properties,carrier,handset and geolocation query.
+
+b. Publisher_xml_builder
+1. Modified generate_query method to support Carrier,Geolocation and handset information.
+2. Modified generate_query method to simplified device carrier,handset and geolocation query.
+
+Controller:
+---------------
+a. Advertiser controller 
+
+1. updated advertiser controller to have geolocation and handset method.
+2. modified advertiser controller to support new carriers and properties table.
+
+b. Publisher controller
+1. updated controller to have geolocation and handset method.
+2. modified controller to support new carriers table.
+
+c. Admin controller.
+1. updated controller to have geolocation and handset method.
+2. modified controller to support new carriers and devicesproperties table.
+3. modified controller to support new devices_summaries table for divce_summary chart.
+
+
+DB/Tables
+----------------------
+1. Added adv_geolocations,adv_handsets,pub_geolocations,pub_handsets and devices_summary.
+2. Modified campaigns_summaries and adclients_summaries table.
+
+
+===================================
+Release 2.4
+===================================
+
+New Features:
+----------------------------
+a. Added Owner report,Fraud click report,Wifi traffic review, why no ads?, Campaign data breakdown, Click Log Report,
+	US Geostats and Publisher Geostats
+b. Updated analytics to expire session after 20 mins.
+
+
+Components:
+-----------------
+Component updated:
+
+NA
+
+Component Added:
+
+1. analytics_data.rb
+2. mongodb_summarizer.rb
+3. mongodb_setup.rb
+4. mongodb_query_settings.rb
+5. us_geodetails.rb
+
+Controller:
+---------------
+a. Application Controller.rb
+1. Added method session expiry method to expire session after 20 mins.
+
+b. Admin controller.
+1. Added pub_geo_chart,pub_geo_cities_search,pub_geo_cities,pub_geo_states_search,pub_geo_states,us_geo_chart,us_geo_cities_search,
+   us_geo_cities,us_geo_states_search,us_geo_states,click_log_search,click_log,get_advertiser_name,get_adclient_name,get_advertiser_detail,
+   get_publisher_detail,campaign_breakdown_search,campaign_breakdown,no_ads_details,wifi_details,fc_details,unfilled_details,
+   generate_csv_report,no_ads_chart,no_ads_served_search,no_ads_served,unfilled_ips_search,unfilled_ips,owner_popup,owner_report_search,
+   owner_report,fraud_click_search,fraud_click,wifi_traffic_search and wifi_traffic method for new charts.
+
+Views:
+--------
+1. Admin
+a. added pub_geo_cities,pub_geo_states,us_geo_cities,us_geo_states,click_log,campaign_breakdown,owner_report,fraud_click
+   wifi_traffic,no_ads_served,owner_popup,unfilled_ips,unfilled_details,no_ads_details,fc_details and wifi_details.
+b. updated admin_home view.

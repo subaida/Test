@@ -1,0 +1,38 @@
+.pageHeader{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 12pt;
+	font-weight:bold;
+}
+.tableGreyBorder
+{
+	BORDER: 1px solid #f1f1f1;
+}
+.trGreyBg
+{
+	BACKGROUND: #F1f1f1;
+}
+.trDarkGreyBg
+{
+	BACKGROUND: #999999;
+}
+.text
+{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+}
+.textbold
+{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+}
+.textError
+{
+	COLOR: #FF0000;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;	
+}

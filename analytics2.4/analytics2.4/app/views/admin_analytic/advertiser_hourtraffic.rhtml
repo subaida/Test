@@ -1,0 +1,187 @@
+
+<%begin%>
+<%if @advXML_hour_traffic_report!=nil %>
+	<%if @advXML_hour_traffic_report[:xml_string]!=nil && @advXML_hour_traffic_report[:xml_string]!=""%>
+		<script type="text/javascript">
+			window.onload=function(){ 
+			var myChart_hourly_traffic = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId", "100%", "100%", "0", "0");
+			myChart_hourly_traffic.setDataXML("<%=@advXML_hour_traffic_report[:xml_string]%>");
+			myChart_hourly_traffic.setTransparent(true);
+			myChart_hourly_traffic.render("hour_traffic_div");
+			}
+		</script>
+	<%end%>
+<%end%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td ><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+          <tr>
+            <td width="1%">&nbsp;</td>
+            <td width="98%" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              
+              <tr>
+                <td height="15" colspan="2"><span class="heading">Hourly Traffic Summary <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+              </tr>
+              <tr>
+                <td height="25" colspan="2"><table width="100%" border="0">
+                  <tr>
+                    <td width="42%"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_adv_report/<%=encrypt(session[:advreport_camp_id])%>/<%=encrypt(session[:advreport_ad_id])%>/<%=session[:advreport_start_on]%>/<%=session[:advreport_end_on]%>/<%=session[:duration]%>/<%=session[:advreport_type]%>">Advertiser Home</a> &gt; <span class="nav_link"> Hourly Traffic Summary </span></td>
+                    <td align="RIGHT" width="54%"><span class="subtitle"><%=session[:advreport_start_on]%></span>&nbsp;&nbsp;to&nbsp;&nbsp;<span class="subtitle"><%=session[:advreport_end_on]%></span></td>
+                    <td align="RIGHT" width="4%"><a href="#" onclick="printWindow()"><img alt="Print" title="Print" src="/images/analytic/print.png" align="top" border="0" /> </a></td>
+                  </tr>
+                </table></td>
+                </tr>
+              
+              <tr>
+                <td height="15" colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                
+                <td align="center" colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+                  <tr>
+                    <td height="225" width="100%" align="CENTER">
+                        <div id="hour_traffic_div" style="height:100%; width:85%"><div class="nodata_indicator">&nbsp;</div>
+                        </div>                     </td>
+                    </tr>
+                </table></td>
+                </tr>
+              
+           
+              <tr>
+                <td colspan="2"><table align="center" width="100%">
+                  <tr>
+                    <td>
+					<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+                      <tr>
+                        <td width="50%" align="left" scope="col">&nbsp;
+					<span class="report_text"><strong>Export to: <a href="/admin_analytic/generate_Csv?heading=hourly_traffic_report"><img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a> </strong> </span></td>
+						<td align="RIGHT">
+							<%if  @hourtraffic_pages.current.previous !=nil%>
+									<%= link_to '<< First',{:page => @hourtraffic_pages.first } ,{:class=>'paginate' }%>
+							  <%else%>
+									&lt;&lt;&nbsp;First
+							  <%end%>                            
+							 &nbsp;&nbsp;
+							  <%if  @hourtraffic_pages.current.previous !=nil%>
+									<%= link_to '< Prev', { :page => @hourtraffic_pages.current.previous },{:class=>'paginate'}  %>
+							  <%else%>
+									  &lt;&nbsp;Prev
+							   <%end%>
+							&nbsp;&nbsp;
+							<span class="pagination"><%= pagination_links(@hourtraffic_pages,:window_size => 5)%></span>
+							  <%if @hourtraffic_pages.current.next !=nil%>
+									&nbsp;&nbsp;
+									<%= link_to 'Next >', { :page => @hourtraffic_pages.current.next},{:class=>'paginate'} %>
+							  <%else%>
+									Next&nbsp;&gt; 
+							   <%end%> 
+							   &nbsp;&nbsp;                    
+							   <%if @hourtraffic_pages.last !=nil && @hourtraffic_pages.current.next !=nil %>
+									<%= link_to 'Last >>', { :page => @hourtraffic_pages.last},{:class=>'paginate'}%>
+							   <%else%>
+									Last&nbsp;&gt;&gt;
+							   <%end%>						</td>
+                            </tr>
+                    </table>					</td>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="div" class="yui-b">
+                          <div align="center" class=" yui-skin-sam"  >
+                            <div id="markup" class="yui-b">
+                              <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+                                <thead>
+                                  <tr>
+                                    <th>Hour</th>
+                                    <th>Traffic</th>
+									<th>Percentage - Traffic(%)</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+								 <%begin%>  
+								 <%session[:csv_string]=nil%>  
+								 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+								 <%csv << ["Hour", "Traffic","Percentage - Traffic"]%>
+                                  <%for hour_traffic in @hour_traffic%>
+								  	<%csv<<["#{hour_traffic.delivery_hour}","#{hour_traffic.impressions==nil ? 0 : hour_traffic.impressions}","#{hour_traffic.percentage==nil ? 0.00 : sprintf('%0.2f',hour_traffic.percentage)}%"]%>
+                                  <tr>
+                                    <td><%=hour_traffic.delivery_hour%></td>
+                                    <td><%=hour_traffic.impressions%></td>
+									<td><%=hour_traffic.percentage==nil ? 0.00 :sprintf('%0.2f',hour_traffic.percentage)%> </td>
+                                  </tr>
+                                  <%end%>
+								  <%end%> 
+								  <%rescue Exception=>e%>
+								  <%puts"Exception occured in hourly traffic view #{e}"%>
+								  <%end%>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                    </div></td>
+                  </tr>
+                </table>                </td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+        </table></td>
+            <td width="1%" align="left" valign="top">&nbsp;</td>
+          </tr>
+      
+    </table></td>
+  </tr>
+</table>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - advertiser_hourtraffic view Exception :: #{e.to_s}"
+%>
+<table width="100%" border="0" cellpadding="5" cellspacing="2" class="infobar">
+  <tr>
+    <td class="textBlueBold" align="left">Error occoured. </td>
+  </tr>
+</table>
+<%end%>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"hour",label:"Hour",sortable:true,resizeable:true},
+			 {key:"impression",label:"Traffic",formatter:formatNumber,sortable:true,resizeable:true},
+			 {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"hour"},
+			 	{key:"impression", parser:YAHOO.util.DataSource.parseNumber},      
+			 		{key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"hour",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>

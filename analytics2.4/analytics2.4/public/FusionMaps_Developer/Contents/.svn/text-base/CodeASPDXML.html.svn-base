@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionMaps Documentation</title>
+<link rel="stylesheet" type="text/css" href="Style.css" />
+</head>
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps with ASP &gt; Using dataXML Method </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">FusionMaps can effectively be used with Microsoft ASP  to plot data over geographic locations.  In this section and the following, we'll show  examples on how to plot data on FusionMaps using various methods in ASP. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>We'll cover  the following examples here:</p>
+      <ul>
+        <li>Rendering map from array using <span class="codeInline">dataXML</span> Method. </li>
+        <li>Rendering map from array using <span class="codeInline">dataURL</span> Method. </li>
+        <li>Rendering map using Form based data and </li>
+        <li>Rendering drill-down maps pulling data from database.</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="highlightBlock">Before proceeding further, we recommend to go through the documentation &quot;How to use FusionMaps&quot; for a better insight. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Sample: Using dataXML method </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><ul>
+      <li>Here we will first declare an array and store data in it. </li>
+      <li>Then we will build the map XML by fetching data from the array. </li>
+      <li>Finally, we will relay the data in XML format to  FusionMaps to render the map. </li>
+    </ul></td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="highlightBlock">The code discussed here is present in <span class="codeInline">Download Package > Code > ASP > BasicExample</span> folder. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">We will be displaying the population of the continents using FusionMaps in this example. Here is the ASP code that has been used in the example. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header1">Creating World Population Map from the data stored in an array </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><span class="codeInline">BasicMapsArray.asp</span> contains the following code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p>&lt;%@ Language=VBScript %&gt;<br />
+      &lt;%<br />
+      <span class="codeComment">'We've included ../Includes/FusionMaps.asp, which contains functions<br />
+      'to help us easily embed the maps.</span><br />
+      %&gt;<br />
+  &lt;!-- #INCLUDE FILE=&quot;../Includes/FusionMaps.asp&quot; --&gt;<br />
+  &lt;HTML&gt;<br />
+  &lt;HEAD&gt;<br />
+  <br />
+  <span class="codeComment">&nbsp; </span>&lt;%<br />
+      <span class="codeComment">&nbsp; &nbsp; 'We've included FusionMaps.js, which helps in JavaScript map embedding.</span><br />
+      <span class="codeComment">&nbsp; </span>%&gt;<br />
+      <span class="codeComment">&nbsp; </span>&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot; src=&quot;../JSClass/FusionMaps.js&quot;&gt;&lt;/script&gt;<br />
+  &lt;/HEAD&gt;<br />
+  &lt;BODY&gt;<br />
+  <span class="codeComment">&nbsp; </span>  &lt;%<br />
+  <br />
+  <span class="codeComment">&nbsp; &nbsp; 'Declare array to store world population<br />
+        &nbsp; &nbsp; ' we use world map with 8 entities/continents<br />
+        &nbsp; &nbsp; ' this 2 dimensional array will store 8 rows of data for each continent of the map<br />
+        &nbsp; &nbsp; ' first column of each row will store the Internal Id of each entity on the map<br />
+        &nbsp; &nbsp; ' second column will store population data of each entity</span><br />
+        <br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dim dataArray(8,2)</p>
+      <p> <span class="codeComment">&nbsp; &nbsp; 'Store population data </span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(1,1)=&quot;01&quot; <span class="codeComment">' Internal ID of Asia</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(1,2)=&quot;3779000000&quot; <span class="codeComment">' Asia's population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(2,1)=&quot;02&quot; <span class="codeComment">' Internal ID of Europe </span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(2,2)=&quot;727000000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; &nbsp; </span>dataArray(3,1)=&quot;03&quot;<span class="codeComment">' Internal ID of Africa</span><br />
+        <span class="codeComment">&nbsp; &nbsp; </span>dataArray(3,2)=&quot;877500000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(4,1)=&quot;04&quot;<span class="codeComment">' Internal ID of North America</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(4,2)=&quot;421500000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(5,1)=&quot;05&quot;<span class="codeComment">' Internal ID of South America</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(5,2)=&quot;379500000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(6,1)=&quot;06&quot;<span class="codeComment">' Internal ID of Central America</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(6,2)=&quot;80200000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(7,1)=&quot;07&quot;<span class="codeComment">' Internal ID of Oceania</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(7,2)=&quot;32000000&quot;<span class="codeComment">'population</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(8,1)=&quot;08&quot;<span class="codeComment">' Internal ID of Middle East</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dataArray(8,2)=&quot;179000000&quot;<span class="codeComment">'population</span><br />
+        <br />
+        <span class="codeComment">&nbsp; &nbsp; 'Declare strXML to store dataXML of the map</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>dim strXML<br />
+  <br />
+        <span class="codeComment">&nbsp; &nbsp; 'Opening MAP element</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = &quot;&lt;map borderColor='FFFFFF' fillAlpha='80' showBevel='0' legendPosition='Bottom' &gt;&quot;<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>        <span class="codeComment">'Setting Color ranges : 4 color ranges for population ranges</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;colorRange&gt;&quot;<span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;color minValue='0' maxValue='100000000' displayValue='Population : Below 100 M' color='CC0001' /&gt;&quot;<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;color minValue='100000000' maxValue='500000000' displayValue='Population :100 - 500 M' color='FFD33A' /&gt;&quot;<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;color minValue='500000000' maxValue='1000000000' displayValue='Population :500 - 1000 M' color='069F06' /&gt;&quot;<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;color minValue='1000000000' maxValue='5000000000' displayValue='Population : Above 1000 M' color='ABF456' /&gt;&quot;<br />
+        strXML = strXML &amp; &quot;&lt;/colorRange&gt;&quot;<br />
+  <br />
+        <span class="codeComment">&nbsp; &nbsp; 'Opening data element that will store map data</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;data&gt;&quot;<br />
+        <span class="codeComment">&nbsp; &nbsp; 'Using Data from array for each entity </span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>FOR i=1 TO ubound(dataArray)<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;entity id='&quot; &amp; dataArray(i,1) &amp; &quot;' value='&quot; &amp; dataArray(i,2) &amp; &quot;' /&gt;&quot;<br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>NEXT<span class="codeComment">&nbsp; </span><br />
+        <span class="codeComment">&nbsp; &nbsp; 'closing  data element</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML = strXML &amp; &quot;&lt;/data&gt;&quot;<br />
+        <span class="codeComment">&nbsp; &nbsp; 'closing map element</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>strXML  = strXML &amp; &quot;&lt;/map&gt;&quot; </p>
+      <p> <span class="codeComment">&nbsp; &nbsp; 'Create the Map - using strXML as dataXML string;</span><br />
+        <span class="codeComment">&nbsp; </span><span class="codeComment">&nbsp; </span>Call renderMap(&quot;../../Maps/FCMap_World8.swf&quot;, &quot;&quot;, strXML, &quot;firstMap&quot;, 750, 460,0,0)<br />%&gt;<br />
+        &lt;/BODY&gt;<br />
+  &lt;/HTML&gt;</p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header1">Steps involved in this code </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">First, we included two files:
+      <ul>
+        <li class="codeInline">FusionMaps.asp</li>
+        <li class="codeInline">FusionMaps.js</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;!-- #INCLUDE FILE=&quot;../Includes/FusionMaps.asp&quot; --&gt;<br />
+&lt;HTML&gt;<br />
+&lt;HEAD&gt;<br />
+...
+<br />
+&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot; src=&quot;../JSClass/FusionMaps.js&quot;&gt;&lt;/script&gt;<br />
+...</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>These two files contain functions to  embed the map easily. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Then we declared an  array <span class="codeInline">dataArray</span> to store the  population data of 8 continents. This is a 2-dimensional array, where the first column stores the Internal ID for all the continets and the second column stores respective population data.</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="highlightBlock">Internal ID is a field which helps to indentify each part of a map uniquely. Please go through the Map Specificaiton Sheet to know the Internal IDs for each map in FusionMaps.</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p>dim dataArray(8,2)</p>
+      <p> <span class="codeComment">'Store population data </span><br />
+        dataArray(1,1)=&quot;01&quot; <span class="codeComment">' Internal ID of Asia</span><br />
+dataArray(1,2)=&quot;3779000000&quot; <span class="codeComment">' Asia's population</span><br />
+dataArray(2,1)=&quot;02&quot; <span class="codeComment">' Internal ID of Europe </span><br />
+dataArray(2,2)=&quot;727000000&quot; <span class="codeComment">'population</span><br />
+dataArray(3,1)=&quot;03&quot;<span class="codeComment">' Internal ID of Africa</span><br />
+dataArray(3,2)=&quot;877500000&quot;<span class="codeComment">'population</span><br />
+dataArray(4,1)=&quot;04&quot;<span class="codeComment">' Internal ID of North America</span><br />
+dataArray(4,2)=&quot;421500000&quot;<span class="codeComment">'population</span><br />
+dataArray(5,1)=&quot;05&quot;<span class="codeComment">' Internal ID of South America</span><br />
+dataArray(5,2)=&quot;379500000&quot;<span class="codeComment">'population</span><br />
+dataArray(6,1)=&quot;06&quot;<span class="codeComment">' Internal ID of Central America</span><br />
+dataArray(6,2)=&quot;80200000&quot;<span class="codeComment">'population</span><br />
+dataArray(7,1)=&quot;07&quot;<span class="codeComment">' Internal ID of Oceania</span><br />
+dataArray(7,2)=&quot;32000000&quot;<span class="codeComment">'population</span><br />
+dataArray(8,1)=&quot;08&quot;<span class="codeComment">' Internal ID of Middle East</span><br />
+dataArray(8,2)=&quot;179000000&quot;<span class="codeComment">'population</span></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">We defined a variable <span class="codeInline">strXML</span> to store the entire   XML data. </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="codeBlock"><span class="codeComment">'Declare strXML to store dataXML of the map</span><br />
+      dim strXML<br />
+      '<span class="codeComment">Opening MAP element </span><br />
+    strXML = &quot;&lt;map borderColor='FFFFFF' fillAlpha='80' showBevel='0' legendPosition='Bottom' &gt;&quot;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The following code is used to define  the color range for the map entities. Different colors show different range of population. The first range is for the regions where population ranges from 0 to 100000000 and it is shown in Red. The second range is for the regions where population ranges from 100000000 to 500000000 and it is shown in Yellow. The third range is from 500000000 to 1000000000 in dark green and the fourth range is 1000000000 and above in light green color. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><span class="codeComment">'Setting Color ranges : 4 color ranges for population ranges</span><br />
+strXML = strXML &amp; &quot;&lt;colorRange&gt;&quot;<br />
+strXML = strXML &amp; &quot;&lt;color minValue='0' maxValue='100000000' displayValue='Population : Below 100 M' color='CC0001' /&gt;&quot;<br />
+strXML = strXML &amp; &quot;&lt;color minValue='100000000' maxValue='500000000' displayValue='Population :100 - 500 M' color='FFD33A' /&gt;&quot;<br />
+strXML = strXML &amp; &quot;&lt;color minValue='500000000' maxValue='1000000000' displayValue='Population :500 - 1000 M' color='069F06' /&gt;&quot;<br />
+strXML = strXML &amp; &quot;&lt;color minValue='1000000000' maxValue='5000000000' displayValue='Population : Above 1000 M' color='ABF456' /&gt;&quot;<br />
+strXML = strXML &amp; &quot;&lt;/colorRange&gt;&quot;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Next we added the map data in <span class="codeInline">&lt;entity&gt; </span>elements by iterating through the array elements. We used <span class="codeInline">for</span> loop for this. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><span class="codeComment">'Opening data element that will store map data </span><br />
+    strXML = strXML &amp; &quot;&lt;data&gt;&quot; <br />
+    <span class="codeComment">'Using Data from array for each entity  </span><br />
+    FOR i=1 TO ubound(dataArray) <br />
+   &nbsp;&nbsp;&nbsp; strXML = strXML &amp; &quot;&lt;entity id='&quot; &amp; <strong>dataArray(i,1)</strong> &amp; &quot;' value='&quot; &amp; <strong>dataArray(i,2)</strong> &amp; &quot;' /&gt;&quot; <br />
+   NEXT <br />
+   <span class="codeComment">'closing data element </span><br />
+   strXML = strXML &amp; &quot;&lt;/data&gt;&quot; <br />
+   <span class="codeComment">'closing map element</span> <br />
+   strXML = strXML &amp; &quot;&lt;/map&gt;&quot;</td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Finally we called the function <span class="codeInline">renderMap()</span> from  <span class="codeInline">FusionMaps.asp</span> file to render the map. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><span class="codeComment">'Create the Map - using strXML as dataXML string;</span><br />
+Call renderMap(&quot;../../Maps/FCMap_World8.swf&quot;, &quot;&quot;, strXML, &quot;firstMap&quot;, 750, 460,0,0)</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text"><span class="codeInline">FusionMaps.asp </span>contains the function <span class="codeInline">renderMap()</span>. This helps us  create the map simply by passing few parameters in a predefined sequence. The <span class="codeInline">renderMap()</span> function accepts following parameters in the same order as they are presented below: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" bordercolor="#999999" class="tableAlternate tableBorder">
+      <tr class="tableAlternateHeader">
+        <td width="19%" valign="top" class="header1">Parameter</td>
+        <td width="81%" valign="top" class="header1">Description</td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">mapSWF</td>
+        <td valign="top" class="text">SWF File Name (and Path) of the map which we want to plot. Here, we are plotting a World (having  8 continent segments) Map. So, we've specified it as <span class="codeInline">../../Maps/FCMap_World8.swf</span></td>
+      </tr>
+      <tr class="tableAlternateDark">
+        <td valign="top" class="codeInline">strURL</td>
+        <td valign="top" class="text">If we  use <span class="codeInline">dataURL </span>method to plot data over maps, we have to pass the URL as this parameter. Else, set it to &quot;&quot; (in case we use  <span class="codeInline">dataXML </span>method). In this case, we're using data XML method, hence we kept it blank. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">strXML</td>
+        <td valign="top" class="text">If we use <span class="codeInline">dataXML </span>method to plot data over maps, we have to pass the XML data as this parameter. Else, set it to &quot;&quot; (in case we are using of <span class="codeInline">dataURL</span> method). In this case, we're using <span class="codeInline">dataXML</span> method, hence we passed <span class="codeInline">strXML</span> through this field. </td>
+      </tr>
+      <tr class="tableAlternateDark">
+        <td valign="top" class="codeInline">mapId</td>
+        <td valign="top" class="text">The ID for the map by which it will be recognized in the HTML page. If we use multiple maps on the same page, then all the maps should have unique <span class="codeInline">mapId</span>. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">mapWidth</td>
+        <td valign="top" class="text">Intended width for the map (in pixels)</td>
+      </tr>
+      <tr class='tableAlternateDark'>
+        <td valign="top" class="codeInline">mapHeight</td>
+        <td valign="top" class="text">Intended height for the map (in pixels)</td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">debugMode</td>
+        <td valign="top" class="text">Whether to start the map in debug mode. Please see Debugging your Maps section for more details on Debug   Mode. </td>
+      </tr>
+      <tr class="tableAlternateDark">
+        <td valign="top" class="codeInline">registerWithJS</td>
+        <td valign="top" class="text">Whether to register the map with JavaScript. </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Below is the screenshot of  the map used for this example. </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text"><img src="Images/CodeASPDXML1.jpg" class="imageBorder" /></td>
+  </tr>
+</table>
+</body>
+</html>

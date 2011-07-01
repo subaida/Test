@@ -1,0 +1,382 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "zest_datepicker"%>
+<%= javascript_include_tag :defaults %>
+<script language="JavaScript" src="/FusionMaps_Developer/JSClass/FusionMaps.js"></script> 
+<script type="text/javascript">
+ 	window.onload=function(){
+		var map = new FusionMaps("/FusionMaps_Developer/Maps/FCMap_USA.swf", "Map1Id","100%", "100%","0", "0");
+		map.setDataXML("<%=@geo_chart%>");
+		map.setTransparent(true);
+		map.render("us_geo_div");
+	}
+</script>
+<script type="text/javascript">
+ function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('start_date').value=document.getElementById('start_on').value;
+		document.getElementById('end_date').value=document.getElementById('end_on').value;
+	}
+}
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('start_date').value= start_date;
+		document.getElementById('end_date').value= end_date;	
+	}
+}
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+function resetDate(obj)
+{
+	document.getElementById('duration').selectedIndex = 0;
+}
+</script> 
+<style type="text/css">
+div.auto_complete ul { 
+  border:1px solid #888; 
+  margin:0; 
+  padding:0; 
+  width:100%; 
+  background-color: #ffffff;
+  list-style-type:none; 
+} 
+div.auto_complete ul li { 
+  margin:0; 
+  padding:3px; 
+  color:#0066CC;
+  
+} 
+div.auto_complete ul li.selected { 
+  background-color: #E8E8E8; 
+  text-decoration: underline;
+ 
+} 
+div.auto_complete ul strong.highlight { 
+  color: #800; 
+  margin:0; 
+  padding:0;
+} 
+.cal_height
+{
+margin:2px 6px 0px 6px ;
+}
+</style> 
+
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15">&nbsp;</td>
+            <td height="15"><span class="heading">Publisher Geostats </span></td>
+            <td height="15">&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/pub_geo_states?search_date=<%=@delivery_time%>">Publisher Geostats</a> &gt; <span class="nav_link">Citywise  
+				 <%if (@display_pub!=nil and @display_pub!='') or (@display_state!=nil and @display_state!='')%> (<%=@display_pub%><%if @display_pub=='' or @display_state=='' or @display_state==nil%><%else%> - <%end%><%=@display_state%>)<%end%></span></td>
+				<td align="RIGHT"><strong><a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>			 </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="5">&nbsp;</td>
+            <td height="5">&nbsp;</td>
+            <td height="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+            <td height="5"><table width="100%" border="0" cellspacing="0" cellpadding="0" >
+			  <tr>
+				<td align="CENTER"><table width="100%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+                  <tr>
+                    <td width="75%"><form  action="/admin_analytic/pub_geo_cities_search" method="post" name="pub_geo_form" id="pub_geo_form">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                          <tr class="link_strip">
+                            <td align="LEFT"><div id="divAuto" style="position:relative; display:inline; z-index:10000; float:left;"><strong>City:&nbsp;</strong> <%= text_field_with_auto_complete :analytics_city, :city_name, {:value=>@city,:maxlength => 50,:size=>20 }, {:method => :get,:skip_style => true} %>
+                                  <input type="hidden" value="<%if @offset==nil or @offset==''%>10<%else%><%=@offset%><%end%>" id="show" name="show">
+                              &nbsp;&nbsp;&nbsp;&nbsp; </div>
+                                <div id="div1" style="position:relative; display:inline; z-index:10000; float:left;"><strong>Publisher:&nbsp;</strong> <%= text_field_with_auto_complete :publisher, :publisher_name, {:value=> @flag=='true' ? (@pub_name=='0' ? '' : @pub_name) : '',:maxlength => 50,:size=>20 }, {:method => :get,:skip_style => true} %>&nbsp;&nbsp;&nbsp;&nbsp; </div>
+                                <strong>&nbsp; Duration:</strong>&nbsp;
+                                <select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" style="width:120px;" >
+                                  <option value="0" <%if @duration.to_s=='0'%>selected="selected"<%end%>>&nbsp;Today</option>
+                                  <option value="1" <%if @duration.to_s=='1'%>selected="selected"<%end%>>&nbsp;Yesterday</option>
+                                  <option value="6" <%if @duration.to_s=='6'%>selected="selected"<%end%>>&nbsp;Last 7 days</option>
+                                  <option value="29" <%if @duration.to_s=='29'%>selected="selected"<%end%>>&nbsp;Last 30 days</option>
+                                  <option value="89" <%if @duration.to_s=='89'%>selected="selected"<%end%>>&nbsp;Last 90 days</option>
+                                  <option onclick="popupCustom(this);" value="custom" <%if @duration.to_s=='custom'%>selected="selected"<%end%>>&nbsp;Custom</option>
+                                </select>
+                              &nbsp;
+                                <input type="submit" name="Submit" id="go" value="GO" />
+                              &nbsp;
+                              <input  type="hidden" id="start_date" name="start_date" readonly='true' value="<%=@start_date%>"/>
+                              <input type="hidden" id="end_date"  name="end_date" readonly='true' value="<%=@end_date%>" />
+                              <input type="hidden" id="duration"  name="duration" readonly='true' value="<%=@duration%>" />
+                            </td>
+                          </tr>
+                        </table>
+                    </form></td>
+                    <td width="25%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="37">
+                        <tr class="link_strip">
+                          <td align="LEFT" width="23%"><strong>Range</strong> : <%=@start_date%> &nbsp;<strong>to</strong>&nbsp; <%=@end_date%> </td>
+                        </tr>
+                    </table></td>
+                  </tr>
+                </table></td>
+			  </tr>
+			</table></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="5">&nbsp;</td>
+            <td height="5">&nbsp;</td>
+            <td height="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="100%" height="400">
+                    <div id="us_geo_div" align="center" style="height:100%;">
+						<div id="nodata_td" class="nodata_indicator">&nbsp;</div>
+					</div>
+			    </td> 
+              </tr>
+			  <tr>
+			  	<td>
+					<table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;</td>
+            <td align="right" scope="col"><table border="0" align="RIGHT">
+               <tr>
+                <td align="RIGHT">
+					<%begin%>
+                    	&lt;&lt;&nbsp;<%if @limit<=0%>First&nbsp;&nbsp;&lt;&nbsp;Prev<%else%><a href="javascript:void(0);" id="f" onClick="zPagination(this.id,'<%=@paginate_url%>');">First</a>&nbsp;&nbsp;&lt;&nbsp;<a href="javascript:void(0)" id="p" onClick="zPagination(this.id,'<%=@paginate_url%>');">Prev</a><%end%>&nbsp;&nbsp;<%if @limit + @offset >= @max_limit%>Next&nbsp;&gt;&nbsp;&nbsp;Last<%else%><a href="javascript:void(0)" id="n" onClick="zPagination(this.id,'<%=@paginate_url%>');">Next</a>&nbsp;&gt;&nbsp;&nbsp;<a href="javascript:void(0)" id="l" onclick="zPagination(this.id,'<%=@paginate_url%>');">Last</a><%end%>&nbsp;&gt;&gt;                    			<%rescue Exception=>e; puts"#{e}"%>
+						<%end%></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>			</td></tr>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="3" cellspacing="0">
+                            <thead>
+                              <tr>
+							    <th> Publisher </th>
+                                <th> Adclient </th>
+								<th> City </th>
+                                <th> Filled </th>
+								<th> Unfilled </th>
+								<th> Aquired </th>
+                                <th> Clicks </th>								
+                                <th> CTR (%)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+							 <%for data in @pub_geodetails%>
+                              <tr>
+                                <td><%=(@pub_details[data['cid'].to_sym]==nil or @pub_details[data['cid'].to_sym]=='') ? 'Unknown' : @pub_details[data['cid'].to_sym][1]%></td>
+                                <td><%=(@pub_details[data['cid'].to_sym]==nil or @pub_details[data['cid'].to_sym]=='') ? 'Unknown' : @pub_details[data['cid'].to_sym][0]%></td>
+								<td><%=(data['ct']==nil or data['ct']=='') ? 'Unknown' : data['ct']%></td>
+								<td><%=data['fl']%></td>
+								<td><%=data['unfl']%></td>
+								<td><%=data['unfl'].to_i+data['fl'].to_i%></td>
+								<td><%=data['ck']%></td>
+								<td><%=(data['fl'].to_i==0) ? sprintf('%.2f',(0.00)) : sprintf('%.2f',(data['ck'].to_f/data['fl'].to_f))%></td>
+							    <td>&nbsp;</td>
+                              </tr>
+							  <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+				  <tr><td height="5"></td></tr>
+				  <tr>
+				    <td><table width="100%" border="0" cellspacing="2" cellpadding="2">
+					  <tr>
+						<td align="LEFT"><strong>Export to: </strong><a href="/admin_analytic/generate_csv_report?type=PUB_CITY&amp;pub_name=<%=@pub_name%>&amp;adclient=<%=@adclient%>&amp;city=<%=@city%>&amp;state=<%=@state%>&amp;start_date=<%=@start_date%>&amp;end_date=<%=@end_date%>"><img alt="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /></a></td>
+						<td align="RIGHT"><strong>Show:</strong>
+						  <select onchange="update_show(this);"><option value="10" <%if @offset==10%>selected<%end%>>10</option><option value="100" <%if @offset==100%>selected<%end%>>100</option><option value="500" <%if @offset==500%>selected<%elsif @offset==nil or @offset==''%>selected<%end%>>500</option><option value="1000" <%if @offset==1000%>selected<%end%>>1000</option></select></td>
+					  </tr>
+					</table>					</td>
+				</tr>
+                </table>				</td>
+			  </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+<input type="hidden" id="max_limit" value="<%=@max_limit%>" />
+<input type="hidden" id="limit" value="<%=@limit%>" />
+<input type="hidden" id="offset" value="<%=@offset%>" />
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%=@start_date%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%=@end_date%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');document.pub_geo_form.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"publisher",label:"Publisher",sortable:true,resizeable:true},
+			 {key:"adclient",label:"Adclient",sortable:true},
+			 {key:"city",label:"City",sortable:true},   
+			 {key:"filled",label:"Filled",sortable:true,formatter:formatNumber},      
+			 {key:"unfilled",label:"Unfilled",sortable:true,formatter:formatNumber},
+			 {key:"aquired",label:"Aquired",sortable:true,formatter:formatNumber},      
+			 {key:"clicks",label:"Clicks",sortable:true,formatter:formatNumber},
+			 {key:"ctr",label:"CTR (%)",sortable:true,formatter:formatFloat}];  
+		     this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"publisher"},   
+			        {key:"adclient"},
+					{key:"city"},
+					{key:"filled",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"unfilled",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"aquired",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"clicks",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"ctr",parser:this.parseNumberFromFloat}]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"filled",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<script type="text/javascript">
+	function update_show(obj)
+	{
+		document.getElementById('offset').value=obj.value;
+		var requestUrl = "<%=@paginate_url%>"+"&limit=0&offset="+obj.value;
+		location.href = requestUrl;
+		
+	}
+</script>
+<script type="text/javascript" src="/javascripts/z_pagination.js"></script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - pub_geo_cities view Exception :: #{e.to_s}"
+%>
+<%end%>

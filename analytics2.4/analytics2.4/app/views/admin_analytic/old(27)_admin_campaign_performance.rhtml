@@ -1,0 +1,522 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<script src="/javascripts/prototype.js"></script>
+<script src="/javascripts/effects.js"></script>
+
+<script type="text/JavaScript">
+var flag='true';
+document.getElementsByClassName = function(className, parentElement) {
+  if (Prototype.BrowserFeatures.XPath) {
+    var q = ".//*[contains(concat(' ', @class, ' '), ' " + className + " ')]";
+    return document._getElementsByXPath(q, parentElement);
+  } else {
+    var children = null;
+	if(document.body.getElementsByTagName('*').length==0){
+		children=($(parentElement) || document.body).childNodes;
+	}
+	else{
+ 		children=($(parentElement) || document.body).getElementsByTagName('*');
+	}
+    var elements = [], child;
+    for (var i = 0, length = children.length; i < length; i++) {
+      child = children[i];
+      if (Element.hasClassName(child, className))
+        elements.push(Element.extend(child));
+    }
+    return elements;
+  }
+}
+
+
+
+
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('adminstart_on').value= start_date;
+		document.getElementById('adminend_on').value= end_date;	
+	}
+}
+
+function change2mouseover(obj)
+{	
+	if (obj.className=='panels_active' && flag=='true')
+	{
+		obj.className='panels_hover';
+	}
+}
+function change2active(obj)
+{	
+	if (obj.className=='panels_hover')
+	{
+		obj.className='panels_active';
+	}
+	
+}
+
+
+function change2visited(obj)
+{
+	new Effect[Element.visible('menuDiv') ? 'BlindUp' : 'BlindUp']('menuDiv', {duration: 0.25});
+	document.getElementById('duration').disabled=false;
+	if (flag=='true')
+	{
+		var obj1=document.getElementsByClassName('panels_visited')[0];
+		obj1.className='panels_active';
+		obj.className='panels_visited';
+		var array=new Array()
+		array=document.getElementsByClassName('panels_active')
+		for(i=0; i < array.length;i++)
+		{
+			array[i].disabled="disabled";
+		}
+		//document.getElementsByClassName('panels_visited')[0].disabled="disabled";
+		document.getElementById('go').disabled="disabled";
+	}
+}
+
+function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('adminstart_on').value=document.getElementById('start_on').value;
+		document.getElementById('adminend_on').value=document.getElementById('end_on').value;
+	}
+}
+
+function onLoad()
+{
+	if (<%=@analytic=='refresh'%>)
+	{
+		document.getElementById('duration').value='30';
+	}
+	
+}
+
+//--- pop-up window 
+
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+
+//Update the summary chart
+
+function updateChart(chart)
+{	
+	if(flag=='true')
+	{
+		new Ajax.Updater('update_chart', "/admin_analytic/admin_campaign_performance?update=true&report_type="+chart, {asynchronous:true, evalScripts:true,onComplete:function(request){document.getElementById('indicator').style.display='none';document.getElementById('update_chart').style.display='block';enableAction();setTimeout(flag='true',20);}, onLoading:function(request){flag='false';document.getElementById('indicator').style.display='block';}});
+	}
+
+}
+
+function enableAction()
+{
+	array=document.getElementsByClassName('panels_active')
+	for(i=0;i< array.length;i++)
+	{
+		array[i].disabled="";
+	}
+	document.getElementById('go').disabled="";
+}
+function resetDate(obj)
+{
+	document.getElementById('duration').selectedIndex = 0;
+}
+</script>
+</head>
+ <%@campaign_report = session[:adminxml_string]%>
+ <script type="text/javascript">
+	window.onload=function(){ 
+				<%if @campaign_report!=nil && @campaign_report!=""%>
+				 <%if @campaign_report[:summary]!=nil && @campaign_report[:summary]!=""%>
+				 		var myChart_campaign = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+						myChart_campaign.setDataXML("<%=@campaign_report[:summary]%>");
+						myChart_campaign.setTransparent(true);
+						myChart_campaign.render("campaign_div");
+				<%end%>
+				<%if @campaign_report[:overall]!=nil && @campaign_report[:overall]!=""%>
+				 		var myChart_campaign_overall = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+						myChart_campaign_overall.setDataXML("<%=@campaign_report[:overall]%>");
+						myChart_campaign_overall.setTransparent(true);
+						myChart_campaign_overall.render("overall_div");
+				<%end%>
+			<%end%>
+			}
+		</script>
+<body >
+
+<%begin%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+          <tr>
+            <td width="1%">&nbsp;</td>
+            <td width="98%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td  class="heading" height="25" align="left">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+						  <td class="heading"  width="97%">Campaign Performance </td>
+						  <td width="3%">&nbsp;</td>
+						</tr>
+						<tr>
+						  <td  width="97%" height="10"></td>
+						  <td width="3%"></td>
+						</tr>
+					  </table>
+				  </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  <table width="100%" border="0">
+                    <tr>
+                      <td width="97%"><A href="/admin_analytic/admin_home">Admin Home</A> &gt; <span class="nav_link">Campaign Performance</span></td>
+                      <td width="3%" align="right"><strong align="right"> <a href="#" onclick="printWindow()" border="0"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+                    </tr>
+                  </table></td>
+              </tr>
+
+              <tr>
+                <td height="10"></td>
+              </tr>
+              <tr>
+                <td height="25"><table width="100%" border="0" cellpadding="5" cellspacing="0" class="subpagetableborder">
+                  <tr >
+                    <td align="center"  width="100%">
+					<form  action="/admin_analytic/admin_campaign_performance" method="post" name="campaign_performance" class="formtag">
+					<table width="100%" border="0" cellspacing="0" cellpadding="5">
+                        <tr>
+                          <td width="70%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                              <tr class="link_strip">
+                                <td align="LEFT"><strong>Show top :</strong></strong>&nbsp;
+                                    <select name="limit" id="limit" >
+                                      <option value="10" <%if session[:limit]=='10'%>selected="selected"<%end%> >10</option>
+									  <option value="20" <%if session[:limit]=='20'%>selected="selected"<%end%> >20</option>
+                                    </select>
+                                  &nbsp;&nbsp;&nbsp; &nbsp;<strong>Order :&nbsp; </strong>
+                                  <select id="order" name="order"  >
+                                     <option value="asc"  <%if session[:order]=='asc'%>selected="selected"<%end%>>Ascending</option>
+                                     <option value="desc" <%if session[:order]=='desc'%>selected="selected"<%end%> >Descending</option>									 
+                                  </select>
+                                  <strong>&nbsp;&nbsp;&nbsp;&nbsp;Choose Duration :</strong>&nbsp;
+                                  <select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);"  name="duration" id="duration" style="width:120px;" >
+									<option value="1" <%if session[:duration].to_s=='1'%>selected="selected"<%end%>>Yesterday</option>
+									<option value="6" <%if session[:duration].to_s=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                                    <option value="29" <%if session[:duration].to_s=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                                    <option value="89" <%if session[:duration].to_s=='89'%>selected="selected"<%end%>>Last 90 days</option>
+                                    <option value="179" <%if session[:duration].to_s=='179'%>selected="selected"<%end%>>Last 180 days</option>
+                                    <option value="364" <%if session[:duration].to_s=='364'%>selected="selected"<%end%>>Last 365 days</option>
+                                    <option onclick="popupCustom(this);" value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+                                  </select>
+                                  &nbsp;
+                                  <input type="submit" name="Submit" id="go" value="GO" />
+                                  &nbsp;</td>
+                              </tr>
+                          </table></td>
+                          <td width="30%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="34">
+                              <tr class="link_strip">
+                                <td align="LEFT"><strong>Range</strong> : 
+                                <%if session[:adminstart_on]!=nil or session[:adminstart_on]!='' %>
+                                    <%=session[:adminstart_on]%>
+                                    <%else%>
+                                    <%=@startdate%>
+                                    <%end%>
+                                  &nbsp;<strong>to</strong>
+                                  <%if session[:adminend_on]!='' or session[:adminend_on]!=nil %>
+                                  <%=session[:adminend_on]%>
+                                  <%else%>
+                                  <%=@enddate%>
+                                  <%end%>
+                                  <div id="get_dateRange">
+                                    <input type="hidden" name="from" value="<%=@history%>" />
+                                    <input  type="hidden" id="adminstart_on" name="adminstart_on" readonly='true' value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=session[:adminstart_on]%><%else%><%=@startdate%><%end%>"/>
+                                    <input type="hidden" id="adminend_on"  name="adminend_on" readonly='true' value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=session[:adminend_on]%><%else%><%=@enddate%><%end%>" />
+                                    <input type="hidden" id="statistics" name="statistics" value="impressions" readonly='true' />
+                                  </div></td>
+                              </tr>
+                          </table></td>
+                        </tr>
+                    </table></form></td>
+                  </tr>
+                  <tr >
+                    <td align="center" ><table align="center" border="0" cellpadding="5" cellspacing="0" width="100%">
+                        <tr>
+                          <td width="15%" align="center" valign="middle"  ><div style="cursor:hand;" align="center"  valign="middle" <%if session[:adminreport_name]=='impressions'%>class="panels_visited" <%else%> class="panels_active"<%end%> onclick="change2visited(this);updateChart('impressions');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);"> <strong><%=@impressions==nil ? 0 : number_with_delimiter(@impressions)%> Impressions</strong><br>
+                                click to view chart</div></td>
+                          <td width="15%" align="center" valign="middle"><div <%if session[:adminreport_name]=='clicks'%>class="panels_visited" <%else%> class="panels_active"<%end%> align="center"  valign="middle" onclick="change2visited(this);updateChart('clicks');" onmouseover="change2mouseover(this);" id="div5" onmouseout="change2active(this);"> <strong><%=@clicks==nil ? 0 : number_with_delimiter(@clicks)%> Clicks</strong><br>
+                                click to view chart </div></td>
+                          <td width="15%" align="center" valign="middle"><div <%if session[:adminreport_name]=='ctr'%>class="panels_visited" <%else%> class="panels_active"<%end%> align="center"  valign="middle" onclick="change2visited(this);updateChart('ctr');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);" ><strong>CTR - <%=@ctr==nil ? 0 : sprintf('%.2f',@ctr)%>%</strong><br>
+                                click to view chart </div></td>
+                          <td width="15%" align="center" valign="middle"><div  <%if session[:adminreport_name]=='amount_spent'%>class="panels_visited" <%else%> class="panels_active"<%end%> align="center"  valign="middle" onclick="change2visited(this);updateChart('amount_spent');" onmouseover="change2mouseover(this);" onmouseout="change2active(this);"><strong> Spent - $<%=@amount_spent==nil ? 0 : number_with_delimiter(sprintf('%.2f',@amount_spent))%></strong><br>
+                               click to view chart </div></td>
+                          </tr>
+                    </table></td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="25" align="CENTER"><span id="indicator_div"><img id="indicator" style="display:none;margin-top:10px;" src="/images/indicator.gif" height="32" width="32" alt="In progress..." /></span></td>
+              </tr>
+              <tr>
+                <td height="25">
+				
+				<div id="update_chart">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="chart_title">Top <%=session[:limit]%> Campaigns</td>
+                    <td class="chart_title">Overall Campaigns</td>
+                  </tr>
+				  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+	                   <td width="23%" height="300"><div id="campaign_div" align="center"><div class="nodata_td">&nbsp;</div></div></td>
+                       <td width="24%"><div id="overall_div" align="center"><div class="nodata_td">&nbsp;</div></div></td>
+                  </tr>
+				  <tr>
+	                   <td width="23%"  colspan="2">&nbsp;</td>
+                </tr>
+				  <tr>
+	                   <td  colspan="2">
+						   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                             <tr>
+                               <td width="1%">&nbsp;</td>
+                               <td width="44%" align="left"><span class="report_text"><strong>Export to: <a href="/admin_analytic/admin_campaign_performance?csv=true"><img src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a></strong></span></td>
+     
+                               <td width="55%" align="right">
+									 <%if  @instCampaignData_pages.current.previous !=nil%>
+									 		<%= link_to '<< First',{:page => @instCampaignData_pages.first } ,{:class=>'paginate',:onclick=>"document.getElementById('indicator_div').scrollIntoView(true);Element.show('indicator');" }%>
+									 <%else%>
+									 		&lt;&lt;&nbsp;First
+									 <%end%>
+									 &nbsp;&nbsp;                                     
+									 <%if  @instCampaignData_pages.current.previous !=nil%>
+									 		<%= link_to '< Prev', { :page => @instCampaignData_pages.current.previous },{:class=>'paginate',:onclick=>"document.getElementById('indicator_div').scrollIntoView(true);Element.show('indicator');"}  %>
+									 <%else%>
+									 		&lt;&nbsp;Prev
+									 <%end%>
+									 &nbsp;&nbsp;
+								 	 <span class="pagination"><%= pagination_links(@instCampaignData_pages,{:window_size => 5},{:onclick=>"document.getElementById('indicator_div').scrollIntoView(true);Element.show('indicator');"})%></span>
+									 <%if @instCampaignData_pages.current.next !=nil%>
+									 		&nbsp;&nbsp;
+									 		<%= link_to 'Next >', { :page => @instCampaignData_pages.current.next},{:class=>'paginate',:onclick=>"document.getElementById('indicator_div').scrollIntoView(true);Element.show('indicator');"} %>
+									 <%else%>
+									 		Next&nbsp;&gt;
+									 <%end%>
+									 &nbsp;&nbsp;                                     
+									 <%if @instCampaignData_pages.last !=nil && @instCampaignData_pages.current.next !=nil %>
+									 		<%= link_to 'Last >>', { :page => @instCampaignData_pages.last},{:class=>'paginate',:onclick=>"document.getElementById('indicator_div').scrollIntoView(true);Element.show('indicator');"}%>
+									 <%else%>
+									 		Last&nbsp;&gt;&gt;
+									 <%end%>
+                                 </td>
+                             </tr>
+							 <tr>
+						   <td colspan="3" height="5"></td>
+						   </tr>
+							 <tr>
+                               <td colspan="3">
+							   		<div align="center" class=" yui-skin-sam"  >
+										 <div id="markup" class="yui-b">
+										   <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+											 <thead>
+											   <tr>
+												 <th>Campaign Name</th>
+												 <th>Impressions</th>
+												 <th>Clicks</th>
+												 <th>CTR (%) </th>
+												 <th>Amount Spent ($) </th>
+												 <th>Percentage - Traffic (%) </th>
+											   </tr>
+											 </thead>
+											 <tbody>
+											 <%if @instCampaignData!=nil%>
+											   <%session[:csv_string] = FasterCSV.generate do |csv|
+													csv << ["Campaign Name", "Impressions","Clicks","CTR","Amount Spent","Percentage - Traffic"]
+													for @campaign in @instCampaignData
+													csv << ["#{@campaign.campaign_id==nil ? 'NA' : @campaign.campaign_id}","#{(@campaign.impressions==nil || @campaign.impressions=="") ? 0 : @campaign.impressions}","#{(@campaign.clicks==nil || @campaign.clicks=="") ? 0 : @campaign.clicks}","#{(@campaign.ctr==nil || @campaign.ctr=="") ? 0.00 : sprintf('%.2f',@campaign.ctr)}%","$#{(@campaign.amt_spent==nil || @campaign.amt_spent=="") ? 0.00 : sprintf('%.2f',@campaign.amt_spent)}","#{(@campaign.percentage==nil || @campaign.percentage=="") ? 0.00 : sprintf('%.2f',@campaign.percentage)}%"]%>
+											   <tr>
+												   <td><a href="/admin_analytic/advertiser_home?from=campaign&amp;campaign_id=<%=encrypt(@campaign.campaign_id)%>&amp;analytic=refresh" title="click to view to campaign report" alt="click to view to campaign report"><%=@campaign.campaign_id==nil ? 'NA' : @campaign.campaign_id%></a></td>
+												 <td><%=(@campaign.impressions==nil || @campaign.impressions=="") ? 0 : @campaign.impressions%></td>
+												 <td><%=(@campaign.clicks==nil || @campaign.clicks=="") ? 0 : @campaign.clicks%></td>
+												 <td><%=(@campaign.ctr==nil || @campaign.ctr=="") ? 0.00 : sprintf('%.2f',@campaign.ctr)%></td>
+												 <td><%=(@campaign.amt_spent==nil || @campaign.amt_spent=="") ? 0.00 : sprintf('%.2f',@campaign.amt_spent)%></td>
+												 <td><%=(@campaign.percentage==nil || @campaign.percentage=="") ? 0.00 : sprintf('%.2f',@campaign.percentage)%></td>
+											   </tr>
+											   <%end%>
+											   <%end%>
+											  <%end%>
+											 </tbody>
+										   </table>
+										 </div>
+									</div>							   </td>
+                               </tr>
+                           </table>					   </td>
+	                   </tr>
+                </table>	
+				</div>			</td>
+              </tr>
+			  
+              <tr>
+                <td width="50%" >				</td>
+              </tr>
+              
+              <tr>
+                <td>
+				
+ 
+ 
+<br/>
+
+<script type="text/javascript">
+	formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+		YAHOO.util.Event.addListener(window, "load", function() {   
+   		YAHOO.example.EnhanceFromMarkup = new function() {   
+		  var myColumnDefs = [   
+             {key:"Campaign_Id",label:"Campaign Name"},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},
+			 {key:"ctr",label:"CTR (%)",formatter:formatFloat,sortable:true},
+			 {key:"amount_spent",label:"Amount Spent ($)",formatter:formatFloat,sortable:true},
+			 {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];   
+		this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+            fields: [{key:"Campaign_Id"},   
+                     {key:"impressions", parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"clicks", parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"ctr",parser:this.parseNumberFromFloat},  
+					 {key:"amount_spent",parser:this.parseNumberFromFloat},  
+					 {key:"percentage",parser:this.parseNumberFromFloat}
+             ]   
+		 };  
+  		 this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"impressions",dir:"desc"}
+				 }   
+         );   
+     };  
+ });   
+
+ </script>				</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td width="1%" valign="top">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+     
+    </table></td>
+  </tr>
+</table>
+<%
+ rescue Exception=>e
+      puts "DEBUGGER :: ERROR :: in Admin_Campaign_Performance.rhtml - Admin_Campaign_Performance :: #{e.to_s}"
+ end %>
+</body>
+ </html>
+<!--POPUP MENU-->
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=session[:adminstart_on]%><%else%><%=@startdate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=session[:adminend_on]%><%else%><%=@enddate%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3"></td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" align="LEFT" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.campaign_performance.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - admin_campaign_performance view Exception :: #{e.to_s}"
+%>
+<%end%>

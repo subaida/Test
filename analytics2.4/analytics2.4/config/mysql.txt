@@ -1,0 +1,348 @@
+070430 10:27:54  mysqld started
+070430 10:27:57  mysqld ended
+
+070430 10:28:20  mysqld started
+070430 10:28:22  mysqld ended
+
+070430 10:28:34  mysqld started
+070430 10:28:37  mysqld ended
+
+070430 10:37:07  mysqld started
+070430 10:37:07  InnoDB: Started; log sequence number 0 43655
+070430 10:37:07 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070430 10:43:32 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070430 10:43:32  InnoDB: Starting shutdown...
+070430 10:43:35  InnoDB: Shutdown completed; log sequence number 0 43655
+070430 10:43:35 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070430 10:43:35  mysqld ended
+
+070430 10:43:36  mysqld started
+070430 10:43:38  mysqld ended
+
+070430 10:43:45  mysqld started
+070430 10:43:45  InnoDB: Started; log sequence number 0 43655
+070430 10:43:45 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070430 10:48:47 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070430 10:48:47  InnoDB: Starting shutdown...
+070430 10:48:50  InnoDB: Shutdown completed; log sequence number 0 43655
+070430 10:48:50 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070430 10:48:50  mysqld ended
+
+070430 10:48:50  mysqld started
+070430 10:48:50  InnoDB: Started; log sequence number 0 43655
+070430 10:48:50 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070430 18:35:25 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070430 18:35:25  InnoDB: Starting shutdown...
+070430 18:35:27  InnoDB: Shutdown completed; log sequence number 0 43655
+070430 18:35:27 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070430 18:35:27  mysqld ended
+
+070502 10:08:18  mysqld started
+070502 10:08:21  mysqld ended
+
+070502 10:43:40  mysqld started
+070502 10:43:40  InnoDB: Started; log sequence number 0 43655
+070502 10:43:40 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070502 11:20:02 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070502 11:20:02  InnoDB: Starting shutdown...
+070502 11:20:04  InnoDB: Shutdown completed; log sequence number 0 43655
+070502 11:20:04 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070502 11:20:04  mysqld ended
+
+070502 11:22:28  mysqld started
+070502 11:22:31  mysqld ended
+
+070511 12:02:41  mysqld started
+070511 12:02:44  mysqld ended
+
+070514 14:25:49  mysqld started
+070514 14:25:52  mysqld ended
+
+070514 14:26:03  mysqld started
+070514 14:26:03  InnoDB: Started; log sequence number 0 43655
+070514 14:26:03 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+A mysqld process already exists at  Mon May 14 14:32:39 IST 2007
+070514 17:38:44 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070514 17:38:44  InnoDB: Starting shutdown...
+070514 17:38:46  InnoDB: Shutdown completed; log sequence number 0 427464
+070514 17:38:46 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070514 17:38:46  mysqld ended
+
+070515 16:20:04  mysqld started
+070515 16:20:05  InnoDB: Started; log sequence number 0 427464
+070515 16:20:05 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070516 11:32:16 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070516 11:32:16  InnoDB: Starting shutdown...
+070516 11:32:18  InnoDB: Shutdown completed; log sequence number 0 432850
+070516 11:32:18 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070516 11:32:18  mysqld ended
+
+070516 11:32:18  mysqld started
+070516 11:32:21  mysqld ended
+
+070516 11:36:06  mysqld started
+070516 11:36:08  mysqld ended
+
+070516 11:37:28  mysqld started
+070516 11:37:28  InnoDB: Started; log sequence number 0 432850
+070516 11:37:28 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070519 17:04:05 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070519 17:04:07  InnoDB: Starting shutdown...
+070519 17:04:10  InnoDB: Shutdown completed; log sequence number 0 3365370
+070519 17:04:10 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070519 17:04:10  mysqld ended
+
+070519 17:04:18  mysqld started
+070519 17:04:20  mysqld ended
+
+070521 10:41:26  mysqld started
+070521 10:41:29  mysqld ended
+
+070521 10:42:10  mysqld started
+070521 10:42:11  InnoDB: Started; log sequence number 0 3365396
+070521 10:42:11 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070521 10:45:04 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070521 10:45:06  InnoDB: Starting shutdown...
+070521 10:45:09  InnoDB: Shutdown completed; log sequence number 0 3365396
+070521 10:45:09 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070521 10:45:09  mysqld ended
+
+070521 10:45:10  mysqld started
+070521 10:45:12  mysqld ended
+
+070521 10:50:01  mysqld started
+070521 10:50:03  mysqld ended
+
+070521 10:51:14  mysqld started
+070521 10:51:14  InnoDB: Started; log sequence number 0 3365396
+070521 10:51:14 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070521 10:59:51 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070521 10:59:51  InnoDB: Starting shutdown...
+070521 10:59:52  InnoDB: Shutdown completed; log sequence number 0 3365396
+070521 10:59:52 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070521 10:59:52  mysqld ended
+
+070521 10:59:53  mysqld started
+070521 10:59:55  mysqld ended
+
+070521 11:00:44  mysqld started
+070521 11:00:47  mysqld ended
+
+070521 11:00:58  mysqld started
+070521 11:00:58  InnoDB: Started; log sequence number 0 3365396
+070521 11:00:58 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070521 11:18:27 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070521 11:18:27  InnoDB: Starting shutdown...
+070521 11:18:30  InnoDB: Shutdown completed; log sequence number 0 3365396
+070521 11:18:30 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070521 11:18:30  mysqld ended
+
+070521 11:18:31  mysqld started
+070521 11:18:33  mysqld ended
+
+070521 11:18:40  mysqld started
+070521 11:18:40  InnoDB: Started; log sequence number 0 3365396
+070521 11:18:40 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070602 11:58:17 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070602 11:58:19 [Warning] /usr/sbin/mysqld: Forcing close of thread 8883  user: 'root'
+
+070602 12:22:35  mysqld started
+070602 12:22:35  InnoDB: Database was not shut down normally!
+InnoDB: Starting crash recovery.
+InnoDB: Reading tablespace information from the .ibd files...
+InnoDB: Restoring possible half-written data pages from the doublewrite
+InnoDB: buffer...
+070602 12:22:35  InnoDB: Starting log scan based on checkpoint at
+InnoDB: log sequence number 0 23385809.
+InnoDB: Doing recovery: scanned up to log sequence number 0 23385809
+070602 12:22:35  InnoDB: Started; log sequence number 0 23385809
+070602 12:22:35 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.37-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070612 14:25:01 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070612 14:25:01  InnoDB: Starting shutdown...
+070612 14:25:05  InnoDB: Shutdown completed; log sequence number 0 64355814
+070612 14:25:05 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070612 14:25:05  mysqld ended
+
+070612 14:27:09  mysqld started
+070612 14:27:09  InnoDB: Started; log sequence number 0 64355814
+070612 14:27:09 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070612 19:05:24 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070612 19:05:26  InnoDB: Starting shutdown...
+070612 19:05:29  InnoDB: Shutdown completed; log sequence number 0 64413075
+070612 19:05:29 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070612 19:05:29  mysqld ended
+
+070612 19:08:50  mysqld started
+070612 19:08:52  InnoDB: Started; log sequence number 0 64413075
+070612 19:08:53 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070613  1:42:02 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070613  1:42:02  InnoDB: Starting shutdown...
+070613  1:42:05  InnoDB: Shutdown completed; log sequence number 0 64413124
+070613  1:42:05 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070613 01:42:05  mysqld ended
+
+070613 01:44:34  mysqld started
+070613  1:44:36  InnoDB: Started; log sequence number 0 64413124
+070613  1:44:36 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070613 13:45:38 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070613 13:45:38  InnoDB: Starting shutdown...
+070613 13:45:42  InnoDB: Shutdown completed; log sequence number 0 64413134
+070613 13:45:42 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070613 13:45:42  mysqld ended
+
+070613 13:48:06  mysqld started
+070613 13:48:07  InnoDB: Started; log sequence number 0 64413134
+070613 13:48:07 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070613 14:23:45 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070613 14:23:45  InnoDB: Starting shutdown...
+070613 14:23:47  InnoDB: Shutdown completed; log sequence number 0 64413134
+070613 14:23:47 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070613 14:23:47  mysqld ended
+
+070613 14:33:54  mysqld started
+070613 14:33:55  InnoDB: Started; log sequence number 0 64413134
+070613 14:33:56 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070621  1:42:25 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070621  1:42:27  InnoDB: Starting shutdown...
+070621  1:42:30  InnoDB: Shutdown completed; log sequence number 0 66703494
+070621  1:42:30 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070621 01:42:30  mysqld ended
+
+070621 01:42:37  mysqld started
+070621  1:42:38  InnoDB: Started; log sequence number 0 66703494
+070621  1:42:38 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070626 15:46:51 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070626 15:46:53  InnoDB: Starting shutdown...
+070626 15:46:55  InnoDB: Shutdown completed; log sequence number 0 67989209
+070626 15:46:55 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070626 15:46:55  mysqld ended
+
+070626 15:47:01  mysqld started
+070626 15:47:01  InnoDB: Started; log sequence number 0 67989209
+070626 15:47:01 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070704 23:01:43 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070704 23:01:43  InnoDB: Starting shutdown...
+070704 23:01:47  InnoDB: Shutdown completed; log sequence number 0 75762756
+070704 23:01:47 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070704 23:01:47  mysqld ended
+
+070704 23:01:57  mysqld started
+070704 23:01:57  InnoDB: Started; log sequence number 0 75762756
+070704 23:01:57 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+070718 11:24:41 [Note] /usr/sbin/mysqld: Normal shutdown
+
+070718 11:24:41  InnoDB: Starting shutdown...
+070718 11:24:45  InnoDB: Shutdown completed; log sequence number 0 81932947
+070718 11:24:45 [Note] /usr/sbin/mysqld: Shutdown complete
+
+070718 11:24:45  mysqld ended
+
+070718 11:28:09  mysqld started
+070718 11:28:10  InnoDB: Started; log sequence number 0 81932947
+070718 11:28:10 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+071003 15:12:39  mysqld started
+071003 15:12:40  InnoDB: Database was not shut down normally!
+InnoDB: Starting crash recovery.
+InnoDB: Reading tablespace information from the .ibd files...
+InnoDB: Restoring possible half-written data pages from the doublewrite
+InnoDB: buffer...
+071003 15:12:42  InnoDB: Starting log scan based on checkpoint at
+InnoDB: log sequence number 0 100358535.
+InnoDB: Doing recovery: scanned up to log sequence number 0 100358535
+071003 15:12:42  InnoDB: Started; log sequence number 0 100358535
+071003 15:12:43 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+071030 21:49:04  mysqld started
+071030 21:49:05  InnoDB: Database was not shut down normally!
+InnoDB: Starting crash recovery.
+InnoDB: Reading tablespace information from the .ibd files...
+InnoDB: Restoring possible half-written data pages from the doublewrite
+InnoDB: buffer...
+071030 21:49:07  InnoDB: Starting log scan based on checkpoint at
+InnoDB: log sequence number 0 181960763.
+InnoDB: Doing recovery: scanned up to log sequence number 0 181960763
+071030 21:49:07  InnoDB: Started; log sequence number 0 181960763
+071030 21:49:07 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+071115 12:53:58 [Note] /usr/sbin/mysqld: Normal shutdown
+
+071115 12:54:00  InnoDB: Starting shutdown...
+071115 12:54:05  InnoDB: Shutdown completed; log sequence number 0 249864155
+071115 12:54:05 [Note] /usr/sbin/mysqld: Shutdown complete
+
+071115 12:54:05  mysqld ended
+
+071115 12:56:58  mysqld started
+071115 12:57:00  InnoDB: Started; log sequence number 0 249864155
+071115 12:57:00 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)
+071117 16:32:14 [Note] /usr/sbin/mysqld: Normal shutdown
+
+071117 16:32:17  InnoDB: Starting shutdown...
+071117 16:32:24  InnoDB: Shutdown completed; log sequence number 0 258670538
+071117 16:32:25 [Note] /usr/sbin/mysqld: Shutdown complete
+
+071117 16:32:26  mysqld ended
+
+071117 16:34:56  mysqld started
+071117 16:34:58  InnoDB: Started; log sequence number 0 258670538
+071117 16:34:58 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.0.41-community'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Edition (GPL)

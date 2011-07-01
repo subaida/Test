@@ -1,0 +1,82 @@
+<%begin%>
+<style type="text/css">
+.errorMessage
+{
+	background-color:#ffffd5;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-bottom-width:1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-bottom-style:solid;
+	border-right-color: #dd9988;
+	border-top-color:#dd9988;
+	border-left-color:#dd9988;
+	border-bottom-color:#dd9988;
+	padding: 3px 3px 3px 3px;
+	color:#FF0000;
+	}
+</style>
+<div id= "release_payment">
+
+<body class="yui-skin-sam">
+<div id="releasepayment" class="yui-content">
+<%# form_remote_tag(:complete =>"eval(request.responseText);",:url=>{:controller=>'admin_analytic',:action=>'owner_popup'},:method=>'post') do %>
+
+<form onSubmit="new Ajax.Request('/admin_analytic/owner_popup', {asynchronous:true, evalScripts:true, method:'post', onComplete:function(request){eval(request.responseText);}, parameters:Form.serialize(this)}); return false;" method="post" action="/admin_analytic/owner_popup">
+
+
+<table width="100%" border="0" cellspacing="4" cellpadding="4" class="table_border"  style=" height:50px; width:500px;">
+  <tr>
+    <td colspan="2" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="84%"><span class="admin_title"><strong>Update Carrier  </strong></span></td>
+        <td width="16%" align="right"><a href="javascript:void(0)" class="close_icon" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close </a></td>
+      </tr>
+    </table></td>
+  </tr>
+
+  <% if not flash[:notice].blank? %>	
+  <tr>				
+    <td width="32%" align="left" colspan="2" class="errorMessage" ><%= flash[:notice] %></td>
+  </tr>
+  <% end %>
+    
+  	  
+  <tr>
+  		<input type="hidden" name="page" value="">	
+		<input type="hidden" name="owner" value="<%= @owner_name%>">	
+		<input type="hidden" name="country_name" value="<%= @country_name%>">
+		<input type="hidden" name="impressions" value="<%= @impressions%>">
+		<input type="hidden" name="paginate_url" value="<%= @paginate_url %>">
+		<input type="hidden" name="limit" value="<%= @limit %>">
+		<input type="hidden" name="offset" value="<%= @offset %>">				
+		
+		<%flash[:notice]=nil%>
+						
+    <td width="32%" height="40" align="left"><strong>Enter Carrier Name: &nbsp;</strong></td>
+    <td width="68%" height="40"><input name="carrier_name"  id="carrier_name" type="text" size="20"  maxlength="30"/></td>
+  </tr>  
+ 
+  
+  
+  <tr>
+    <td height="40" align="right">&nbsp;</td>
+    <td height="40"><input type="submit" name="Submit" value="Submit"  />
+      &nbsp;</td>
+  </tr>
+</table>
+</form>
+<%#end%>
+</div>
+</body>
+
+
+</div>
+<%
+rescue Exception => e
+	puts "Error : /payments/owner_popup.rhtml : #{e.to_s}"
+end
+%>

@@ -1,0 +1,167 @@
+<%begin%> 
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="chart_title" <%if @adminreport_name=='ctr'%>colspan="2"<%end%>>Top <%=session[:limit]%> Campaigns</td>
+    <%if @adminreport_name!='ctr'%><td class="chart_title">Overall Campaigns</td><%end%>
+  </tr>
+  <tr>
+    <td><span id="indicator_div"></span></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="23%" height="300" <%if @adminreport_name=='ctr'%>colspan="2"<%end%>><div id="campaign_div" align="center"><div class="nodata_td">&nbsp;</div></div></td>
+    <%if @adminreport_name!='ctr'%><td width="24%"><div id="overall_div" align="center"><div class="nodata_td">&nbsp;</div></div></td><%end%>
+  </tr>
+  <tr>
+    <td width="23%"  colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td  colspan="2">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%">&nbsp;</td>
+            <td width="44%" align="left"><span class="report_text"><strong>Export to: <a href="/admin_analytic/admin_campaign_performance?csv=true"><img src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a></strong></span></td>
+           
+            <td width="55%" align="right">
+				<%if  @instCampaignData_pages.current.previous !=nil%>
+						<%= link_to_remote('<< First',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_campaign_performance', :page =>@instCampaignData_pages.first,:report_type=>@adminreport_name,:update=>true}},{:class=>"paginate"})%>
+				<%else%>
+						&lt;&lt;&nbsp;First
+				<%end%>
+				&nbsp;&nbsp;                
+				<%if  @instCampaignData_pages.current.previous !=nil%>
+						<%= link_to_remote('< Prev',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_campaign_performance', :page =>@instCampaignData_pages.current.previous,:report_type=>@adminreport_name,:update=>true}},{:class=>"paginate"})%>
+				<%else%>
+						&lt;&nbsp;Prev
+				<%end%>
+				&nbsp;&nbsp;
+				<span class="pagination"><%=pagination_links_remote(@instCampaignData_pages,{:window_size => 5},{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url=>{:action=>'admin_campaign_performance',:report_type=>@adminreport_name,:update=>true}})%> </span>
+				<%if @instCampaignData_pages.current.next !=nil%>
+						&nbsp;&nbsp;
+						<%= link_to_remote('Next >',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_campaign_performance', :page =>@instCampaignData_pages.current.next,:report_type=>@adminreport_name,:update=>true}},{:class=>"paginate"})%>
+				<%else%>
+						Next&nbsp;&gt;
+				<%end%>
+				&nbsp;&nbsp;                
+				<%if @instCampaignData_pages.last !=nil && @instCampaignData_pages.current.next !=nil %>
+						<%= link_to_remote('Last >>',{:loading=>"Element.show('indicator');document.getElementById('indicator_div').scrollIntoView(true);",:complete=>"Element.hide('indicator')",:update => "update_chart",:url => { :action => 'admin_campaign_performance', :page =>@instCampaignData_pages.last,:report_type=>@adminreport_name,:update=>true}},{:class=>"paginate"})%>
+				<%else%>
+						Last&nbsp;&gt;&gt;
+				<%end%>               
+			</td>
+          </tr>
+		  <tr>
+		  	 <td colspan="3" height="5"></td>
+		  </tr>
+		  <tr>
+            <td colspan="3"><div align="center" class=" yui-skin-sam"  >
+      <div id="markup" class="yui-b">
+        
+        <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Campaign Name</th>
+              <th>Impressions</th>
+              <th>Clicks</th>
+              <th>CTR (%) </th>
+              <th>Amount Spent ($) </th>
+              <%if @adminreport_name!='ctr'%> <th>Percentage - Traffic(%) </th><%end%>
+            </tr>
+          </thead>
+          <tbody>
+             <%session[:csv_string] = FasterCSV.generate do |csv|
+							   		csv << ["Campaign Name", "Impressions","Clicks","CTR","Amount Spent"]
+									for @campaign in @instCampaignData
+									csv << ["#{@camp_name[@campaign.campaign_id]}","#{(@campaign.impressions==nil || @campaign.impressions=="") ? 0 : @campaign.impressions}","#{(@campaign.clicks==nil || @campaign.clicks=="") ? 0 : @campaign.clicks}","#{(@campaign.ctr==nil || @campaign.ctr=="") ? 0.00 : sprintf('%.2f',@campaign.ctr)}%","$#{(@campaign.amt_spent==nil || @campaign.amt_spent=="") ? 0.00 : sprintf('%.2f',@campaign.amt_spent)}%"]%>
+            <tr> 
+                  <td><a href="/admin_analytic/advertiser_home?from=campaign&amp;campaign_id=<%=encrypt(@campaign.campaign_id)%>&amp;analytic=refresh" title="click to view to campaign report" alt="click to view to campaign report"><%=@campaign.campaign_id==nil ? 'NA' : @camp_name[@campaign.campaign_id]%></a></td>
+              <td><%=(@campaign.impressions==nil || @campaign.impressions=="") ? 0 : @campaign.impressions%></td>
+			  <td><%=(@campaign.clicks==nil || @campaign.clicks=="") ? 0 : @campaign.clicks%></td>
+              <td><%=(@campaign.ctr==nil || @campaign.ctr=="") ? 0.00 : sprintf('%.2f',@campaign.ctr)%></td>
+              <td><%=(@campaign.amt_spent==nil || @campaign.amt_spent=="") ? 0.00 : sprintf('%.2f',@campaign.amt_spent)%></td>
+              <%if @adminreport_name!='ctr'%><td><%=(@campaign.percentage==nil || @campaign.percentage=="") ? 0.00 : sprintf('%.2f',@campaign.percentage)%></td><%end%>
+            </tr>
+            <%end
+			end%>
+          </tbody>
+        </table>
+      </div>
+    </div></td>
+          </tr>
+        </table>	</td>
+  </tr>
+</table>
+<% @campaign_report = session[:adminxml_string]%>
+<script type="text/javascript">
+<%if @campaign_report!=nil && @campaign_report!=""%>
+		 <%if @campaign_report[:summary]!=nil && @campaign_report[:summary]!=""%>
+		 		<%if @adminreport_name=='ctr'%>
+				var campaign_update = new FusionCharts("/FusionCharts_Developer/Charts/Column2D.swf", "myChartId", "800", "300", "0", "0");
+				<%else%>
+				var campaign_update = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+				<%end%>
+				campaign_update.setDataXML("<%=@campaign_report[:summary]%>");
+				campaign_update.setTransparent(true);
+				campaign_update.render("campaign_div");
+		<%end%>
+		<%if @campaign_report[:overall]!=nil && @campaign_report[:overall]!="" && @adminreport_name!='ctr'%>
+				var campaign_update_overall = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "500", "300", "0", "0");
+				campaign_update_overall.setDataXML("<%=@campaign_report[:overall]%>");
+				campaign_update_overall.setTransparent(true);
+				campaign_update_overall.render("overall_div");
+		<%end%>
+	<%end%>
+
+</script>
+
+<script type="text/javascript">
+  	formatFloat = function(elCell, oRecord, oColumn, oData) {
+	 var value = oData;
+ 	elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ 	};
+formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+   		YAHOO.example.EnhanceFromMarkup = new function() {   
+		  var myColumnDefs = [   
+             {key:"Campaign_Id",label:"Campaign Name",sortable:true,resizeable:true},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true,resizeable:true},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true,resizeable:true},
+			 {key:"ctr",label:"CTR (%)",formatter:formatFloat,sortable:true,resizeable:true},
+			 {key:"amount_spent",label:"Amount Spent ($)",formatter:formatFloat,sortable:true,resizeable:true}
+			 <%if @adminreport_name!='ctr'%>,{key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true,resizeable:true}<%end%>];   
+		this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+            fields: [{key:"Campaign_Id"},   
+                     {key:"impressions",parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"clicks", parser:YAHOO.util.DataSource.parseNumber},  
+					 {key:"ctr",parser:this.parseNumberFromFloat},  
+					 {key:"amount_spent",parser:this.parseNumberFromFloat}<%if @adminreport_name!='ctr'%>, 
+					 {key:"percentage",parser:this.parseNumberFromFloat}<%end%>
+
+             ]   
+			 
+         };  
+  
+		 this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"<%=@adminreport_name%>",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+  
+
+ </script>			
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in admin campaing updatechart view and error is #{e.to_s}"%>
+<%end%>
+
+
+

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; Overview </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>FusionMaps maps can  very easily be integrated with your Flash movies and applications. To load a map in your movie, all you need to do is include the respective map's class at design-time, copy the library items and then compile it with your application to form a single comprehensive unit. </p>
+      <p class="highlightBlock">To load FusionMaps maps in your Flash movies, <strong>you need to make sure that your Flash movies are also in Flash 8 format  and uses ActionScript 2.</strong> This is because FusionMaps is coded in ActionScript 2/Flash 8 and intensively makes use of features provided in Flash 8. <strong>If you're developing in Flash 9 (or above)</strong>, you'll need to load FusionMaps maps as external SWF files - you cannot directly load the class of the map. </p>
+      <p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">XML Data Usage </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionMaps always needs its data in XML format. It CANNOT accept any other format of data including variables, arrays, recordsets etc. Even when using FusionMaps inside your Flash movies, you need to provide it XML data only. </p>
+      <p>XML data can be easily created in your Flash movies either using string concatenation or using methods of the XML Object. You do not need to store data in physical XML files. You can build the XML data in Flash variables at run-time and then pass this to map. So, even if you've your data in arrays, recordsets or remote database (that you access using your own Flash code), you can easily convert them to XML at run-time and then use FusionMaps with it. </p>
+      <p>We won't be discussing XML data structure here, as that has already been discussed in &quot;FusionMaps and XML&quot; Section. </p>
+    <p>Here, we'll directly jump to see how to create a FusionMaps map in your Flash application. We'll start with a very basic single map application. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Basic Example </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>For this example, we create a new .fla named as <span class="codeInline">MyFirstMap.fla</span>. We set the size of this movie to 500x350 pixels and set background as white. </p>
+    <p class="highlightBlock">The code examples discussed in this section are present in <span class="codeInline">Download Package &gt; Code &gt; FlashExamples</span>.</p>
+    <p>Now, before we code to create the maps, we need to set (install) the maps  for use in this movie. Setting up the maps for use in your movie is very simple. You just need to copy <span class="codeInline">com</span> folder from <span class="codeInline">Download Package &gt; MapsSource </span> folder into the folder in which you'll be placing your .fla file. Here,  we're placing our <span class="codeInline">.fla</span> file in <span class="codeInline">FlashExamples</span> folder, and as such we copy the <span class="codeInline">com</span> folder here.</p>
+    <p class="highlightBlock"><span class="codeInline">com</span> folder is the package for FusionMaps Class files. It contains all the files required to generate any map in FusionMaps. <br />
+      <br />
+      Individual map class files are present in <span class="codeInline">com &gt; fusionmaps &gt; maps</span>  folder. If you feel that you just need to plot a few maps in your movie, you can delete the rest of Map Class files from this folder. <br />
+      <br />
+      There are lot of other folders under <span class="codeInline">com &gt; fusionmaps </span> folder. These files are required by FusionMaps to create the map. </p>
+    <p>Next, we see how  to copy the map's visual elements from original library into our movie. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Copying the Map Library Elements </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>We now need to copy the World Map library items from original .fla file to our .fla (<span class="codeInline">MyFirstMap.fla</span>) file. These elements are necessary for the map to render. </p>
+        <p>For each map in FusionMaps pack, if you open the respective .fla file, you'll find a folder in the library that contains the map visual elements. The folder is named as <span class="codeInline">&quot;&lt;&lt;Map Name&gt;&gt; Map&quot;</span> e.g.,<span class="codeInline"> &quot;World Map&quot;</span> or <span class="codeInline">&quot;USA Map&quot;</span>.</p>
+      <p><strong>If you've the Enterprise license of FusionMaps</strong>, the .fla files are present  in <span class="codeInline">Download Package &gt; MapSource</span>. These .fla files are complete .fla files that can be recompiled to form the original map too. </p>
+      <p><strong>If you've any other license (not including evaluation)</strong>, you'll have to download the map library by logging into your account at <a href="http://www.fusioncharts.com/PUC">www.fusioncharts.com/PUC</a> &gt; Add-ons. We've removed the library file from core download owing to its size.  The map library consists of <span class="codeInline">.fla </span>files that just contains the library items for all the maps. These .fla cannot be compiled to create the full map. It's just to be used as library.</p>
+      <p>To copy the Library items, open libraries of the original .fla and of our .fla. Now, drag &amp; drop the &quot;<span class="codeInline">World Map</span>&quot; folder from original .fla to our .fla.</p>
+      <p>The libraries should now look as under. </p>
+      <p class="highlightBlock">In the image below, we've dragged and dropped the library item from <span class="codeInline">.fla</span> of World Map present in Enterprise license. If you've any other license, download the library files and open the library <span class="codeInline">.fla</span> to drag and drop the library items instead of World Map <span class="codeInline">.fla</span>. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_O_Lib.gif" width="476" height="385" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">This completes the setup for our movie. Let's now get back to our application. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Back to our movie... </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Now that the map is set for use, let's get back to our Flash file. Rename the default layer as &quot;<span class="codeInline">Graphic Elements</span>&quot; and place an oval shape with shadow effect. Basically, we'll use this as the background of the map. The idea is to show how easily FusionMaps can integrate with the graphical elements of your Flash movie. It should look something as under: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_O_St.jpg" width="536" height="598" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Binding ActionScript </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Create another layer and name it as &quot;<span class="codeInline">Actions</span>&quot;. In its first keyframe, punch in the following ActionScript code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p class="codeComment">/**<br />
+      * This keyframe contains the Actions required to load a FusionMaps<br />
+      * map in your Flash movie.<br />
+      *<br />
+      * We've set the FPS of this movie to 120 for smooth animations.<br />
+      * Depending on your requirements, you can set any FPS. FusionMaps<br />
+      * renders time based animations, so the length of animation would stay<br />
+      * same. Only the smoothness would vary.<br />
+      */<br />
+      //You first need to include the following two files in your movie.<br />
+      //These two files contain pre-loading functions and application<br />
+      //messages for the map.</p>
+      <p><span class="codeComment">//Note: If you're loading multiple maps in your Flash movie, you<br />
+        //do NOT need to include these files for each each. You can put these<br />
+        //lines in the main timeline, so that it gets loaded only once.</span><br />
+        #include &quot;com/fusionmaps/includes/LoadingFunctions.as&quot;<br />
+      #include &quot;com/fusionmaps/includes/AppMessages.as&quot;</p>
+      <p><span class="codeComment">//To create the map, you now need to import the Class of the <br />
+        //map which you want to create. All maps are present in the package <br />
+        //com.fusionmaps.maps (Download Package &gt; MapSource folder)<br />
+        //If you're using multiple maps, you can import all the requisite<br />
+        //map classes in the main timeline of your movie. That ways, you<br />
+        //wouldn't have to import the maps classes everytime you wish to use.</span><br />
+        import com.fusionmaps.maps.WorldMap;</p>
+      <p class="codeComment">// ------------- XML Data for the map -------------- //<br />
+        //FusionMaps necessarily needs its data in XML format.<br />
+        //So, if you've data in arrays, forms, recordsets, etc., you<br />
+        //first need to convert it into XML. Only then would you be able<br />
+        //to use the maps.</p>
+      <p><span class="codeComment">//Here, we're hard-coding an XML data document for demo.<br />
+        //In your applications, this XML data could be dynamically<br />
+        //built at run time using string concatenation or XML<br />
+        //Object.<br />
+        //Generate the XML data. We hide the border of map, set background<br />
+        //alpha as 0 (for transparency), set legend at bottom, hide its shadow</span><br />
+        var strXML:String = &quot;&lt;map bgAlpha='0' showCanvasBorder='0' includeNameInLabels='0' includeValueInLabels='1'  numberSuffix=' Mn.' labelSepChar=': ' baseFontSize='9' legendPosition='BOTTOM' legendShadow='0'&gt;&quot;;<br />
+        <span class="codeComment">//Define color range</span><br />
+        strXML = strXML + &quot;&lt;colorRange&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='0' maxValue='500' displayValue='Sparsely Populated' color='A7E9BC' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='500' maxValue='1000' displayValue='Well Populated' color='FFFFCC' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='1000' maxValue='5000' displayValue='Densely Populated' color='FF9377' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/colorRange&gt;&quot;;<br />
+        <span class="codeComment">//Add simple data for demo.</span><br />
+        strXML = strXML + &quot;&lt;data&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='NA' value='515' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='SA' value='373' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AS' value='3875' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='EU' value='727' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AF' value='885' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AU' value='32' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/data&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/map&gt;&quot;; <br />
+        <span class="codeComment">//FusionMaps map classes accept XML data as XML Object<br />
+        //and not XML String.<br />
+        //So, if you've an XML string, first create an XML object from it<br />
+        //and then pass to the map. We do the same.</span><br />
+        var xmlData:XML = new XML(strXML);<br />
+        <span class="codeComment">// --------------------------------------------------- // </span></p>
+      <p><span class="codeComment">// -------------- Actual Code to create the map ------------//<br />
+        //To create a map, you first need to create an empty movie clip to act as map holder.</span><br />
+        var mapContainerMC:MovieClip = this.createEmptyMovieClip(&quot;MapHolder&quot;,1);<br />
+        <span class="codeComment">//Now, instantiate the map using Constructor function of the map.<br />
+        /**<br />
+        * @param	targetMC	Movie clip reference in which<br />
+        *						the map will create its own movie clip.s<br />
+        * @param	depth		Depth inside parent movie clip in which<br />
+        *						the map will create its own movie clips.<br />
+        * @param	width		Width of map<br />
+        * @param	height		Height of map<br />
+        * @param	x			x Position of map<br />
+        * @param	y			y Position of map<br />
+        * @param	debugMode	Boolean value indicating whether the map<br />
+        *						is in debug mode.<br />
+        * @param	lang		2 Letter ISO code for the language of application<br />
+        *						messages. Depends on what data you've fed.<br />
+        * @param	scaleMode	Scale mode of the movie - noScale or exactFit<br />
+        */</span><br />
+        var myFirstMap:WorldMap = new WorldMap(mapContainerMC, 1, 450, 315, 20, 20, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);<br />
+        <span class="codeComment">//Convey the XML data to map. </span><br />
+        myFirstMap.setXMLData(xmlData);<br />
+        <span class="codeComment">//Draw the map</span><br />
+        myFirstMap.render();<br />
+        <span class="codeComment">//Stop</span><br />
+    stop();</p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Let's get to the above code step by step. To include any FusionMaps map in your Flash movie, you first need to include two files in your movie: <span class="codeInline">com/fusionmaps/includes/LoadingFunctions.as</span> and <span class="codeInline">com/fusionmaps/includes/AppMessages.as</span>. These files contain necessary pre-load functions and application messages for the map. In your application, you can put this code in the main timeline, so that it gets executed only once.</p>
+    <p>After this, we include the Map Class file of the map which we intend to plot. All Map Classes are present in <span class="codeInline">com &gt; fusionmaps &gt; maps </span>folder. So, the package name of each map class is <span class="codeInline">com.fusionmaps</span>. Here, we're building a World Map, and as such the fully qualified class name is <span class="codeInline">com.fusionmaps.WorldMap</span>.</p>
+    <p>Once the classes are imported, we set our focus to building the XML data for the map. We build the XML using string concatenation in the variable <span class="codeInline">strXML</span>. Here, we're hard-coding the XML data in this string variable. In your real world application, this data could come from a database, web service, recordset etc. All you would need to do is get the appropriate data and then encode it into XML using string concatenation or XML Object (though string concatenation is far easier to use and understand). Finally, we create an XML Object from this xml string, as FusionMaps accepts only XML Objects. </p>
+    <p>Moving on , let's see how to build the map now. Each FusionMaps map needs an empty movie clip to build itself in. So, we create an empty movie clip named as <span class="codeInline">MapHolder</span>. We store the reference to this movie clip in <span class="codeInline">mapContainerMC</span> variable. For demonstration purposes, we've created this empty movie clip in <span class="codeInline">_level0</span> at depth 1. In your applications, you can create it nested within any movie clip.</p>
+    <p class="codeInline">var mapContainerMC:MovieClip = this.createEmptyMovieClip(&quot;MapHolder&quot;,1)</p>
+    <p>After that, we come to the main line of code - the line that instantiates the map object. </p>
+    <p><span class="codeInline">var myFirstMap:WorldMap = new WorldMap(mapContainerMC, 1, 450, 315, 20, 20, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);</span></p>
+    <p>Here, we're creating an instance of <span class="codeInline">WorldMap</span> class in our local variable <span class="codeInline">myFirstMap</span>. <span class="codeInline">myFirstMap</span> now stores the reference of the World Map that we intend to display in this movie. To the constructor function of the map class, we pass the following parameters (in sequential order): </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+      <tr>
+        <td width="23%" class="header">Parameter</td>
+        <td width="77%" class="header">Description</td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">targetMC</td>
+        <td class="text"><p>Reference to the movie clip in which the map will create its sub-movie clips. In our example above, we're creating <span class="codeInline">MapHolder</span> movie clip for the map. So, we pass its reference <span class="codeInline">mapContainerMC</span> to the map. </p>
+          <p>Whenever you're passing a movie clip reference to map, make sure it's an empty movie clip. </p></td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">depth</td>
+        <td class="text">The depth inside the <span class="codeInline">targetMC</span> (previous parameter) where you want the map to start drawing it's elements. You can normally pass 1 as this parameter. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">width</td>
+        <td class="text">Intended width of map in pixels. If you're using &quot;<span class="codeInline">exactFit</span>&quot; as <span class="codeInline">scaleMode</span>, this attribute represents percentage. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">height</td>
+        <td class="text">Intended height of map in pixels. If you're using &quot;<span class="codeInline">exactFit</span>&quot; as <span class="codeInline">scaleMode</span>, this attribute represents percentage. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">x</td>
+        <td class="text">x-offset for the map inside <span class="codeInline">targetMC </span>movie clip. This effectively asks the map to leave x pixels on left inside <span class="codeInline">targetMC</span> movieclip before it starts drawing. In our example, we've set it to 20, as we've our oval background element border extending till 20 pixels on left. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">y</td>
+        <td class="text">y-offset for the map inside <span class="codeInline">targetMC </span>movie clip. This effectively asks the map to leave y pixels on top inside <span class="codeInline">targetMC</span> movieclip before it starts drawing. In our example, we've set it to 15, as we've our oval background element border extending till 15 pixels on top. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">debugMode</td>
+        <td class="text">This takes a boolean value indicating whether to start the map in debug mode or not. Please see <span class="codeInline">Debugging your Maps &gt; Debug Window</span> section for more information on this. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">lang</td>
+        <td class="text">2 Letter ISO code for the language of application						messages. It depends on what data you've fed for Application Messages. By default, only English messages are fed into the system and the ISO code is &quot;<span class="codeInline">EN&quot;</span>. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">scaleMode</td>
+        <td class="text">Scale mode of the movie - <span class="codeInline">noScale</span> or <span class="codeInline">exactFit</span>. noScale is the recommended method for FusionMaps, as that scales the maps proportionately in pixels. <span class="codeInline">exactFit</span> method basically re-scales the entire map instead of re-drawing. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">registerWithJS</td>
+        <td class="text">Not applicable when loading in Flash. Always set as false. </td>
+      </tr>
+      <tr>
+        <td valign="top" class="codeInline">DOMId</td>
+        <td class="text">Not applicable when loading in Flash. Set as empty string. </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Note that the above parameters are same for all FusionMaps map. </p>
+    <p>This completes the initialization of your map. You now need to convey the XML data to map. To do so, you use the <span class="codeInline">setXMLData() </span>method of Map Class as under:</p>
+    <p class="codeInline">myFirstMap.setXMLData(xmlData);</p>
+    <p>Here, <span class="codeInline">xmlData </span>refers to our XML Object which we had earlier created. Finally, you render the map by calling<span class="codeInline"> render() </span>method of the map object:</p>
+    <p class="codeInline">myFirstMap.render();</p>
+    <p>When you now view this application, you'll get the following results. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_O_Fi.gif" width="512" height="408" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Easy - isn't it? Well, this was just a beginning. You'll soon see how easy it is to embed powerful mapping capabilities in your Flash applications now. We next see how to load multiple maps in the same application. </p>    </td>
+  </tr>
+</table>
+</body>
+</html>

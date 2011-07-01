@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionMaps v3 Documentation</title>
+<link rel="stylesheet" href="ChartStyle.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><span class="pageHeader">Attributes for &lt;entity&gt; element </span></td>
+  </tr>
+  <tr> 
+    <td class="text"><p>The &lt;entity&gt; element can have the following attributes: </p></td>
+  </tr>
+  <tr>
+    <td class="text">&nbsp;</td>
+  </tr>
+</table>
+<a name='top'></a>
+<table width="98%" align="center" class="tableGreyBorder" cellpadding="4">
+  <tr class="trAttHeader"> 
+    <td width="25%" class="textbold"> Attribute Name </td>
+    <td width="15%"> <span class="textbold"> Type </span> </td>
+    <td width="15%"> <span class="textbold"> Range </span> </td>
+    <td width='45%'> <span class="textbold"> Description </span> </td>
+  </tr>
+  <tr class="text"> 
+    <td width="25%" valign="top"> <span class="text"> value </span> </td>
+    <td width="15%" valign="top"> <span class="text"> Number </span> </td>
+    <td width="15%" valign="top">&nbsp;</td>
+    <td width='45%' valign='top'> <span class="text"> Numeric value of the &lt;entity&gt;. </span></td>
+  </tr>
+  <tr class="trLightBlueBg"> 
+    <td width="25%" valign="top"> <span class="text"> displayValue </span> </td>
+    <td width="15%" valign="top"> <span class="text"> String </span> </td>
+    <td width="15%" valign="top">&nbsp;</td>
+    <td width='45%' valign='top'> <span class="text"> If you want to display your custom value for each entity (apart from it's long name, short name or value), you can specify it here. </span></td>
+  </tr>
+  <tr class='text'> 
+    <td width="25%" valign="top">toolText </td>
+    <td width="15%" valign="top"> <span class="text"> String</span></td>
+    <td width="15%" valign="top">&nbsp;</td>
+    <td width='45%' valign='top'>Lets you specify a custom tool text for the entity. </td>
+  </tr>
+  <tr class="trLightBlueBg"> 
+    <td width="25%" valign="top"> <span class="text"> color </span>    </td>
+    <td width="15%" valign="top"> <span class="text"> Color</span></td>
+    <td width="15%" valign="top"> <span class="text"> Hex Code </span></td>
+    <td width='45%' valign='top' class="text">Lets you specify a custom color for the entity. If color range is defined, each entity takes its color from the range it belongs to. However, if you need to force a color for an entity (over-riding the range value), you can specify the hex code here. </td>
+  </tr>
+  <tr class='text'> 
+    <td valign="top">alpha</td>
+    <td valign="top"><span class="text">Number</span></td>
+    <td valign="top"><span class="text">0-100</span></td>
+    <td valign='top'>Custom alpha (transparency) for the entity </td>
+  </tr>
+  <tr class='trLightBlueBg'> 
+    <td width="25%" valign="top"> <span class="text"> link </span> </td>
+    <td width="15%" valign="top"> <span class="text"> String </span></td>
+    <td width="15%" valign="top">&nbsp;</td>
+    <td width='45%' valign='top' class="text">If you want to link the entity to a URL, you can specify the URL in FusionCharts format. The link can open in same window, new window, pop-up, frames or as JavaScript functions.<br>
+    <br>
+    Please see the section &quot;Drill Down Maps&quot; to learn more about this. </td>
+  </tr>
+  <tr class="text"> 
+    <td width="25%" valign="top"> <span class="text"> font </span></td>
+    <td width="15%" valign="top"> <span class="text"> </span><span class="text">String</span></td>
+    <td width="15%" valign="top">&nbsp;</td>
+    <td width='45%' valign='top'> <span class="text"> If you want the label of this particular entity to appear in a different font (other from the one defined in STYLES/map element), specify the font face here. </span></td>
+  </tr>
+  <tr class='trLightBlueBg'> 
+    <td width="25%" valign="top"> <span class="text"> fontSize </span></td>
+    <td width="15%" valign="top"> <span class="text"> String </span> </td>
+    <td width="15%" valign="top"> <span class="text"> </span> </td>
+    <td width='45%' valign='top'><span class="text"> If you want the label of this particular entity to appear in a different font size (other from the one defined in STYLES/map element), specify the font size here. </span></td>
+  </tr>
+  <tr class="text"> 
+    <td width="25%" valign="top"> <span class="text"> fontColor </span></td>
+    <td width="15%" valign="top"> <span class="text"> Boolean </span> </td>
+    <td width="15%" valign="top"> <span class="text"> 0/1 </span> </td>
+    <td width='45%' valign='top'> If you want the label of this particular entity to appear in a different font color (other from the one defined in STYLES/map element), specify the font color here. </td>
+  </tr>
+  <tr class="trLightBlueBg">
+    <td valign="top" class="text">fontBold</td>
+    <td valign="top" class="text">Boolean</td>
+    <td valign="top" class="text"> 0/1 </td>
+    <td valign='top' class="text"> If you want the label of this particular entity to appear bold (other from the one defined in STYLES/map element), set this as 1. </td>
+  </tr>
+  <tr class="text">
+    <td valign="top" class="text">showLabel</td>
+    <td valign="top" class="text">Boolean</td>
+    <td valign="top" class="text">0/1</td>
+    <td valign='top' class="text">Whether to show the label for this entity? This attribute over-rides the value specified for <span class="codeInline">showLabels</span> attribute for <span class="codeInline">&lt;map&gt;</span> element. </td>
+  </tr>
+</table>
+<br>
+</body>
+</html>

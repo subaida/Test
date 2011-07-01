@@ -1,0 +1,14 @@
+ <select name="ad_id" style="width:110px;" id="ad_id">
+	<%if @camp_id!='SMS' and @camp_id!='WAP'%>
+		<%if (@ad_list==nil) || (@ad_list!=nil and @ad_list.size==0)%>
+				<option value="">No AD defined</option>
+		<%else%>
+			<option value="<%=encrypt('All')%>">All</option>
+				<%for ad in @ad_list %>
+					<option value="<%=encrypt("#{ad.id}")%>" <%if session[:advreport_ad_id].to_i==ad.id.to_i%> selected="selected"<%end%>><%=ad.name%></option>
+				<%end%>
+		<%end%>
+	<%else%>
+		<option value="<%=encrypt('All')%>">All</option>
+	<%end%>
+</select>

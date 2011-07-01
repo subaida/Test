@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin Reports Analytics</title>
+<style type="text/css">
+<!--
+.style1 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+}
+.style2 {	font-size: 15px;
+	font-weight: bold;
+}
+-->
+.ana_nav { width:275px; height:40px; margin:0 15px 15px 0px; padding:10px; background-color:#f7f7f7; display:block; border:1px solid #eee;}
+.ana_nav_hover { width:275px; height:40px; margin:0 15px 15px 0px; padding:10px; background-color:#eee; display:block; border:1px solid #ccc;}
+
+
+</style>
+</head>
+
+<body >
+<%begin%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	 <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>&nbsp;</td>
+            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              <tr>
+                <td width="1%">&nbsp;</td>
+                <td width="98%" height="25"><span class=" style1">Admin Reports</span></td>
+                <td width="1%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="15"></td>
+                <td height="15"></td>
+                <td height="15"></td>
+              </tr>
+              <tr>
+                <td height="15"></td>
+                <td height="15" valign="top"><table border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td valign="TOP"><div id="cp" class="ana_nav">
+                        <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/admin_campaign_performance"><img alt="Campaign performace" src="/images/icons/icon_campaign_performance.gif" hspace="5" border="0" /></a></td>
+                            <td width="86%"><a href="/admin_analytic/admin_campaign_performance"><span class="style2">Campaign Performance </span></a></td>
+                          </tr>
+                        </table>
+                    </div>
+                        <div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_publisher_performance"><img alt="Publisher Performance" src="/images/icons/icon_pub_perform.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_publisher_performance"><span class="style2">Publisher Performance </span></a></td>
+                            </tr>
+                          </table>
+                        </div>
+                      <div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_advertiser_performance"><img alt="Advertiser Performance" src="/images/icons/icon_adv_perform.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_advertiser_performance"><span class="style2">Advertiser Performance </span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  <div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/owner_report"><img alt="Owners report" src="/images/icons/owner.jpeg" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/owner_report"><span class="style2">Owners Report </span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  
+					  <div id="div3" class="ana_nav">
+                        <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/no_ads_served"><img alt="Why no ads" src="/images/icons/no_ads.jpg" width="40" hspace="5" height="40" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/no_ads_served"><span class="style2">Why No ADs? </span></a></td>
+                          </tr>
+                        </table>
+					    </div>
+						<div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/us_geo_states"><img alt="Geo Stats" src="/images/icons/us_geo.png" width="40" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/us_geo_states"><span class="style2">US Geostats </span></a></td>
+                            </tr>
+                          </table>
+                      </div></td>
+                    <td valign="TOP"><div id="div" class="ana_nav">
+                        <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/admin_devices_summary"><img alt="Devices summary" src="/images/icons/icon_device.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/admin_devices_summary"><span class="style2">Devices Summary </span></a></td>
+                          </tr>
+                        </table>
+                    </div>
+                        <div id="div" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_fillrate"><img alt="Fill rate overview" src="/images/icons/icon_fillrateoverview.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_fillrate"><span class="style2">Fill Rate Overview </span></a></td>
+                            </tr>
+                          </table>
+                        </div>
+                      <div id="div" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_traffic_growth"><img alt="Traffic by country" src="/images/icons/icon_countrytraffic.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_traffic_growth"><span class="style2">Traffic By Country </span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  <div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/fraud_click"><img alt="Fraud click report" src="/images/icons/fraud_click.gif" hspace="5" border="0" height="40" width="40"/></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/fraud_click"><span class="style2">Fraud Click Report </span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  <div id="cp" class="ana_nav">
+					    <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/campaign_breakdown"><img alt="Campaign data breakdown" src="/images/icons/breakdown.png" width="40" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/campaign_breakdown"><span class="style2">Campaign Data Breakdown </span></a></td>
+                          </tr>
+                        </table>
+					  </div>
+					  <div id="cp" class="ana_nav">
+					    <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/pub_geo_states"><img alt="Publisher Geostats" src="/images/icons/pub_geo.jpg" width="40" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/pub_geo_states"><span class="style2">Publisher Geostats </span></a></td>
+                          </tr>
+                        </table>
+					  </div>
+					  </td>
+                    <td valign="TOP"><div id="div2" class="ana_nav">
+                        <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/admin_advertiser_traffic_growth"><img alt="Advertiser traffic growth" src="/images/icons/icon_trafficgrowth_adv.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/admin_advertiser_traffic_growth"><span class="style2">Advertiser Traffic Growth</span></a></td>
+                          </tr>
+                        </table>
+                    </div>
+                        <div id="div2" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_pub_traffic_growth"><img alt="Publisher traffic growth" src="/images/icons/icon_trafficgrowth.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_pub_traffic_growth"><span class="style2">Publisher Traffic Growth</span></a></td>
+                            </tr>
+                          </table>
+                        </div>
+                      <div id="div2" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/admin_pub_fillrate"><img alt="Publisher fill rate" src="/images/icons/icon_pubfillrate.gif" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/admin_pub_fillrate"><span class="style2">Publisher Fill Rate </span></a></td>
+                            </tr>
+                          </table>
+                      </div><div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/wifi_traffic"><img alt="Wifi Traffic" src="/images/icons/wifi.jpg" hspace="5" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/wifi_traffic"><span class="style2">Wifi Traffic Review </span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  <div id="cp" class="ana_nav">
+                          <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="14%"><a href="/admin_analytic/click_log"><img alt="Click log report" src="/images/icons/log.gif" width="40" hspace="5" height="40" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                              <td width="86%"><a href="/admin_analytic/click_log"><span class="style2">Click Log Report</span></a></td>
+                            </tr>
+                          </table>
+                      </div>
+					  <div id="div4" class="ana_nav">
+                        <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="14%"><a href="/admin_analytic/admin_geo_fillrate"><img alt="Click log report" src="/images/icons/geo_fillrate.jpg" width="40" hspace="5" height="40" border="0" /></a><a href="/admin_analytic/admin_campaign_performance"></a></td>
+                            <td width="86%"><a href="/admin_analytic/admin_geo_fillrate"><span class="style2">Geo Fill Rate Overview </span></a></td>
+                          </tr>
+                        </table>
+					    </div></td>
+                  </tr>
+
+                </table></td>
+                <td height="15"></td>
+              </tr>
+              
+            </table></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td align="center">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<%
+ rescue Exception=>e
+       puts "DEBUGGER :: ERROR :: in Admin_Campaign_Performance.rb - Admin_Home :: #{e.to_s}"
+     end %>
+</body>
+</html>

@@ -1,0 +1,77 @@
+Error Messages For
+=========================
+
+A Rails plugin that extends the functionality and customization of
+Rails Auto-Generated Errors when calling error_messages_for().
+
+Five new parameters have been added.
+
+:priority - An array of model attributes. Attributes with errors specified
+in the array will display first. Attributes with errors not in the array
+will be displayed in random order after the prioritized attributes.
+
+:attr_names - A hash of attr_name => 'Display Name' mappings. The default
+humanizing of attribute names in Rails models will remove underscores and
+capitalize the first word. This isn't always adequate. By specifying display names,
+you can customize your error displays to be more 'english' like. You can also specify
+complete errors by using the :defaults boolean attribute described next.
+
+:defaults - True or False. Used in conjunction with :attr_names, you can override the default
+error messages on a per-attribute basis, but still validate many attributes with one declaration.
+An example, right now in Rails, you must validate each attribute independently if you want to
+customize the error messages for each attribute (even though the validation is the same).
+Now you can pass all your attributes to the validation routines and control your error messages
+where they belong, in the view.
+
+:header - A string to override the header text of the error container. It will perform substitutions for the error count
+and model name. Using a simple syntax of {count} and {object}.
+
+:sub_header - A string to override the sub header in the error container.
+
+USAGE
+=====
+
+
+To prioritize your errors display:
+<%= error_messages_for('object', :priority => ['column_name_1', 'column_name_2'] %>
+
+Or for multiple models:
+<%= error_messages_for(['object1', 'object2'], :priority => ['column_name_1', 'column_name_2'] %>
+
+To override the auto-generated column names:
+<%= error_messages_for('object',
+    :attr_names => {'column_name_1' => 'The First Column', 'column_name_2' => 'The Second Column'} ) %>
+
+
+To override the default error messages by column:
+
+# models/person.rb
+
+class Person < ActiveRecord::Base
+
+  validates_presence_of :column_name_1, :column_name_2, ...
+
+end
+
+# views/people/new.rhtml
+
+<%= error_messages_for('person',
+    :attr_names => {'column_name_1' => 'The First Column cannot be empty.',
+        'column_name_2' => 'The Second Column has to be filled in to.'},
+    :defaults => false,
+    :header => 'You need to correct {count} error(s) before we can save this {object}',
+    :sub_header => 'The following fields had bad data input' ) %>
+
+
+BUG REPORTS
+===========
+
+Feel free to send bug reports and suggestions for improvement to "ruby" "at" "bobsilva.com".
+
+
+CHANGE LOG
+==========
+
+2006-01-27 - Can now pass in multiple objects to consolidate error handling
+
+2006-01-26 - Initial Release of version 0.1

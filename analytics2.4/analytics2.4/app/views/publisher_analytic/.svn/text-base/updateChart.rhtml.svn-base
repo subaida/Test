@@ -1,0 +1,20 @@
+<%begin%>
+	<script type="text/javascript">
+	var screenWidth=(screen.width)*0.875;
+	<%if @chart!="" and @chart!=nil%>
+		<%if params[:report_type]=='Impressions Vs Clicks'%>
+		var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/MSLine.swf", "myChartId", screenWidth, 225, "0", "0");
+		<%else%>
+		var myChart_summary = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId", screenWidth, "225", "0", "0");
+		<%end%>
+		myChart_summary.setDataXML("<%=@chart%>");
+		myChart_summary.setTransparent(true);
+		myChart_summary.render("summary_div");
+	<%else%>
+		document.getElementById('summary_div').innerHTML='<div class="nodata_linechart_b">&nbsp;</div>';
+	<%end%>
+	</script>
+	
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in updateChart view and error is #{e.to_s}"%>
+<%end%>

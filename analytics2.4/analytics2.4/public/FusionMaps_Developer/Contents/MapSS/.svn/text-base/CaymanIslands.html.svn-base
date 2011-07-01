@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.style9 {font-size: 8px; font-family: Verdana; color: #333333; }
+-->
+</style>
+</head>
+
+<body>
+<p class="pageHeader">Cayman Islands   Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:<span class="text">Cayman Islands   </span> Map<br />
+    <span class="textbold">SWF Name</span>: FCMap_CaymanIslands.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>: 920 x 450 pixels<br/>
+<span class="textbold">Selection</span>: Districts <br/>
+<span class="textbold">Internal ID Compliant with </span>: HASC <br/>
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.BT</td>
+    <td class="text">BT</td>
+    <td class="text">Bodden Town</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.CB</td>
+    <td class="text">CB</td>
+    <td class="text">Cayman Brac</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.EE</td>
+    <td class="text">EE</td>
+    <td class="text">East End</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.GT</td>
+    <td class="text">GT</td>
+    <td class="text">George Town</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.SO</td>
+    <td class="text">SO</td>
+    <td class="text">Little Cayman</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.NS</td>
+    <td class="text">NS</td>
+    <td class="text">North Side</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">KY.WB</td>
+    <td class="text">WB</td>
+    <td class="text">West Bay</td>
+  </tr>
+</table>
+<p><br />
+</p>
+</body>
+</html>

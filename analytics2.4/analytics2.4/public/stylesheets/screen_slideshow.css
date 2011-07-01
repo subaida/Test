@@ -1,0 +1,37 @@
+	#mainContainer{
+		margin:0 auto;
+		text-align:left;	
+		background-color:#FFF;
+		border:1px solid #E2EBED;
+		margin-top:5px;
+	}
+	.contentContainer{
+		padding-left:5px;
+		padding-right:10px;
+		padding-bottom:3px;
+	}
+	.contentContainer p,.contentContainer h1{
+		margin-top:0px;
+	}
+	
+	/* END CSS FOR THIS DEMO */
+	
+	/* CSS FOR SLIDESHOW SCRIPT */
+	.imageSlideshowHolder,.imageSlideshowHolder_left{
+		margin:2px;	/* "Air" */
+		float:right; /* Floating gallery at the right side of other web page content */		
+		width:334px;	/* Image width */
+		height:228px;	/* Image height */		
+		position:relative;	/* Don't remove this line */
+	}
+	.leftFloatingDiv{
+		float:left;
+		width:334px;
+		height:228px;
+	}
+	/* Don't change these values */
+	.imageSlideshowHolder img{
+	position:absolute;
+	left:7px;
+	top:1px;
+	}

@@ -1,0 +1,211 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "zest_datepicker"%>
+<%= javascript_include_tag :defaults %>
+ <link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datasource-beta.js"></script>  
+ <script type="text/javascript" src="/javascripts/AutoSuggest.js"></script>
+<script type="text/javascript" src="/javascripts/Common.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>  
+
+ 
+<style type="text/css">
+div.auto_complete ul { 
+                  border:1px solid #888; 
+                  margin:0; 
+                  padding:0; 
+                  width:100%; 
+				  background-color: #ffffff;
+				  list-style-type:none; 
+                } 
+                div.auto_complete ul li { 
+                  margin:0; 
+                  padding:3px; 
+				  
+                } 
+                div.auto_complete ul li.selected { 
+                  background-color: #ffb; 
+				 
+                } 
+                div.auto_complete ul strong.highlight { 
+                  color: #800; 
+                  margin:0; 
+                  padding:0; 
+                } 
+</style> 
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15">&nbsp;</td>
+            <td height="15"><span class="heading">Wifi Details </span></td>
+            <td height="15">&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/wifi_traffic?search_date=<%=@delivery_time%>">Wifi Traffic</a> &gt; <span class="nav_link">Wifi Traffic IP Details (<%=@client_id%>)</span> </td>
+				<td align="RIGHT"><strong><a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>			 </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+              
+			  <tr>
+			  	<td>
+					<table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;</td>
+            <td align="right" scope="col"><table border="0" align="RIGHT">
+               <tr>
+                <td align="RIGHT">
+					
+                    	&lt;&lt;&nbsp;<%if @limit.to_i<=0%>First&nbsp;&nbsp;&lt;&nbsp;Prev<%else%><a href="javascript:void(0);" id="f" onClick="zPagination(this.id,'<%=@paginate_url%>');">First</a>&nbsp;&nbsp;&lt;&nbsp;<a href="javascript:void(0)" id="p" onClick="zPagination(this.id,'<%=@paginate_url%>');">Prev</a><%end%>&nbsp;&nbsp;<%if @limit.to_i + @offset.to_i >= @max_limit%>Next&nbsp;&gt;&nbsp;&nbsp;Last<%else%><a href="javascript:void(0)" id="n" onClick="zPagination(this.id,'<%=@paginate_url%>');">Next</a>&nbsp;&gt;&nbsp;&nbsp;<a href="javascript:void(0)" id="l" onclick="zPagination(this.id,'<%=@paginate_url%>');">Last</a><%end%>&nbsp;&gt;&gt;
+                    			</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>			</td></tr>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="4" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th width="29%">IP Address </th>
+                                <th width="28%">UserAgent </th>
+								<th width="13%">Owner </th>
+                                <th width="30%">TimeStamp </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+							 <%for wifi_details in @wifi_details%>
+                              <tr>
+                                <td><%=(wifi_details['ip_address']==nil or wifi_details['ip_address']=='') ? 'Unknown' : wifi_details['ip_address']%></td>
+                                <td><%=(wifi_details['user_agent']==nil or wifi_details['user_agent']=='') ? 'Unknown' : wifi_details['user_agent']%></td>
+								<td><%=(wifi_details['carrier_name']==nil or wifi_details['carrier_name']=='') ? 'Unknown' : wifi_details['carrier_name']%></td>
+                       			<td ><%=wifi_details['delivery_time']%></td>
+                              </tr>
+							  <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+				  <tr><td>&nbsp;</td></tr>
+				  <tr>
+				  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td align="LEFT"><strong>Export to: </strong><a href="/admin_analytic/generate_csv_report?type=WD&amp;campaign_id=<%=@campaign_id%>&amp;pub_id=<%=@pub_id%>&amp;delivery_time=<%=@delivery_time%>&amp;client_id=<%=@client_id%>"><img alt="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /></a></td>
+					<td align="RIGHT"><strong>Show:</strong>
+						  <select onchange="update_show(this);"><option value="10" <%if @offset==10%>selected<%end%>>10</option><option value="100" <%if @offset==100%>selected<%elsif @offset==nil or @offset==''%>selected<%end%>>100</option><option value="500" <%if @offset==500%>selected<%end%>>500</option><option value="1000" <%if @offset==1000%>selected<%end%>>1000</option></select></td>
+				  </tr>
+				</table>
+				</td>
+					</tr>
+                </table>				</td>
+			  </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+<input type="hidden" id="max_limit" value="<%=@max_limit%>" />
+<input type="hidden" id="limit" value="<%=@limit%>" />
+<input type="hidden" id="offset" value="<%=@offset%>" />
+
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"ip_address",label:"IP Address",sortable:true,resizeable:true},
+			 {key:"user_agent",label:"UserAgent",sortable:true,width:500},   
+             {key:"owner",label:"Owner",sortable:true},
+			 {key:"time_stamp",label:"TimeStamp",sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"ip_address"},   
+			        {key:"user_agent"},
+					{key:"owner"},
+					{key:"time_stamp"}]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"pub_id",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<script type="text/javascript" src="/javascripts/z_pagination.js"></script>
+<script type="text/javascript">
+	function update_show(obj)
+	{
+		var requestUrl = "<%=@paginate_url%>"+"&limit=0&offset="+obj.value;
+		document.location.href = requestUrl;
+	}
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - wifi_details view Exception :: #{e.to_s}"
+%>
+<%end%>

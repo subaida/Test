@@ -1,0 +1,172 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Publisher Reports Analytics</title>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"></td>
+            <td width="98%"></td>
+            <td width="1%"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><span class="heading">Top URLs Getting Traffic <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                 <td width="40%" align="left"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_report/<%=encrypt(session[:report_adclient])%>/<%=session[:report_start_on]%>/<%=session[:report_end_on]%>/<%=session[:duration]%>/<%=session[:filled]%>">Publisher Home</a> &gt; <span class="nav_link">Top URLs Getting Traffic</span></td>
+                 <td width="56%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span>&nbsp;</td>
+                 <td width="4%" align="right"> <a href="#" onclick="printWindow()"><img alt="Print" src="/images/analytic/print.png" align="top" title="Print" border="0" /></a></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15">&nbsp;</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+					<tr>
+						<td>
+							<table width="100%" border="0" align="RIGHT">
+								 <tr>
+     								<td width="50%" align="left">
+	 									<strong>&nbsp;Export to:</strong><a href="/admin_analytic/generate_Csv?heading=url_report"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+	  								<td align="right">
+										<%if  @urldata_pages.current.previous !=nil%>
+												<%= link_to '<< First',{:page => @urldata_pages.first } ,{:class=>'paginate' }%> 
+										  <%else%>
+												&lt;&lt;&nbsp;First
+										  <%end%>
+										  &nbsp;&nbsp;	
+										  <%if  @urldata_pages.current.previous !=nil%>
+												<%= link_to '< Prev', { :page => @urldata_pages.current.previous },{:class=>'paginate'}  %> 
+										  <%else%>
+												&lt;&nbsp;Prev
+										  <%end%>
+										  &nbsp;&nbsp;
+										  <span class="pagination"><%= pagination_links(@urldata_pages,:window_size => 5)%></span>
+										   <%if @urldata_pages.current.next !=nil%>
+												&nbsp;&nbsp;
+												<%= link_to 'Next >', { :page => @urldata_pages.current.next},{:class=>'paginate'} %>
+										   <%else%>
+												Next&nbsp;&gt;
+										  <%end%>
+										  &nbsp;&nbsp;
+										  <%if @urldata_pages.last !=nil && @urldata_pages.current.next !=nil %>
+												<%= link_to 'Last >>', { :page => @urldata_pages.last},{:class=>'paginate'}%>
+										  <%else%>
+												Last&nbsp;&gt;&gt;                    
+										  <%end%>									</td>
+								</tr>
+							</table>						</td>
+					</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th>Urls</th>  
+                  <th>Traffic</th>  
+                 <th>Percentage - Traffic (%)</th>  
+             </tr>  
+         </thead>  
+         <tbody> 
+		 	 <%begin%>  
+		 	 <%session[:csv_string]=nil%>  
+		 	 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	 <%csv << ["Url", "Traffic","Percentage - Traffic"]%>     
+		 	 <%for url_summary in @urldata%>
+			 	 <%csv<<["#{(url_summary.url==nil || url_summary.url=='' || url_summary.url==' ') ? 'Unknown' : url_summary.url}","#{url_summary.sum_url==nil ? 0 : url_summary.sum_url}","#{url_summary.url_percentage==nil ? 0.00 :sprintf('%.2f',url_summary.url_percentage)}%"]%>
+             <tr>  
+                 <td><%=(url_summary.url==nil || url_summary.url=='' || url_summary.url==' ') ? 'Unknown' : url_summary.url%></td>  
+                 <td><%=url_summary.sum_url==nil ? 0 : url_summary.sum_url%></td>  
+                 <td><%=url_summary.url_percentage==nil ? 0.00 : sprintf('%.2f',url_summary.url_percentage)%></td>  
+             </tr> 
+			 <%end%>
+			  <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in publisher url view #{e}"%>
+			 <%end%> 
+         </tbody>  
+    </table>  
+	</div>
+</div></td>
+</tr>
+</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"url",label:"Url",sortable:true},   
+             {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true},   
+             {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"url"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"url",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e%>
+<%puts"An Exception occured in publisher url and #{e}"%>
+<%end%>

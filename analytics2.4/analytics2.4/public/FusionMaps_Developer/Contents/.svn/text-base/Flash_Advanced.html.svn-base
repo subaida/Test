@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; Advanced Examples </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>In our previous examples, we had seen how to load FusionMaps in your Flash movies in a very basic way. In this advanced example, we'll assimilate all the information that you've gained from previous examples and use that with new concepts to create an interactive form based mapping application. We'll build a form that takes in continent-wise sales information and then plot it on a World Map.</p>
+      <p>This application explains the following new concepts pertinent to FusionMaps:</p>
+      <ol>
+        <li>Using FusionMaps with data received in forms.</li>
+        <li>Showing map on-demand</li>
+        <li>Hiding   a map when not required</li>
+        <li>Removing and re-initializing a map. </li>
+        <li>Updating an existing map with new data. </li>
+      </ol>      
+      <p>If you're excited after just reading the possibilities above, let's inspire you more by showing how the application would look when it's finished: </p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Adv_Ini.gif" width="512" height="408" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Initial state of the application, where the user enters sales data. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p><img src="Images/Flash_Adv_Fin.jpg" width="512" height="408" /></p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Final  map generated when the user enters requisite data and then clicks on &quot;Plot It&quot; button. </p>
+      <p>Now that you're already jumping, let's straight jump into action. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Setting the movie </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>For this example, we'll create a new .fla and name it as <span class="codeInline">FormExample.fla</span>. We keep it under the same <span class="codeInline">FlashExamples</span> folder so that we do not have to make additional copies of <span class="codeInline">com</span> folder. </p>
+    <p>In this application, we've three states. </p>
+    <ol>
+      <li>Initialization State - This is an invisible state for the user. In this state, we create an instance of the <span class="codeInline">WorldMap</span> class and convey the initialization parameters.</li>
+      <li>Form State - This is the first visible state for the user. In this state, we show the data-entry form to the user. Internally, we update the form fields with default data. We also handle the click event for form's submit button.</li>
+      <li>Map State - In this state, we request the data submitted by the user, create an XML data document out of it and then show it as a map.  </li>
+      </ol>
+    <p>Each state is represented by a key-frame as shown below. The name of state keyframes are <span class="codeInline">FInit</span>, <span class="codeInline">FForm</span> and <span class="codeInline">FMap</span> respectively. Shown below is a screenshot: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_frm_st.jpg" alt="" width="288" height="213" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see above we've following additional layers in this movie:</p>
+      <ul>
+        <li><span class="codeInline">Background</span> layer contains the oval background shared by form and map.</li>
+        <li><span class="codeInline">Form</span> layer contains the form elements which we'll soon visit. The form elements are visible only in frame 1 and 2, as the 3rd frame shows the map.</li>
+        <li><span class="codeInline">Back Button</span> layer contains a button used by the user to get back to form when viewing the map. As such, it's present only in the 3rd frame.</li>
+        <li><span class="codeInline">Actions</span> Layer contains actions to initialize map, initialize form and then render map </li>
+      </ul>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Setting the form </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The form for this application looks as under. We've 6 text fields on this form to accept data for 6 continents. Apart from that, it also contains a few descriptive labels. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Adv_FrmSt.jpg" width="545" height="612" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Binding Actions </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Let's now switch our focus to the core of this application - ActionScripts which bind the entire application. We'll study the ActionScripts frame by frame. Let's first see the ActionScript contained in frame 1: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p class="codeComment">/** <br />
+      * In this frame, we initialize the map object.<br />
+      * We initialize it only once but re-use it multiple times<br />
+      * later.<br />
+      */<br />
+      //You first need to include the following two files in your movie.<br />
+      //These two files contain pre-loading functions and application<br />
+      //messages for the map.</p>
+      <p>#include &quot;com/fusionmaps/includes/LoadingFunctions.as&quot;<br />
+        #include &quot;com/fusionmaps/includes/AppMessages.as&quot;</p>
+      <p><span class="codeComment">//Import the Class of the map which you want to create. </span><br />
+      import com.fusionmaps.maps.WorldMap;</p>
+      <p><span class="codeComment">//Create container movie clip for map</span><br />
+        var mapContainerMC:MovieClip = this.createEmptyMovieClip(&quot;MapHolder&quot;, 1);<br />
+        <span class="codeComment">//Initialize map object.</span><br />
+        var salesMap:WorldMap = new WorldMap(mapContainerMC, 1, 450, 290, 20, 15, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);<br />
+        <span class="codeComment">//Goto next frame</span><br />
+    gotoAndStop(&quot;FForm&quot;);</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In this frame, we're basically including and importing the required files for map. We're also creating the empty movie clip for the map and then instantiating the <span class="codeInline">WorldMap</span>. The actions in this frame run only once during the entire application. So, we're effectively creating only one instance of <span class="codeInline">WorldMap</span>. We'll be updating the same instance with new data as and when the user changes the data in form. </p>
+      <p>Let's see the code that runs the form in frame 2: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p><span class="codeComment">/**<br />
+      * This frame is an application state which contains the input form<br />
+      * for the user. <br />
+      */<br />
+      //Restrict text fields to accept only numeric values<br />
+      </span>txtNA.restrict = &quot;0-9&quot;;<br />
+      txtSA.restrict = &quot;0-9&quot;;<br />
+      txtEU.restrict = &quot;0-9&quot;;<br />
+      txtAS.restrict = &quot;0-9&quot;;<br />
+      txtAF.restrict = &quot;0-9&quot;;<br />
+      txtAU.restrict = &quot;0-9&quot;;</p>
+      <p><span class="codeComment">//Set default values for text fields - just for demo.</span><br />
+        txtNA.text = &quot;108124&quot;;<br />
+        txtSA.text = &quot;162346&quot;;<br />
+        txtEU.text = &quot;36766&quot;;<br />
+        txtAS.text = &quot;171453&quot;;<br />
+        txtAF.text = &quot;99235&quot;;<br />
+      txtAU.text = &quot;184655&quot;;</p>
+      <p><span class="codeComment">//Define the listener for &quot;Plot&quot; button's click event.</span><br />
+        var btnListener:Object = new Object();<br />
+        btnListener.click = function() {<br />
+        <span class="codeComment">&nbsp;&nbsp;&nbsp;&nbsp;//When the plot button is clicked, we need to generate XML document<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//from data provided in form fields.<br />
+  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;//Build the XML data and convey it to map</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;var strXML:String= &quot;&lt;map bgAlpha='0' showCanvasBorder='0' includeNameInLabels='0' includeValueInLabels='1' baseFontSize='9' legendPosition='BOTTOM' legendShadow='0'&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Define color range</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;colorRange&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;color minValue='0' maxValue='50000' displayValue='Low Sales Region' color='FF9377'/&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;color minValue='50000' maxValue='100000' displayValue='Moderate Sales Region' color='FFFFCC' /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;color minValue='100000' maxValue='10000000' displayValue='High Sales Region' color='A7E9BC'  /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;/colorRange&gt;&quot;;</p>
+      <p> &nbsp;<span class="codeComment">&nbsp;&nbsp;&nbsp;//Add data to it</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;data&gt;&quot;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='NA' value='&quot; + txtNA.text + &quot;' /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='SA' value='&quot; + txtSA.text + &quot;' /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='EU' value='&quot; + txtEU.text + &quot;' /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='AS' value='&quot; + txtAS.text + &quot;' /&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='AF' value='&quot; + txtAF.text + &quot;' /&gt;&quot;; <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;entity id='AU' value='&quot; + txtAU.text + &quot;' /&gt;&quot;; <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;/data&gt;&quot;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;strXML = strXML + &quot;&lt;/map&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Convey the XML data to map. </span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;salesMap.setXMLData(new XML(strXML));<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//We draw the map on next frame. So, go there.</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;gotoAndStop(&quot;FMap&quot;);<br />
+        };<br />
+        <span class="codeComment">//Attach the event listener to button.</span><br />
+        btnPlot.addEventListener(&quot;click&quot;, btnListener);</p>
+      <p><span class="codeComment">//Stop till an action is invoked.</span><br />
+      stop();</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Here, we're:</p>
+      <ol>
+        <li>Restricting the form text fields to accept only numeric data</li>
+        <li>Setting some default values for them (for demonstration purpose only)</li>
+        <li>Defining the event listener for &quot;Plot it&quot; button</li>
+        <li>In the click event listener handler, we create an XML data document out of data specified by the user in the form. We store the data in <span class="codeInline">strXML</span> variable.  </li>
+        <li>We convey this XML data to map using <span class="codeInline">setXMLData()</span> method. </li>
+        <li>Finally, we send the control to <span class="codeInline">FMap</span> frame, which contains the code to render the map. </li>
+      </ol>
+    <p>In <span class="codeInline">FMap</span> frame, we've the following actions: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><span class="codeComment">/**<br />
+* We actually draw the map in this frame. <br />
+*/ <br />
+//Show the map container.</span><br />
+mapContainerMC._visible = true;<br />
+<span class="codeComment">//Draw the map</span><br />
+salesMap.render();<br />
+<br />
+<span class="codeComment">//Define the listener for back button's click event.</span><br />
+var btnListener:Object = new Object();<br />
+btnListener.click = function(){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//Re-initialize the map, so that user can plot again<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//as we're allowing the user to go back to form and then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//map the data again.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;salesMap.remove();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;salesMap.reInit();<br />
+&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Hide the map container so that it doesn't overlap form.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;mapContainerMC._visible = false;</span><br />
+&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Goto the form</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;gotoAndStop(&quot;FForm&quot;);<br />
+}<br />
+<span class="codeComment">//Add event listener</span><br />
+btnBack.addEventListener(&quot;click&quot;,btnListener);<br />
+stop();</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above code, we're first setting the visibility of map container movie clip (<span class="codeInline">mapContainerMC</span>) to true. If this application is running for the first time, the visibility of this movie clip is already true. However, if the user has viewed the map once, then updated data in form and then clicked &quot;Plot it&quot;  button, the container for map is hidden by us. So, we set it to visible again.</p>
+      <p>Thereafter, we straight render the map by calling <span class="codeInline">render()</span> method on <span class="codeInline">salesMap</span> object (which is an instance of <span class="codeInline">WorldMap</span> class). The XML data was already conveyed to map in previous frame.</p>
+      <p>We also define the event listener for &quot;Back&quot; button. In this handler, we're first removing the map using <span class="codeInline">remove()</span> method of this map. This method removes all the items in the map (barring logger). The map still stays in the memory though.<span class="codeInline"> remove() </span>method is used when you want to use the same map object again in your movie to plot another map. Since we intend to re-use the map object to plot the data again, we call the <span class="codeInline">remove()</span> method. After the <span class="codeInline">remove() </span>method, we ask the map to re-initialize by calling the <span class="codeInline">reInit() </span>method. This method prepares the map to accept new data and be able to render again. <span class="codeInline">reInit()</span> method should always be called after <span class="codeInline">remove()</span> method of the map, if you intend to use the map object to plot another map. </p>
+      <p class="highlightBlock">If you need to destroy the map altogether (when you do not need to plot any other maps using the same object), you should call the <span class="codeInline">destroy()</span> method of map. e.g., <span class="codeInline">salesMap.destroy().</span> This method removes all the associated movie clips, listeners, events and data containers for the map. </p>
+      <p>We also hide the container movie clip for the map, as that's not required in the Form visible state. Finally, we go back to the form state of the application. </p>
+      <p>When you now run the application, you'll get the desired results (as shown above). This example demonstrates all the features that you can attain when using FusionMaps within your Flash movies.</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

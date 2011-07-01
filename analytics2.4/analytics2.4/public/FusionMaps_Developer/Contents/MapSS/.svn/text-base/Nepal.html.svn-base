@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.style9 {font-size: 8px; font-family: Verdana; color: #333333; }
+-->
+</style>
+</head>
+
+<body>
+<p class="pageHeader">Nepal Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:<span class="text">Nepal</span> Map<br />
+    <span class="textbold">SWF Name</span>: FCMap_Nepal.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>:760 x 410 pixels<br/>
+<span class="textbold">Selection</span>: Zones <br>
+<br/>
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr height="17">
+    <td width="30%" height="17" class="text">NP.BA</td>
+    <td width="30%" class="text">BA</td>
+    <td class="text">Bagmati</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.BH</td>
+    <td class="text">BH</td>
+    <td class="text">Bheri</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.DH</td>
+    <td class="text">DH</td>
+    <td class="text">Dhawalagiri</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.GA</td>
+    <td class="text">GA</td>
+    <td class="text">Gandaki</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.JA</td>
+    <td class="text">JA</td>
+    <td class="text">Janakpur</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.KA</td>
+    <td class="text">KA</td>
+    <td class="text">Karnali</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.KO</td>
+    <td class="text">KO</td>
+    <td class="text">Kosi</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.LU</td>
+    <td class="text">LU</td>
+    <td class="text">Lumbini</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.MA</td>
+    <td class="text">MA</td>
+    <td class="text">Mahakali</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.ME</td>
+    <td class="text">ME</td>
+    <td class="text">Mechi</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.NA</td>
+    <td class="text">NA</td>
+    <td class="text">Narayani</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.RA</td>
+    <td class="text">RA</td>
+    <td class="text">Rapti</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.SA</td>
+    <td class="text">SA</td>
+    <td class="text">Sagarmatha</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">NP.SE</td>
+    <td class="text">SE</td>
+    <td class="text">Seti</td>
+  </tr>
+</table>
+<br />
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" height="30" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Note: All Internal Id's are not available in Statoids.These Id's are arbitary.</span> 
+  </tr>
+</table>
+<p>&nbsp; </p>
+</body>
+</html>

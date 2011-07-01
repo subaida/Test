@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="../Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">Full Map as a hotspot</h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>You can also set 
+        the full map as a single hotspot. This is useful, when you want to show 
+        a small thumbnail of the map, which when clicked opens a detailed bigger 
+        map. </p>
+      <p>To set the entire map as a hotspot, just specify the target link in 
+        <span class="codeInline">clickURL</span> attribute of <span class="codeInline">&lt;map&gt;</span> 
+        element as under:</p>
+      <p class="codeInline">&lt;map ... clickURL='DetailedMap.html' ...&gt;</p>
+      <p>You can again specify the link in five ways:</p>
+      <ol>
+        <li>Simple link opening in same window</li>
+        <li>Simple link opening in new window</li>
+        <li>Link to another frame</li>
+        <li>Link opening in a new pop-up window</li>
+        <li>Existing JavaScript functions (on the same page) to be invoked as 
+          links</li>
+      </ol>
+      <p>If you set the entire map as hotspot, the other links on the map 
+        (individual links for entities) wouldn't work. </p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">Example XML:</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;map <strong>clickURL='n-http://www.InfoSoftGlobal.com'</strong> borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;data&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='NA' value='515' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='SA' value='373' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AS' value='3875' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='EU' value='727' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AF' value='885' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AU' value='32' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;/data&gt; <br />
+&lt;/map&gt;</td>
+  </tr>
+</table>
+</body>
+</html>

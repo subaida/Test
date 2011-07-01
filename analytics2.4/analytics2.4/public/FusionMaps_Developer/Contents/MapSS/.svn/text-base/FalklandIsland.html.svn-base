@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p class="pageHeader">Falkland Island  Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:FalklandIsland Map<br />
+    <span class="textbold">SWF Name</span>:FCMap_FalklandIsland.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>:390x310 pixels<br/>
+    <span class="textbold">Selection</span>:</p>
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr>
+    <td valign="bottom"  class="text"><p>NA.FK</p></td>
+    <td valign="bottom"  class="text"><p>FK</p></td>
+    <td valign="bottom"  class="text"><p class="text">Falkland Island</p></td>
+  </tr>
+</table>
+<p><br />
+</p>
+</body>
+</html>

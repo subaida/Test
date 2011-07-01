@@ -1,0 +1,177 @@
+<%begin%>
+
+
+<table border="0"  width="100%">
+	<tr>
+	<td>
+	<table width="100%" border="0">
+  	<tr>
+     	<td width="50%" align="left">&nbsp;<strong>Export to:</strong>
+			<a href="/advertiser_analytic/adv_generate_csv?heading=summary report"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a>	 </td>
+     		<td align="right"> 
+		
+				  <%if  @AdvCampaignSummaries_pages.current.previous !=nil%>
+				  <%= link_to_remote('<< First ',{:update => "showText",:url => { :action => 'advertiser_update_text', :page =>@AdvCampaignSummaries_pages.first },:loading => "Element.show('search-indicator')",:complete => "Element.hide('search-indicator');showText();"},{:class=>"paginate"})%>
+				  <%else%>
+				  &lt;&lt;&nbsp;First
+				  <%end%>
+					 &nbsp;&nbsp;
+				  <%if  @AdvCampaignSummaries_pages.current.previous !=nil%>
+						<%= link_to_remote('< Prev ',{:update => "showText",:url => { :action => 'advertiser_update_text', :page =>@AdvCampaignSummaries_pages.current.previous },:loading => "Element.show('search-indicator')",:complete => "Element.hide('search-indicator');showText();"},{:class=>"paginate"})%>
+				  <%else%>
+						&lt;&nbsp;Prev
+				 <%end%>
+				   &nbsp;&nbsp;
+						<span class="pagination"><%=pagination_links_remote(@AdvCampaignSummaries_pages,{:window_size => 5},:update => "showText",:url=>{:action=>'advertiser_update_text'})%> </span>
+				 
+				  <%if @AdvCampaignSummaries_pages.current.next !=nil%>
+				   &nbsp;&nbsp;
+				  <%= link_to_remote('Next >',{:update => "showText",:url => { :action => 'advertiser_update_text', :page =>@AdvCampaignSummaries_pages.current.next },:loading => "Element.show('search-indicator')",:complete => "Element.hide('search-indicator');showText();"},{:class=>"paginate"})%>
+				  <%else%>
+						 Next&nbsp;&gt; 
+				  <%end%>
+					&nbsp;&nbsp;
+				  <%if @AdvCampaignSummaries_pages.last !=nil && @AdvCampaignSummaries_pages.current.next !=nil %>
+				  <%= link_to_remote('Last >> ',{:update => "showText",:url => { :action => 'advertiser_update_text', :page =>@AdvCampaignSummaries_pages.last },:loading => "Element.show('search-indicator')",:complete => "Element.hide('search-indicator');showText();"},{:class=>"paginate"})%>
+				  <%else%>
+						Last&nbsp;&gt;&gt;
+				  <%end%>
+                              
+				</td>
+			   </tr>
+			</table>
+		</td>
+	</tr>
+<tr>
+	<td>
+
+	<div align="center" class=" yui-skin-sam" >
+	  <div id="markup" class="yui-b">
+		<table align="CENTER" id="accounts"  cellpadding="0" cellspacing="0" width="100%">
+		  <thead>
+			<tr>
+			  <th>Delivery Date </th>
+			  <th>Impressions</th>
+			  <th>Clicks</th>
+			  <th>CTR (%)</th>
+			  <th>Amount Spent ($)</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<%begin%>  
+			 <%session[:csv_string]=nil%>  
+			 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+			 <%csv << ["Delivery Date", "Impressions","Clicks","CTR","Amount Spent"]%>
+			<%for advcampaignsummaries in @AdvCampaignSummaries %>
+				 <%csv<<["#{Time.parse(advcampaignsummaries.delivered_date).strftime('%d-%b-%Y')}","#{((advcampaignsummaries.impressions==nil) ? 0 : advcampaignsummaries.impressions)}","#{((advcampaignsummaries.clicks==nil) ? 0 : advcampaignsummaries.clicks)}","#{sprintf('%0.2f',((advcampaignsummaries.ctr==nil) ? 0 : advcampaignsummaries.ctr ))}%","$#{sprintf('%0.2f',((advcampaignsummaries.amount_spent==nil) ? 0 : advcampaignsummaries.amount_spent))}"]%>
+			<tr>
+			  <td><%=advcampaignsummaries.delivered_date%></td>
+			   <td><%=((advcampaignsummaries.impressions==nil) ? 0 : advcampaignsummaries.impressions )%></td>
+			  <td><%=((advcampaignsummaries.clicks==nil) ? 0 : advcampaignsummaries.clicks )%></td>                                
+			  <td><%=sprintf('%0.2f',((advcampaignsummaries.ctr==nil) ? 0 : advcampaignsummaries.ctr ))%></td>
+			  <td><%=sprintf('%0.2f',((advcampaignsummaries.amount_spent==nil) ? 0 : advcampaignsummaries.amount_spent))%></td>
+			</tr>
+			<%end%>
+			<%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in advertiser update text view #{e}"%>
+			 <%end%>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+
+// Define a custom format function
+	var myFormatDate = function(elCell, oRecord, oColumn, oData) {
+	var myYear=oData.split("/")[0];
+	var myMonth=oData.split("/")[1];
+	var myDay=oData.split("/")[2];
+    var sMonth;
+    switch(myMonth) {
+        case '01':
+            sMonth = "Jan";
+            break;
+        case '02':
+            sMonth = "Feb";
+            break;
+        case '03':
+            sMonth = "Mar";
+            break;
+        case '04':
+            sMonth = "Apr";
+            break;
+        case '05':
+            sMonth = "May";
+            break;
+        case '06':
+            sMonth = "Jun";
+            break;
+        case '07':
+            sMonth = "Jul";
+            break;
+        case '08':
+            sMonth = "Aug";
+            break;
+        case '09':
+            sMonth = "Sep";
+            break;
+        case '10':
+            sMonth = "Oct";
+            break;
+        case '11':
+            sMonth = "Nov";
+            break;
+        case '12':
+            sMonth = "Dec";
+            break;
+    }
+	    elCell.innerHTML = myDay + "-" + sMonth + "-"+myYear;
+}
+
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+		 	 {key:"delivery date",label:"Delivery Date",formatter:myFormatDate,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC}},
+			 {key:"impressions",label:"Impressions",sortable:true,formatter:formatNumber},
+			 {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},   
+             {key:"ctr",label:"CTR (%)",sortable:true,formatter:formatFloat},
+			 {key:"amount spent",label:"Amount Spent ($)",sortable:true,formatter:formatFloat}];
+		 this.parseNumberFromFloat = function(sString) { 
+		     return parseFloat(sString.substring(0));   
+         }  
+         
+		 this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"delivery date"} ,
+					 {key:"impressions", parser:YAHOO.util.DataSource.parseNumber},   
+			 		{key:"clicks", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"ctr",parser:this.parseNumberFromFloat} ,
+					 {key:"amount spent",parser:this.parseNumberFromFloat} 
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"delivery date",dir:"asc"}
+				 }   
+			 );   
+     };  
+
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in advertiser_analytic_controller - advertiser_update_text view Exception :: #{e.to_s}"
+%>
+<%end%>

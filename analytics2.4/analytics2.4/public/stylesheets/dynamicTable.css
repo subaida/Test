@@ -1,0 +1,59 @@
+.dynamicTable
+{
+	border-collapse: collapse;
+	border: 2px ridge #CCE;
+	margin: auto;
+	background: white;
+	width:98%;
+}
+
+.dynamicTable td, .dynamicTable th
+{
+	padding: 5px;
+	border: 1px solid black;
+}
+
+#dynamicTableMenu
+{
+	position: absolute;
+	background: white;
+	border: 2px ridge black;
+	padding: 5px;
+	text-align: center;
+	cursor: hand;
+	cursor: pointer;
+}
+
+#dynamicTableMenu ul, #dynamicTableMenu ul
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: left;
+}
+
+#dynamicTableMenu button
+{
+	margin-top: 10px;
+}
+
+.dynamicTable .sortAsc
+{
+	background-image: url(../images/arrow-up.gif);
+	padding-right: 15px;
+}
+
+.dynamicTable .sortDesc
+{
+	background-image: url(../images/arrow-down.gif);
+	padding-right: 15px;
+}
+
+.dynamicTable th
+{
+	cursor: hand;
+	cursor: pointer;
+	background-color: #DDF;
+	background-repeat: no-repeat;
+	background-position: center right;
+}

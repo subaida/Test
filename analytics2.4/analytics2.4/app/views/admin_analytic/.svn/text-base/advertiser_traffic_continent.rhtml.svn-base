@@ -1,0 +1,184 @@
+<%begin%>
+<%if @advXML_continent_traffic_report!=nil%>
+	<%if @advXML_continent_traffic_report[:xml_string]!=nil and @advXML_continent_traffic_report[:xml_string]!=""%>
+		<script type="text/javascript">
+			window.onload=function(){ 
+								var map_traffic = new FusionMaps("/FusionMaps_Developer/Maps/<%if @continent_code.to_s=='NA'%>FCMap_NorthAmerica.swf<%elsif @continent_code.to_s=='SA'%>FCMap_SouthAmerica.swf<%elsif @continent_code.to_s=='EU'%>FCMap_Europe.swf<%elsif @continent_code.to_s=='AS'%>FCMap_Asia.swf<%elsif @continent_code.to_s=='AF'%>FCMap_Africa.swf<%elsif @continent_code.to_s=='OC'%>FCMap_Oceania.swf<%elsif @continent_code.to_s=='ME'%>FCMap_MiddleEast.swf<%elsif @continent_code.to_s=='CA'%>FCMap_CentralAmerica.swf<%end%>", "Map1Id","100%", "100%","0", "0");
+			  map_traffic.setDataXML("<%=@advXML_continent_traffic_report[:xml_string]%>");
+			  map_traffic.setTransparent(true);
+			  map_traffic.render("traffic_continent_div");
+			  }
+		</script>
+	<%end%>
+<%end%>
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15"><span class="heading">Traffic Source Summary <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15" width="1%"></td>
+            <td height="15" width="98%"><table width="100%" border="0">
+              <tr>
+                <td width="41%"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_adv_report/<%=encrypt(session[:advreport_camp_id])%>/<%=encrypt(session[:advreport_ad_id])%>/<%=session[:advreport_start_on]%>/<%=session[:advreport_end_on]%>/<%=session[:duration]%>/<%=session[:advreport_type]%>">Advertiser Home</a> &gt; <span class="nav_link">Traffic Source Summary </span></td>
+                <td width="55%" align="RIGHT"><span class="subtitle"><%=session[:advreport_start_on]%></span>&nbsp;&nbsp;to&nbsp;&nbsp;<span class="subtitle"><%=session[:advreport_end_on]%></span></td>
+                <td align="RIGHT" width="4%"><a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" align="top" border="0" /> </a></td>
+              </tr>
+            </table></td>
+            <td height="15" width="1%"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td height="550" width="100%" align="center">
+					<div id="traffic_continent_div" style="height:100%; width:70%" align="center"><div class="nodata_indicator">&nbsp;</div></div>				</td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table align="center" width="100%">
+              <tr>
+                <td align="CENTER" valign="MIDDLE"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+                  <tr>
+                    <td width="50%" align="left" scope="col"><strong>Export to: <a href="/admin_analytic/generate_Csv?heading=traffic_source_(continent wise)"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a> </strong></td>
+                    <td align="RIGHT" >
+						 <%if  @countrydata_pages.current.previous !=nil%>
+                            	<%= link_to '<< First',{:page => @countrydata_pages.first } ,{:class=>'paginate' }%>
+                            <%else%>
+                            	&lt;&lt;&nbsp;First
+                            <%end%>
+							&nbsp;&nbsp;
+                            <%if  @countrydata_pages.current.previous !=nil%>
+                            	<%= link_to '< Prev', { :page => @countrydata_pages.current.previous },{:class=>'paginate'}  %>
+                            <%else%>
+                            	&lt;&nbsp;Prev
+                            <%end%>
+							&nbsp;&nbsp;
+					 		<span class="pagination"><%= pagination_links(@countrydata_pages,:window_size => 5)%></span>
+                            <%if @countrydata_pages.current.next !=nil%>
+								&nbsp;&nbsp;
+                            	<%= link_to 'Next >', { :page => @countrydata_pages.current.next},{:class=>'paginate'} %>
+                            <%else%>
+                            	Next&nbsp;&gt;
+                            <%end%>
+							&nbsp;&nbsp;
+                            <%if @countrydata_pages.last !=nil && @countrydata_pages.current.next !=nil %>
+                            	<%= link_to 'Last >>', { :page => @countrydata_pages.last},{:class=>'paginate'}%>
+                            <%else%>
+                            	Last&nbsp;&gt;&gt;
+                            <%end%>					</td>
+                  </tr>
+                </table>				    </td>
+              </tr>
+              <tr>
+                <td><div align="center" class=" yui-skin-sam"  >
+                    <div id="markup" class="yui-b">
+                      <table align="center" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Country</th>
+                            <th>Traffic</th>
+                            <th>Percentage - Traffic(%)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+						  <%begin%>  
+						  <%session[:csv_string]=nil%>  
+						  <%session[:csv_string] = FasterCSV.generate do |csv|%>
+						  <%csv << ["Country", "Traffic","Percentage - Traffic"]%>
+                          <%for country_summary in @countrydata%>
+								<%countryName=@countryHash["#{country_summary.country_code}"]%>
+								<%csv<<["#{(countryName=='' || countryName==nil) ? 'Unknown' : countryName}","#{country_summary.sum_region==nil ? 0 : country_summary.sum_region}","#{country_summary.percentage==nil ? 0.00 : sprintf('%.2f',country_summary.percentage)}%"]%>
+							  <tr>
+								<td><%=(countryName=='' || countryName==nil) ? 'Unknown' : countryName%></td>
+								<td><%=country_summary.sum_region%></td>
+								<td><%=country_summary.percentage==nil ? 0.00 : sprintf('%.2f',country_summary.percentage)%></td>
+							  </tr>
+                          <%end%>
+						  <%end%>
+						  <%rescue Exception=>e%>
+						  <%puts"Exception occured in advertiser traffic continent view #{e}"%>
+						 <%end%>
+                        </tbody>
+                      </table>
+                    </div>
+                </div></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - advertiser_traffic_continent view Exception :: #{e.to_s}"
+%>
+<table width="100%" border="0" cellpadding="5" cellspacing="2" class="infobar">
+  <tr>
+    <td class="textBlueBold" align="left">Error occoured. </td>
+  </tr>
+</table>
+<%end%>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"country",label:"Country",sortable:true,resizeable:true},   
+             {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true,resizeable:true},   
+             {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"country"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"country",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+

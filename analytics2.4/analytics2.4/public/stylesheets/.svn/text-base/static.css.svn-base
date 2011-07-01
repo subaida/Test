@@ -1,0 +1,219 @@
+/* Common font style for all pages */
+
+body {font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; margin:0px;}
+body, p, ol, ul, td {font-family: Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; color: #000000;}
+.help_border { border-bottom-width: thin; border-bottom-style: solid; border-bottom-color: #CCCCCC;}
+
+
+/* common link style for all pages */
+a:link{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color: #0174AA;}
+a:active{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color: #0174AA;}
+a:visited{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color: #0174AA;}
+a:hover{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration: underline; color: #0174AA;}
+
+/* header and footer background */
+
+.header_bg{	background-image: url(/images/bg_header.gif); background-repeat: repeat-x;}
+.footer_bg{background-image: url(/images/bg_footer.gif); background-repeat: repeat-x;}
+
+/* static site widget section bg*/
+.section_bg{
+	background-image:url(/images/static/section_bg.gif);
+	background-repeat: repeat-x;
+	background-color: #FFFFFF;
+}
+
+.heading{font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: bold; color: #000000; text-decoration: none; line-height: 25px;}
+.sub_heading{font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight:bold; color:#575352; text-decoration: none; line-height:20px;}
+.sub_title{color:#CC6600; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; line-height:23px;}
+
+.heading3 {	color: #0a8fba;
+	font-weight: bold;
+}
+.style12 {	color: #666666;
+	font-weight: bold;
+}
+.style14 {	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.style28 {	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333333;
+}
+.style29 {font-size: 17px}
+.Home_title1 {	color: #FFFFFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 33px;
+	line-height: 35px;
+}
+.Home_title2 {	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	line-height: 30px;
+}
+.headingBlack {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+	line-height: 25px;
+}
+.body_content {	font-size: 14px;
+	font-weight: normal;
+}
+.subheading1 {
+	color: #CE0000;
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 23px;
+	font-weight: bold;
+}
+.subheading2 {
+	color: #333333;
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 23px;
+	font-weight: bold;
+}
+
+/* curve style */
+.lb {background-image: url(/images/cur_lb.gif); background-repeat: no-repeat; width:18px; height:16px;} 
+.rb {background-image: url(/images/cur_rb.gif); background-repeat: no-repeat; width:18px; height:16px;} 
+.lt {background-image: url(/images/cur_lt.gif); background-repeat: no-repeat; width:18px; height:16px;} 
+.rt {background-image: url(/images/cur_rt.gif); background-repeat: no-repeat; width:18px; height:16px;} 
+.ver-l {background-image: url(/images/bh_ver-l.gif); background-repeat: repeat-y; background-color: #FFFFFF;}
+.ver-r {background-image: url(/images/bh_ver-r.gif); background-repeat: repeat-y; background-color: #FFFFFF;}
+.hor-t {background-image: url(/images/bh_hor-t.gif); background-repeat: repeat-x; background-color: #FFFFFF;}
+.hor-b {background-image: url(/images/bh_hor-b.gif); background-repeat: repeat-x; background-color: #FFFFFF;}
+
+
+
+/*main static site border */
+.sublinks{ background-color:#F8F9FA; border: 1px solid #EEF0F2;}
+.sublinks_hd {background-color:#D1EDF8; }
+
+/* static home page background */
+.home_hd_bg {
+	background-image: url(/images/static/home_hd_bg.jpg);
+	background-repeat: repeat-x;
+	height: 210px;
+	width: 1004px;
+}
+.heighlight_section1 {
+	background-color: #FAF5F5;
+	border: 1px solid #F4EAEA;
+}
+
+.heighlight_sections2 {
+	background-color: #FBFBF4;
+	border: 1px solid #EFEFDC;
+}
+.heighlighted_bg{
+border:1px solid #eeeeee;
+background-color:#f7f7f7;
+padding:5px;
+}
+/* static site widget section bg*/
+.section_bg{
+	background-image:url(/images/static/section_bg.gif);
+	background-repeat: repeat-x;
+	background-color: #FFFFFF;
+}
+
+
+.wlbg_active
+{
+	border:1px solid #e9e9e9;
+	display:block;
+	float:left;
+	font-size:25px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:#000000;
+	vertical-align: middle;
+	line-height: 50px;
+	height:50px;
+	width:275px;
+	background-image:url(../images/wlbg_a.gif);
+	background-repeat: repeat-x;
+	cursor:pointer;
+	text-align: center;
+}
+
+.wlbg_hover
+{
+	border: 1px solid #e9e9e9;
+	display: block;
+	float: left;
+	font-size: 25px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000000;
+	vertical-align: middle;
+	line-height: 50px;
+	height: 50px;
+	width: 275px;
+	background-image: url(../images/wlbg_h.gif);
+	background-repeat: repeat-x;
+	cursor: pointer;
+	text-align: center;
+}
+.analytics_sub_title {
+	font-family: Arial;
+	font-size: 18px;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-style: normal;
+	line-height: 22px;
+}
+
+.analytic_hd_bg{
+	background-image: url(/images/analytics_images/analytic_bg.jpg);
+	background-repeat: repeat-x;
+	height: 238px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #FFFFFF;
+	width: 1004px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.analytics_title{
+	font-family:Arial;
+	font-size:25px;
+	line-height:30px;
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.analytics_hd_text{
+font-family:Arial; font-size:15px; line-height:20px; color:#FFFFFF;
+}
+.ana_heading {
+	font-family: Arial, sans-serif;
+	font-size: 22px;
+	line-height: 25px;
+	font-weight: bold;
+	color: #6C6376;
+	text-decoration: none;
+}
+
+/* all forms mandatory font color style */
+
+.mandatory{
+font:Arial, Helvetica, sans-serif;
+color:#FF0000;
+font-size:13px;
+}
+
+/* analytics div based new style sheet */
+
+#header_bg{	background-image: url(/images/bg_header.gif); background-repeat: repeat-x; height:70px;}
+#footer_bg{background-image: url(/images/bg_footer.gif); background-repeat: repeat-x; height:70px;}
+.footer_text a{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; color: #0174AA; line-height:25px;}
+.footer_text a:hover{font-family: Arial, Helvetica, sans-serif; font-size:12px; text-decoration:underline; color: #0174AA; line-height:25px;} 
+
+#main_content{ width:1004px; text-align:left; }
+.space {height:15px;}
+
+ul, li, ol { margin-left:5px; padding-left:5px;}

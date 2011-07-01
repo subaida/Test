@@ -1,0 +1,68 @@
+require 'rubygems'
+require 'dbi'
+
+class Countrywisestats
+    def generate_countrywise_stats
+      begin
+          analytics_table_arr=['temp_adclients_summaries','temp_pub_channels','temp_pub_carriers','temp_pub_urls']
+          loopStart={'1'=>'2010-01-02','2'=>'2010-01-03'}
+          for i in 1..loopStart.size
+            date=loopStart["#{i}"]
+            for ip in ["192.168.1.6","192.168.1.8","192.168.1.10"]
+                 for db in ["zestadz_shard1","zestadz_shard2","zestadz_shard3"]
+                    for t in ["even","odd"]
+                        for i in [1,2,3]
+                            for analytics_table in analytics_table_arr
+                                begin
+                                    puts "fetching data from :: #{ip} :: #{db} shard_ads_dec29_#{t}_#{i} :: #{analytics_table}"
+                                    tablename="shard_ads_dec29_#{t}_#{i}"
+                                    dbconn = DBI.connect("DBI:MYSQL:#{db}:#{ip}", "user1", "MW@Jupiter_Zest")
+                                    sql = "select SQL_NO_CACHE ad_client_type as ad_client_type,ad_type as ad_type,sum(impressions) as impressions,sum(clicks) as clicks,(count(id)-sum(impressions)-sum(clicks)) as fill_rate,count(distinct(ipaddress)) as requests_unique_visitors,sum(publisher_revenue) as revenue,state as adclient_name,device_name as handset,mobile_model as handset_model,user_agent,publisher_payments_id as pub_id,client_id as client_id,continent_code as continent_code,country_code as country_code,hour(delivery_time) as delivery_hour,date(delivery_time) as delivery_date from #{tablename} where ad_client_type='WAP' and ad_id not in (1,2,3,4,5,6,7,8,9,10,11,12,13) and delivery_time>='#{date} 00:00:00' and delivery_time<='#{date} 23:59:59' group by delivery_date, delivery_hour, client_id,continent_code,country_code,handset,handset_model order by null" if analytics_table=='temp_adclients_summaries'
+                                    sql = "select SQL_NO_CACHE cl.channel as channels,sum(a.impressions) as requests,(count(a.id)-sum(a.impressions)-sum(a.clicks)) as fill_rate,publisher_payments_id as pub_id,a.client_id as client_id, a.ad_client_type as ad_client_type,hour(a.delivery_time) as delivery_hour,date(a.delivery_time) as delivery_date from #{tablename} a ,channel_lists cl where ad_id not in (1,2,3,4,5,6,7,8,9,10,11,12,13) and delivery_time>='#{date} 00:00:00' and delivery_time<='#{date} 23:59:59' and a.channels like concat('%',cl.channel,'%')  group by delivery_date, delivery_hour, client_id,channels order by null" if analytics_table=='temp_pub_channels'
+                                    sql = "select SQL_NO_CACHE carrier_name as owner,sum(impressions) as requests,(count(id)-sum(impressions)-sum(clicks)) as fill_rate,publisher_payments_id as pub_id,client_id as client_id,ad_client_type as ad_client_type,hour(delivery_time) as delivery_hour,date(delivery_time) as delivery_date from #{tablename} where ad_id not in (1,2,3,4,5,6,7,8,9,10,11,12,13) and delivery_time>='#{date} 00:00:00' and delivery_time<='#{date} 23:59:59' group by delivery_date, delivery_hour, client_id,owner order by null" if analytics_table=='temp_pub_carriers'
+                                    sql = "select SQL_NO_CACHE url as url,sum(impressions) as requests,(count(id)-sum(impressions)-sum(clicks)) as fill_rate,publisher_payments_id as pub_id,client_id as client_id, hour(delivery_time) as delivery_hour,date(delivery_time) as delivery_date from #{tablename} where ad_id not in (1,2,3,4,5,6,7,8,9,10,11,12,13) and delivery_time>='#{date} 00:00:00' and delivery_time<='#{date} 23:59:59' group by delivery_date, delivery_hour, client_id,url order by null" if analytics_table=='temp_pub_urls'
+                                    reports = dbconn.execute(sql)
+                                    rescue Exception => e
+                                        puts "error occurred while selecting :: #{e}"
+                                    ensure
+                                        dbconn.disconnect unless dbconn==nil
+                                    end
+                                    sql=""
+                                    begin
+                                    dbconn_s3 = DBI.connect("DBI:MYSQL:temp_analytics:192.168.1.3", "root", "Al@DB5_RoasteR")
+                                    while row = reports.fetch do
+                                        insert_query="insert into temp_adclients_summaries(ad_client_type,ad_type,impressions,clicks,fill_rate,requests_unique_visitors,revenue,adclient_name,handset,handset_model,user_agent,pub_id,client_id,continent_code,country_code,delivery_hour,delivery_date) VALUES ('#{row['ad_client_type']}','#{row['ad_type']}',#{row['impressions']},#{row['clicks']},#{row['fill_rate']},#{row['requests_unique_visitors']},#{row['revenue']},\"#{row['adclient_name']}\",\"#{row['handset']}\",\"#{row['handset_model']}\",\"#{row['user_agent']}\",#{row['pub_id'].to_i},#{row['client_id']},\"#{row['continent_code']}\",\"#{row['country_code']}\",#{row['delivery_hour']},'#{row['delivery_date']}')" if analytics_table=='temp_adclients_summaries'
+                                        insert_query="insert into temp_pub_channels(channel,requests,fill_rate,pub_id,client_id,ad_client_type,delivery_hour,delivery_date) VALUES(\"#{row['channels']}\",#{row['requests']},#{row['fill_rate']},#{row['pub_id'].to_i},#{row['client_id']},'#{row['ad_client_type']}',#{row['delivery_hour']},'#{row['delivery_date']}')" if analytics_table=='temp_pub_channels'
+                                        insert_query="insert into temp_pub_carriers(owner,requests,fill_rate,pub_id,client_id,ad_client_type,delivery_hour,delivery_date) VALUES(\"#{row['owner']}\",#{row['requests']},#{row['fill_rate']},#{row['pub_id'].to_i},#{row['client_id']},'#{row['ad_client_type']}',#{row['delivery_hour']},'#{row['delivery_date']}')" if analytics_table=='temp_pub_carriers'
+                                        insert_query="insert into temp_pub_urls(url,requests,fill_rate,pub_id,client_id,delivery_hour,delivery_date) VALUES (\"#{row['url']}\",#{row['requests']},#{row['fill_rate']},#{row['pub_id'].to_i},#{row['client_id']},#{row['delivery_hour']},'#{row['delivery_date']}')" if analytics_table=='temp_pub_urls'
+                                        dbconn_s3.execute(insert_query)
+                                    end
+                                    rescue Exception=>e
+                                       puts "error occurred while writing data :: #{e}"
+                                    ensure
+                                      dbconn_s3.disconnect unless dbconn_s3==nil
+                                    end
+                                      reports=nil
+                                      row=nil
+                             end #end of  analytics_table in analytics_table_arr
+                             sleep(5)
+                        end
+                    end # end of t in ["even","odd"]
+                end
+            end
+          end
+          puts"======================DUMP FINISHED=================="
+        rescue Exception => e
+            puts e
+        end #end of rescue
+    end # end of method
+end # end of class
+obj=Countrywisestats.new
+obj.generate_countrywise_stats
+
+
+
+
+
+
+

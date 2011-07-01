@@ -1,0 +1,173 @@
+<%begin%>
+<table border="0"  width="100%">
+<tr>
+<td>
+<table width="100%" border="0">
+  <tr>
+     <td width="50%" align="left">&nbsp;<strong>Export to:</strong>
+<a href="/publisher_analytic/generate_Csv?heading=summary report"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a>	 </td>
+     <td align="right"> 
+			 <%if  @summarydata_pages.current.previous !=nil%>
+			  		<%= link_to_remote('<< First',{:update => "showTextReport",:url => { :action => 'showTextReport', :page =>@summarydata_pages.first }},{:class=>"paginate"})%>
+			  <%else%>
+			  		&lt;&lt;&nbsp;First
+			  <%end%>
+			  &nbsp;&nbsp;
+			  <%if  @summarydata_pages.current.previous !=nil%>
+			  		<%= link_to_remote('< Prev',{:update => "showTextReport",:url => { :action => 'showTextReport', :page =>@summarydata_pages.current.previous }},{:class=>"paginate"})%>
+			  <%else%>
+			  		&lt;&nbsp;Prev 
+			  <%end%>
+			   &nbsp;&nbsp;
+			   <span class="pagination"><%=pagination_links_remote(@summarydata_pages,{:window_size => 5},:update => "showTextReport",:url=>{:action=>'showTextReport'})%></span>
+			  <%if @summarydata_pages.current.next !=nil%>
+			  		&nbsp;&nbsp;
+			  		<%= link_to_remote('Next >',{:update => "showTextReport",:url => { :action => 'showTextReport', :page =>@summarydata_pages.current.next }},{:class=>"paginate"})%>
+			  <%else%>
+			  		Next&nbsp;&gt;
+			  <%end%>
+			  &nbsp;&nbsp;
+			  <%if @summarydata_pages.last !=nil && @summarydata_pages.current.next !=nil %>
+					<%= link_to_remote('Last >>',{:update => "showTextReport",:url => { :action => 'showTextReport', :page =>@summarydata_pages.last }},{:class=>"paginate"})%>
+			  <%else%>
+					Last&nbsp;&gt;&gt;
+			  <%end%>
+	  </td>
+    </tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th>Date</th>  
+                 <th>Impressions</th>  
+                 <th>Clicks</th>  
+				  <th>CTR (%)</th>  
+                  <th>eCPM ($)</th>  
+                 <th>Revenue Earned</th> 
+             </tr>  
+         </thead>  
+         <tbody> 
+		 	<%begin%>
+		 	<%session[:csv_string]=nil%> 
+		 	<%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	<%csv << ["Date","Impressions","Clicks","CTR","eCPM","Revenue Earned"]%>
+		 	 <%for textReport in @summrydata%>
+				<%csv<<["#{Time.parse(textReport.delivered_date).strftime('%d-%b-%Y')}","#{textReport.sum_impressions==nil ? 0 : textReport.sum_impressions}", "#{textReport.sum_clicks==nil ? 0 : textReport.sum_clicks}","#{textReport.sum_ctr==nil ? 0.00 : sprintf('%.2f',textReport.sum_ctr)}%","$#{textReport.sum_ecpm==nil ? 0.00 : sprintf('%.2f',textReport.sum_ecpm)}","$#{textReport.sum_revenue==nil ? 0.00 : sprintf('%.2f',textReport.sum_revenue)}"]%>
+             <tr>  
+                 <td style="text-align:center"><%=textReport.delivered_date%></td>  
+                 <td><%=textReport.sum_impressions==nil ? 0 : textReport.sum_impressions%></td>  
+                 <td><%=textReport.sum_clicks==nil ? 0 : textReport.sum_clicks%></td> 
+				 <td><%=textReport.sum_ctr==nil ? 0.00 : sprintf('%.2f',textReport.sum_ctr)%></td>  
+                 <td><%=textReport.sum_ecpm==nil ? 0.00 : sprintf('%.2f',textReport.sum_ecpm)%></td>  
+                 <td><%=textReport.sum_revenue==nil ? 0.00 : sprintf('%.2f',textReport.sum_revenue)%></td>  
+             </tr> 
+			 <%end%> 
+			 <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in showTextReport view #{e}"%>
+			 <%end%>
+         </tbody>  
+    </table>  
+  </div>
+</div>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+	// Define a custom format function
+	var myFormatDate = function(elCell, oRecord, oColumn, oData) {
+	var myYear=oData.split("/")[0];
+	var myMonth=oData.split("/")[1];
+	var myDay=oData.split("/")[2];
+	var sMonth;
+    switch(myMonth) {
+        case '01':
+            sMonth = "Jan";
+            break;
+        case '02':
+            sMonth = "Feb";
+            break;
+        case '03':
+            sMonth = "Mar";
+            break;
+        case '04':
+            sMonth = "Apr";
+            break;
+        case '05':
+            sMonth = "May";
+            break;
+        case '06':
+            sMonth = "Jun";
+            break;
+        case '07':
+            sMonth = "Jul";
+            break;
+        case '08':
+            sMonth = "Aug";
+            break;
+        case '09':
+            sMonth = "Sep";
+            break;
+        case '10':
+            sMonth = "Oct";
+            break;
+        case '11':
+            sMonth = "Nov";
+            break;
+        case '12':
+            sMonth = "Dec";
+            break;
+    }
+    elCell.innerHTML = myDay + "-" + sMonth  + "-" +myYear;
+}
+
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"date",label:"Date",formatter:myFormatDate,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC}},   
+             {key:"impressions",label:"Impressions",formatter:formatNumber,sortable:true},   
+             {key:"clicks",label:"Clicks",formatter:formatNumber,sortable:true},
+			 {key:"ctr",label:"CTR (%)",formatter:formatFloat,sortable:true},   
+             {key:"ecpm",label:"eCPM ($)",formatter:formatFloat,sortable:true},   
+             {key:"revenue",label:"Revenue Earned ($)",formatter:formatFloat,sortable:true} ];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"date"},   
+                    {key:"impressions", parser:YAHOO.util.DataSource.parseNumber},   
+                    {key:"clicks",parser:YAHOO.util.DataSource.parseNumber},
+					{key:"ctr",parser:this.parseNumberFromFloat},   
+                    {key:"ecpm",parser:this.parseNumberFromFloat},   
+                    {key:"revenue",parser:this.parseNumberFromFloat}  
+             ]   
+		};   
+	 
+        this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource, 
+                 {caption:"",   
+                 sortedBy:{key:"date",dir:"asc"}
+				 }   
+				
+         );   
+     };  	 
+ </script>
+<%rescue Exception=>e%>
+	<%puts "An Exception occured in showTextReport view and error is #{e.to_s}"%>
+<%end%>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr>
+    <td valign="top" class="pageHeader">FusionMaps, JavaScript and <span class="codeInline"><strong>saveAsImage()</strong></span> Method </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>If you've configured your maps to allow export to images (see section Saving as Image), you can invoke this functionality using JavaScript too, using the <span class="codeInline">saveAsImage() </span>method of each map. </p>
+      <p>The first step is to set <span class="codeInline">registerWithJS</span> flag of map as <span class="codeInline">1</span>, as shown under: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p class="codeBlock">&lt;div id=&quot;map1div&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;FusionMaps<br />
+&lt;/div&gt;<br />
+&lt;script language=&quot;JavaScript&quot;&gt; <br />
+&nbsp;&nbsp;&nbsp;var map1 = new FusionMaps(&quot;../../FusionMaps/FCF_World.swf&quot;, &quot;map1Id&quot;, &quot;400&quot;, &quot;300&quot;, &quot;0&quot;, <strong>&quot;1&quot;</strong>); <br />
+&nbsp;&nbsp;&nbsp;map1.setDataXML(&quot;&lt;map <strong>imageSave='1' imageSaveURL='http://&lt;&lt;Path to your script&gt;&gt;/FusionChartsSave.aspx'</strong>&gt;...&lt;/map&gt;&quot;);<br />
+&nbsp;&nbsp;&nbsp;map1.render(&quot;map1div&quot;);<br />
+&lt;/script&gt;</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Next, in your XML data configure the parameters required for map saving (<span class="codeInline">imageSave</span>, <span class="codeInline">imageSaveURL</span> etc.). Thereafter, you can invoke the <span class="codeInline">saveAsImage()</span> method of the map object to invoke the map saving routine. </p>
+      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;HTML&gt;<br />
+      &lt;HEAD&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;TITLE&gt;FusionMaps &amp; JavaScript - Saving Map Example&lt;/TITLE&gt; <br />
+&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;Javascript&quot; SRC=&quot;../../FusionMaps/FusionMaps.js&quot;&gt;&lt;/SCRIPT&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>function saveMap(){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Get map from its ID</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var mapToPrint = getMapFromId(&quot;map1Id&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapToPrint.saveAsImage();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</strong><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/SCRIPT&gt;<br />
+&lt;/HEAD&gt;<br />
+&lt;BODY&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;CENTER&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;h2&gt;FusionMaps and JavaScript - Basic Example&lt;/h2&gt;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&lt;div id=&quot;map1div&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FusionMaps<br />
+&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;script language=&quot;JavaScript&quot;&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map1 = new FusionMaps(&quot;../../FusionMaps/FCF_World.swf&quot;, &quot;map1Id&quot;, &quot;400&quot;, &quot;300&quot;, &quot;0&quot;, <strong>&quot;1&quot;</strong>); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map1.setDataXML(&quot;&lt;map imageSave='1' imageSaveURL='http://&lt;&lt;Path to your script&gt;&gt;/FusionChartsSave.aspx'&gt;...&lt;/map&gt;&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map1.render(&quot;map1div&quot;);<br />
+&nbsp;&nbsp;&nbsp;&lt;/script&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;center&gt;&lt;input type='button' value='Save Map as Image' onClick='javascript:saveMap();'&gt;&lt;/center&gt;<br />
+&nbsp;&nbsp;&nbsp;
+<br />
+&nbsp;&nbsp;&nbsp;&lt;/CENTER&gt;<br />
+&lt;/BODY&gt;<br />
+&lt;/HTML&gt;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above code, we're first creating a world map with DOM Id as <span class="codeInline">map1Id</span>. We also register it with JavaScript. Thereafter, we've created a HTML button, which when clicked invokes the local <span class="codeInline">saveMap()</span> function. This function just gets the reference to the map using <span class="codeInline">getMapFromId()</span> function and finally invokes the <span class="codeInline">saveAsImage()</span> method on the map. </p>
+      <p class="highlightBlock">If you intend to save the map soon after the map has loaded, make sure to put the<span class="codeInline"> saveAsImage()</span> command in <span class="codeInline">FC_Rendered</span> event; otherwise, the exporting will get invoked before the map has started rendering, and you'll get a blank image output. </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

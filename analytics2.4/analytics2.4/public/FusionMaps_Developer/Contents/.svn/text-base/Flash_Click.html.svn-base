@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; Handling Click Events </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>You can easily handle the click events for entities on the map in your Flash movies. That is, whenever a user clicks on an entity, you can be notified of the same in your Flash movie. Here we'll see how to do this. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Adding link to XML</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>To enable your parent movie to track links in FusionMaps maps,  you need to add S- before every link specified in the XML data  document. This instructs the maps to convey the link to its parent SWF  movie. An example is given below: </p>
+      <p><span class="codeInline">&lt;entity id='NA' value='49' link='S-NA'/&gt; </span></p>
+      <p>Here, S- is the prefix to indicate that this link should be bubbled up to parent SWF. When this link is bubbled up, parameter is passed to the event handler. We'll see this in the example below. </p>
+      <p class="highlightBlock">If you need to pass multiple parameters, one way would be to use a comma to separate each new value. Then String.split the parameter into individual values in the called function. This is a simple method that would only work with string values. </p>
+      <p>Let's now put all this learning into a practical example to see its usage. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Creating a link handler example </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In this example, we'll create a copy of <span class="codeInline">MyFirstMap.fla</span> and save it as <span class="codeInline">ClickHandler.fla</span>. We'll define the link events for all the entities on the map. Each entity, when clicked, would call a function, which in turn would just output the name of the entity. In real life scenarios, you can do better things with this data. </p>
+      <p>The actions in the new movie would now contain the following: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p class="codeComment">/**<br />
+* This keyframe contains the Actions required to load a FusionMaps<br />
+* map in your Flash movie.<br />
+*<br />
+* We've set the FPS of this movie to 120 for smooth animations.<br />
+* Depending on your requirements, you can set any FPS. FusionMaps<br />
+* renders time based animations, so the length of animation would stay<br />
+* same. Only the smoothness would vary.<br />
+*/<br />
+//You first need to include the following two files in your movie.<br />
+//These two files contain pre-loading functions and application<br />
+//messages for the map.</p>
+      <p><span class="codeComment">//Note: If you're loading multiple maps in your Flash movie, you<br />
+        //do NOT need to include these files for each each. You can put these<br />
+        //lines in the main timeline, so that it gets loaded only once.</span><br />
+        #include &quot;com/fusionmaps/includes/LoadingFunctions.as&quot;<br />
+      #include &quot;com/fusionmaps/includes/AppMessages.as&quot;</p>
+      <p><span class="codeComment">//To create the map, you now need to import the Class of the <br />
+        //map which you want to create. All maps are present in the package <br />
+        //com.fusionmaps.maps (Download Package &gt; MapSource folder)<br />
+        //If you're using multiple maps, you can import all the requisite<br />
+        //map classes in the main timeline of your movie. That ways, you<br />
+        //wouldn't have to import the maps classes everytime you wish to use.</span><br />
+        import com.fusionmaps.maps.WorldMap;<br />
+        <span class="codeComment">// --------------- Event Handlers ---------------- //<br />
+        <strong>//Create a listener object and register the map with it</strong></span><strong><br />
+        var objL:Object = new Object();<br />
+        <span class="codeComment">//Create the handler for link</span><br />
+        objL.linkClicked = function(target:Object){<br />
+        &nbsp;&nbsp;&nbsp;trace(&quot;Entity &quot; + target.link + &quot; was clicked&quot;);<br />
+}</strong><br />
+        <span class="codeComment">// ------------- XML Data for the map -------------- //<br />
+        //Generate the XML data. We hide the border of map, set background<br />
+        //alpha as 0 (for transparency), set legend at bottom, hide its shadow</span><br />
+        var strXML:String = &quot;&lt;map bgAlpha='0' showCanvasBorder='0' includeNameInLabels='0' includeValueInLabels='1'  numberSuffix=' Mn.' labelSepChar=': ' baseFontSize='9' legendPosition='BOTTOM' legendShadow='0'&gt;&quot;;<br />
+        <span class="codeComment">//Define color range</span><br />
+        strXML = strXML + &quot;&lt;colorRange&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='0' maxValue='500' displayValue='Sparsely Populated' color='A7E9BC' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='500' maxValue='1000' displayValue='Well Populated' color='FFFFCC' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;color minValue='1000' maxValue='5000' displayValue='Densely Populated' color='FF9377' /&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/colorRange&gt;&quot;;<br />
+        //Add simple data for demo.<br />
+        strXML = strXML + &quot;&lt;data&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='NA' value='515' <strong>link='S-NA'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='SA' value='373' <strong>link='S-SA'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AS' value='3875' <strong>link='S-AS'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='EU' value='727' <strong>link='S-EU'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AF' value='885' <strong>link='S-AF'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;entity id='AU' value='32' <strong>link='S-AU'</strong>/&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/data&gt;&quot;;<br />
+        strXML = strXML + &quot;&lt;/map&gt;&quot;; <br />
+        <span class="codeComment">//FusionMaps map classes accept XML data as XML Object<br />
+        //and not XML String.<br />
+        //So, if you've an XML string, first create an XML object from it<br />
+        //and then pass to the map. We do the same.</span><br />
+        var xmlData:XML = new XML(strXML);<br />
+        <span class="codeComment">// --------------------------------------------------- // </span></p>
+      <p><span class="codeComment">// -------------- Actual Code to create the map ------------//<br />
+        //To create a map, you first need to create an empty movie clip to act as map holder.</span><br />
+        var mapContainerMC:MovieClip = this.createEmptyMovieClip(&quot;MapHolder&quot;,1);<br />
+        <span class="codeComment">//Now, instantiate the map using Constructor function of the map.</span><br />
+        var myFirstMap:WorldMap = new WorldMap(mapContainerMC, 1, 450, 315, 20, 20, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);<br />
+        <span class="codeComment">//Convey the XML data to map. </span><br />
+        myFirstMap.setXMLData(xmlData);<br />
+        <span class="codeComment"><strong>//Register the map with listener object</strong></span><strong><br />
+        myFirstMap.addEventListener(&quot;linkClicked&quot;, objL);<br />
+        </strong><span class="codeComment">//Draw the map</span><br />
+        myFirstMap.render();<br />
+        <span class="codeComment">//Stop</span><br />
+        stop();</p>
+      <p><br />
+        </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see above, we've defined the link for each entity on the map. The entities, when now clicked, will invoke <span class="codeInline">linkClicked</span> event of the listener object and pass the parameter to the same. </p>
+      <p>In the body of this function, we've just traced out the entity name received as parameter. In your code, you could pass indexes of data and then deal with it the way you want to.</p>
+      <p>When you now run this code and click on any entity, you'll see the name of entity in output window as under:  </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Click.jpg" width="525" height="416" /></td>
+  </tr>
+</table>
+</body>
+</html>

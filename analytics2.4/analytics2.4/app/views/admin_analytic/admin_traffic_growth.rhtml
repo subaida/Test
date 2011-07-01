@@ -1,0 +1,361 @@
+<%begin%>
+
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "analytic-datepicker"%>
+<script src="/javascripts/prototype.js"></script>
+<script src="/javascripts/effects.js"></script>
+ <link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datasource-beta.js"></script>  
+ <script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>
+    <script type="text/javascript">
+ function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('adminstart_on').value=document.getElementById('start_on').value;
+		document.getElementById('adminend_on').value=document.getElementById('end_on').value;
+	}
+}
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('adminstart_on').value= start_date;
+		document.getElementById('adminend_on').value= end_date;	
+	}
+}
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+function resetDate(obj)
+{
+	document.getElementById('duration').selectedIndex = 0;
+}
+function indicatorHide(div_id)
+{	
+	var obj=document.getElementsByClassName(div_id);
+	if (obj !=null)
+	{	for(i=0; i < obj.length;i++)
+		{
+			obj[i].className=obj[i].id;
+		}
+	}
+}
+ </script>
+   
+ <%@AdvPub_xml = session[:xml_string]%>
+ <script type="text/javascript">
+  window.onload=function(){ 
+ 		 <%if @AdvPub_xml!=nil && @AdvPub_xml!=""%>
+			 <%if @AdvPub_xml[:sesTrafficXML]!=nil && @AdvPub_xml[:sesTrafficXML]!=""%>
+				//var myChart_Traffic = new FusionCharts("/FusionCharts_Developer/Charts/MSLine.swf", "myChartId", "700", "350", "0", "0");
+				var myChart_Traffic = new FusionMaps("/FusionMaps_Developer/Maps/FCMap_NewWorld.swf", "Map1Id","800", "400","0", "0");
+				myChart_Traffic.setDataXML("<%=@AdvPub_xml[:sesTrafficXML]%>");
+				myChart_Traffic.setTransparent(true);
+				myChart_Traffic.render("AdvPub_div");
+			  <%end%>
+          <%end%> 
+		  setTimeout("indicatorHide('nodata_indicator')",500);
+ }
+  </script>
+
+
+<% begin %>
+
+<form  action="/admin_analytic/admin_traffic_growth" method="post" name="form_traffic_growth">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="15"></td>
+            <td height="15"><span class="heading"> Traffic by Country </span></td>
+            <td height="15"></td>
+          </tr>
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <span class="nav_link">Traffic by Country </span></td>
+				<td align="RIGHT"><strong align="right"> <a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td width="1%" height="15"></td>
+            <td width="98%" height="15"></td>
+            <td width="1%" height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="99%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+              <tr>
+                <td width="67%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                    <tr class="link_strip">
+                      <td align="LEFT"><strong>Choose Duration :</strong>&nbsp;
+                          <select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" style="width:120px;" >
+							<option value="1" <%if session[:duration].to_s=='1'%>selected="selected"<%end%>>Yesterday</option>
+						    <option value="6" <%if session[:duration].to_s=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                            <option value="29" <%if session[:duration].to_s=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                            <option value="89" <%if session[:duration].to_s=='89'%>selected="selected"<%end%>>Last 90 days</option>
+                            <option value="179" <%if session[:duration].to_s=='179'%>selected="selected"<%end%>>Last 180 days</option>
+                            <option value="364" <%if session[:duration].to_s=='364'%>selected="selected"<%end%>>Last 365 days</option>
+                            <option value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+                          </select>
+                        &nbsp; &nbsp; 
+						<select name="user_type" id="user_type" style="width:120px;" >
+                            <option value="adv_geolocations" <%if session[:user_type]=='adv_geolocations'%>selected="selected"<%end%>>Advertiser</option>
+                            <option value="pub_geolocations" <%if session[:user_type]=='pub_geolocations'%>selected="selected"<%end%>>Publisher</option>
+                          </select> &nbsp;
+                        <input type="submit" name="Submit" id="go" value="GO" />
+                        &nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="33%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="34">
+                    <tr class="link_strip">
+                      <td align="LEFT" width="23%"><strong>Range</strong> :
+                        <%if session[:adminstart_on]!=nil or session[:adminstart_on]!='' %>
+                          <%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%>
+                          <%else%>
+                          <%=Time.parse(@startdate).strftime("%d-%b-%Y")%>
+                          <%end%>
+                        &nbsp;<strong>to</strong>
+                        <%if session[:adminend_on]!='' or session[:adminend_on]!=nil %>
+                        <%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%>
+                        <%else%>
+                        <%=Time.parse(@enddate).strftime("%d-%b-%Y")%>
+                        <%end%>
+                        <div id="get_dateRange">
+                          <input type="hidden" name="from" value="<%=@history%>" />
+                          <input  type="hidden" id="adminstart_on" name="adminstart_on" readonly='true' value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=session[:adminstart_on]%><%else%><%=@startdate%><%end%>"/>
+                          <input type="hidden" id="adminend_on"  name="adminend_on" readonly='true' value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=session[:adminend_on]%><%else%><%=@enddate%><%end%>" />
+                          <input type="hidden" id="statistics" name="statistics" value="impressions" readonly='true' />
+                        </div></td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td height="15"></td>
+                <td width="100%">
+                    <div id="AdvPub_div" align="center"><div id="nodata_td" class="nodata_indicator">&nbsp;</div></div>				</td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table align="center" width="100%">
+              <tr>
+                <td><table width="100%" border="0" align="RIGHT">
+                    <tr>
+                      <td width="50%" align="left">&nbsp;<strong>Export to:</strong><a href="/admin_analytic/generate_Csv?heading=traffic_source"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+                      <td align="right"><%if  @trafficdata_pages.current.previous !=nil%>
+                          <%= link_to '<< First',{:page => @trafficdata_pages.first } ,{:class=>'paginate' }%>
+                          <%else%>
+                        &lt;&lt;&nbsp;First
+                        <%end%>
+                        &nbsp;&nbsp;
+                        <%if  @trafficdata_pages.current.previous !=nil%>
+                        <%= link_to '< Prev', { :page => @trafficdata_pages.current.previous },{:class=>'paginate'}  %>
+                        <%else%>
+                        &lt;&nbsp;Prev
+                        <%end%>
+                        &nbsp;&nbsp; <span class="pagination"><%= pagination_links(@trafficdata_pages,:window_size => 5)%></span>
+                        <%if @trafficdata_pages.current.next !=nil%>
+                        &nbsp;&nbsp; <%= link_to 'Next >', { :page => @trafficdata_pages.current.next},{:class=>'paginate'} %>
+                        <%else%>
+                        Next&nbsp;&gt;
+                        <%end%>
+                        &nbsp;&nbsp;
+                        <%if @trafficdata_pages.last !=nil && @trafficdata_pages.current.next !=nil %>
+                        <%= link_to 'Last >>', { :page => @trafficdata_pages.last},{:class=>'paginate'}%>
+                        <%else%>
+                        Last&gt;&nbsp;&gt;&gt;
+                        <%end%>                      </td>
+                    </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><div align="center" class=" yui-skin-sam"  >
+                    <div id="markup" class="yui-b">
+                      <table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th width="50%">Country</th>
+                            <th width="50%">Impressions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%begin%>
+                          <%session[:csv_string]=nil%>
+                          <%session[:csv_string] = FasterCSV.generate do |csv|%>
+                          <%csv << ["Continent Name", "Impressions"]%>
+                          <%for traffic_summary in @trafficdata%>
+                          <%countryName=@countrynameHash["#{traffic_summary.continent_code}.#{traffic_summary.country_code}"]%>
+                          <%csv<<["#{(countryName=='' || countryName==nil) ? 'Unknown' : countryName}","#{traffic_summary.sum_requests==nil ? 0 : traffic_summary.sum_requests}"]%>
+                          <tr>
+                            <td><%=(countryName=='' || countryName==nil) ? 'Unknown' : countryName%> </td>
+                            <td><%=(traffic_summary.sum_requests==nil || traffic_summary.sum_requests=="") ? 0 : traffic_summary.sum_requests%></td>
+                          </tr>
+                          <%end%>
+                          <%end%>
+                          <%rescue Exception=>e%>
+                          <%puts"Exception occured in publisher traffic view #{e}"%>
+                          <%end%>
+                        </tbody>
+                      </table>
+                    </div>
+                </div></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+        </table></td>
+      </tr>
+      
+    </table></td>
+  </tr>
+</table>
+</form>
+
+<%
+ rescue Exception=>e
+       puts "DEBUGGER :: ERROR :: in  Admin_Traffic_Growth_Continent.rhtml - Admin_Traffic_Growth_Continent  :: #{e.to_s}"
+     end %>
+
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@startdate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@enddate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.form_traffic_growth.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<script type="text/javascript">
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"continent",label:"Country",sortable:true,resizeable:true},   
+             {key:"traffic",label:"Impressions",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}}   
+           ];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"continent"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber}] 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"traffic",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - admin_traffic_growth_continent view Exception :: #{e.to_s}"
+%>
+<%end%>

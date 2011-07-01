@@ -1,0 +1,159 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p class="pageHeader">Egypt Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:Egypt Map<br />
+    <span class="textbold">SWF Name</span>:FCMap_Egypt.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>:410 x 420 pixels <br/>
+<span class="textbold">Selection</span>:Governorates <br>
+<span class="textbold">Internal ID compliant with </span>:FIPS CODE
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">01</td>
+    <td class="text">DK</td>
+    <td class="text">Ad Daqahliyah</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">02</td>
+    <td class="text">BA</td>
+    <td class="text">Al Bahr al Ahmar&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">03</td>
+    <td class="text">BH</td>
+    <td class="text">Al Buhayrah&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">04</td>
+    <td class="text">FY</td>
+    <td class="text">Al Fayyum&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">05</td>
+    <td class="text">GH</td>
+    <td class="text">Al Gharbiyah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">06</td>
+    <td class="text">IK</td>
+    <td class="text">Al Iskandariyah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">07</td>
+    <td class="text">IS</td>
+    <td class="text">Al Isma'iliyah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">08</td>
+    <td class="text">JZ</td>
+    <td class="text">Al Jizah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">09</td>
+    <td class="text">MF</td>
+    <td class="text">Al Minufiyah&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">10</td>
+    <td class="text">MN</td>
+    <td class="text">Al Minya&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">11</td>
+    <td class="text">QH</td>
+    <td class="text">Al Qahirah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">12</td>
+    <td class="text">QL</td>
+    <td class="text">Al Qalyubiyah&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">25</td>
+    <td class="text">UQ</td>
+    <td class="text">Al Uqsur&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">13</td>
+    <td class="text">WJ</td>
+    <td class="text">Al Wadi al Jadid&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">14</td>
+    <td class="text">SQ</td>
+    <td class="text">Ash Sharqiyah&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">15</td>
+    <td class="text">SW</td>
+    <td class="text">As Suways</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">16</td>
+    <td class="text">AN</td>
+    <td class="text">Aswan&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">17</td>
+    <td class="text">AT</td>
+    <td class="text">Asyut&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">18</td>
+    <td class="text">BN</td>
+    <td class="text">Bani Suwayf&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">19</td>
+    <td class="text">BS</td>
+    <td class="text">Bur Sa'id&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">20</td>
+    <td class="text">DT</td>
+    <td class="text">Dumyat&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">26</td>
+    <td class="text">JS</td>
+    <td class="text">Janub Sina'&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">21</td>
+    <td class="text">KS</td>
+    <td class="text">Kafr ash Shaykh&nbsp;&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">22</td>
+    <td class="text">MT</td>
+    <td class="text">Matruh&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">23</td>
+    <td class="text">QN</td>
+    <td class="text">Qina&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">27</td>
+    <td class="text">SS</td>
+    <td class="text">Shamal Sina'&nbsp;</td>
+  </tr>
+  <tr height="20">
+    <td height="20" class="text">24</td>
+    <td class="text">SJ</td>
+    <td class="text">Suhaj&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

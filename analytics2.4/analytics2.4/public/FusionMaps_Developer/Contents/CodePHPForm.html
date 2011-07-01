@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionMaps Documentation</title>
+<link rel="stylesheet" type="text/css" href="Style.css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps with PHP &gt; Using data from Form </h2></td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text">In this section we will see how to gemerate maps using FusionMaps based on data collected in a Form. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>For the sake of demo, let us take the example of a fictional company that   wants to plot the world-wide sales report for a particular day on a map. </p>
+    <p>The example first loads a page that has a form to accept data for all the   continents. Here, we have put some default data which can be modified as per   user's wish. This data will be submitted to another PHP page. This page will   acquire the data and plot it on the map. For the sake of simplicity, we wouldn't   do any processing or checking on this data. However, your real life applications   might process data before presenting it on the map. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="highlightBlock">Before proceeding further, we recommend to go through the documentation &quot;How to use FusionMaps&quot; for a better insight. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="highlightBlock">The code examples contained in this page are present in <span class="codeInline">Download Package &gt; Code &gt; PHP &gt; FormBased</span> folder. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Building the Form </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The form is contained in the<span class="codeInline"> Default.php</span> page, as shown below: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/CodeASPForm1.jpg" width="474" height="377" class="imageBorder" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">This is a very simple form which Submits to <span class="codeInline">FormSubmit.php</span>. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Requesting the data and Creating the Map </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The work of requesting the data from submitted form and creating the map is   done in <span class="codeInline">FormSubmit.php</span>, present in the same folder. It   contains the following code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p>&lt;?php<br />
+          <br />
+          <span class="codeComment"># include Fusionmaps Rendering Control file<br />
+      # to help us easily embed the maps.</span><br />
+      include(&quot;../Includes/FusionMaps.php&quot;);<br />
+      ?&gt;<br />
+  &lt;HTML&gt;<br />
+  &lt;HEAD&gt;<br />
+  &lt;TITLE&gt;FusionMaps PHP Sample- Form Based Data Example&lt;/TITLE&gt;<br />
+  &lt;?<br />
+      <span class="codeComment">/*<br />
+      You need to include the following JS file, if you intend to embed the Maps using JavaScript.<br />
+      Embedding using JavaScripts avoids the &quot;Click to Activate...&quot; issue in Internet Explorer<br />
+      When you make your own Maps, make sure that the path to this JS file is correct. Else, you would get JavaScript errors.<br />
+      */</span><br />
+      ?&gt; <br />
+  <br />
+  &lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot; src=&quot;../JSClass/FusionMaps.js&quot;&gt;&lt;/script&gt;<br />
+  &lt;/HEAD&gt;<br />
+  <br />
+  &lt;BODY&gt;<br />&lt;CENTER&gt;<br />
+        &lt;h2&gt;&lt;a href=&quot;http://www.fusioncharts.com&quot; target=&quot;_blank&quot;&gt;FusionMaps Free&lt;/a&gt; Form-Based Data Example&lt;/h2&gt;<br />
+        &lt;?<br />
+        <br />
+        <span class="codeComment"># this page accepts data from submitted by default.php<br />
+        # it sets the values for the world map<br />
+        <br />
+        # We first request the data from the Form of Default.php and store in an array<br />
+        <br />
+        # storing Form data to an array </span><br />
+        $dataArray[0][1]=&quot;01&quot;; $dataArray[0][2]=$_REQUEST['AS'];<br />
+        $dataArray[1][1]=&quot;02&quot;; $dataArray[1][2]=$_REQUEST['EU'];<br />
+        $dataArray[2][1]=&quot;03&quot;; $dataArray[2][2]=$_REQUEST['AF'];<br />
+        $dataArray[3][1]=&quot;04&quot;; $dataArray[3][2]=$_REQUEST['NA'];<br />
+        $dataArray[4][1]=&quot;05&quot;; $dataArray[4][2]=$_REQUEST['SA'];<br />
+        $dataArray[5][1]=&quot;06&quot;; $dataArray[5][2]=$_REQUEST['CA'];<br />
+        $dataArray[6][1]=&quot;07&quot;; $dataArray[6][2]=$_REQUEST['OC'];<br />
+        $dataArray[7][1]=&quot;08&quot;; $dataArray[7][2]=$_REQUEST['ME'];<br />
+  <br />
+        <span class="codeComment">/*<br />
+        In this example, we're directly showing this data on the map.<br />
+        In your apps, you can do the required processing and then show the <br />
+        relevant data only.<br />
+        <br />
+        Now that we've the data in an array, we need to convert this into XML.<br />
+        The simplest method to convert data into XML is using string concatenation. <br />
+        */ <br />
+        <br />
+        # Initialize &lt;map&gt; element<br />
+        </span>$strXML=&quot;&quot;;<br />
+        $strXML = &quot;&lt;map includeValueInLabels='1' borderColor='FFFFFF' connectorColor='000000' fillAlpha='70' fillColor ='efeaef' hoverColor='cfefdd' showBevel='0' numberPrefix='$'&gt;&quot;;<br />
+  <br />
+        <span class="codeComment"># You can always define &lt;colorRange&gt; here to get color categories. We omit it here.</span><span class="codeComment"><br />
+        <br />
+        # opening data element</span><br />
+        $strXML .= &quot;&lt;data&gt;&quot;;<br />
+        <br />
+        <br />
+        <span class="codeComment"># Retrieving data from array  to assign to each entity</span><br />
+        for($i=0;$i&lt;=7;$i++){<br />
+        $strXML .= &quot;&lt;entity id='&quot; . $dataArray[$i][1] . &quot;' value='&quot; . $dataArray[$i][2] . &quot;' /&gt;&quot;;<br />
+        }<br />
+        <br />
+        <span class="codeComment"># closing data element </span><br />
+        $strXML .= &quot;&lt;/data&gt;&quot;;<br />
+        <br />
+        <span class="codeComment"># closing map element</span><br />
+        $strXML  .= &quot;&lt;/map&gt;&quot;;<br />
+        <br />
+        <br />
+        <span class="codeComment"># Create the Maps with data from strXML<br />
+        <br />
+        # Finally Rendering the USA Maps with renderMap() php function present in FusionMaps.php (which we have included already)<br />
+        # Since we're using dataXML method, we provide a &quot;&quot; value for dataURL here<br />
+        <br />
+        </span><br />
+        print renderMap(&quot;../../Maps/FCMap_World8.swf&quot;,&quot;&quot;, $strXML, &quot;firstMap&quot;, 750, 460,0,0);<br />
+        <span class="codeComment"><br />
+        </span><br />
+        ?&gt;<br />
+        <br />
+&lt;/CENTER&gt;<br />
+&lt;/BODY&gt;<br />
+&lt;/HTML&gt;</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Steps involved in this code </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><ul>
+        <li>Including <span class="codeInline">FusionMaps.php </span>and <span class="codeInline">FusionMaps.js</span> files that help to embed map easily. </li>
+        <li>Requesting data from the submitted form and storing it in local array, <span class="codeInline">$dataArray</span>. </li>
+      <li>Creating an XML data document using string concatenation and storing it in <span class="codeInline">$strXML</span> variable by iterating through <span class="codeInline">$dataArray</span>. </li>
+      <li>Rendering the map using <span class="codeInline">renderMap()</span> function and passing <span class="codeInline">strXML</span> as the data XML for the map. </li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Below is the snapshot of the map that we get here. </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" class="text"><img src="Images/CodeASPForm2.jpg" width="724" height="419" class="imageBorder" /></td>
+  </tr>
+</table>
+</body>
+</html>

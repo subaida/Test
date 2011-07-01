@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ Analytics</title>
+<%bundle :name => "advertiser_analytics_bundle" do%>
+	<%= stylesheet_link_tag "ga-ltr" %>
+	<%= stylesheet_link_tag "style" %>
+	<%= javascript_include_tag "application"%>
+	<script language="JavaScript" src="/FusionCharts_Developer/JSClass/FusionCharts.js"></script>
+	<link href="/stylesheets/yui/datatable.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/javascripts/yui/yahoo-dom-event.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/element-beta-min.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/datasource-beta.js"></script>  
+	<script type="text/javascript" src="/javascripts/yui/datatable-beta-min.js"></script>
+<%end%>
+<%= javascript_include_tag "toolkit"%>
+<script language="JavaScript" type="text/javascript">
+function printWindow(){
+	window.print();
+}
+
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?")) > 0 && parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+
+</head>
+<body>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2" valign="top" width="100%" class="header_bg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="20%" align="LEFT" valign="TOP"><a href="/advertiser_analytic/advertiser_home"><img src="/images/zestadz_analytics_logo.JPG" hspace="5" border="0" /></a></td>
+        <td width="80%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+               <td align="RIGHT" width="100%"></td><td align="RIGHT" width="100%"><strong><%=session[:userName]%></strong>&nbsp;|&nbsp;<a href="/home">Home</a>&nbsp;|&nbsp;<a href="/login/logout"><%if session[:userName]!='demo'%>Logout<%else%>Login<%end%>&nbsp;</a></td>
+            </tr>
+            <tr>
+              <td height="15"></td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="TOP" align="right"><a href="/advertiser_analytic/advertiser_home?analytic=refresh"><img title="Campaign" alt="Campaign" src="/images/tabs/campaigns_v.gif" id="Advertiser" name="Advertiser" border="0"></a><a href="/publisher_analytic/publisher_home?analytic=refresh" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Site-App','','/images/tabs/siteandapps_v.gif',1)"><img src="/images/tabs/siteandapps_a.gif" id="Site-App" title="Site-App" name="Site-App" border="0"></a></td>
+            </tr>
+        </table></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top"><div id="manageDiv"><%= yield %></div></td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" align="center" valign="top" class="footer_bg"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      
+      <tr>
+        <td align="CENTER" height="30"><span class="footer_text">Copyright &copy; 2010 </span><a href="http://www.zestadz.com" target="_blank">ZestADZ</a><span class="footer_text">. All rights reserved</span> </td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+
+</html>
+

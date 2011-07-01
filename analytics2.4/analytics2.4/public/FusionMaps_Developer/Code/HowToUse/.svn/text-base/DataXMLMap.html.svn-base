@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>My First Map using dataXML Method</title>
+<script language="JavaScript" src="FusionMaps.js"></script>
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td valign="top" class="text" align="center">
+	<div id="mapdiv" align="center"> 
+        FusionMaps.
+	</div>
+        <script type="text/javascript">
+	   var map = new FusionMaps("FCMap_World.swf", "Map1Id", "750", "400", "0", "0");
+	   map.setDataXML("<map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'><data>	<entity id='NA' value='515' /><entity id='SA' value='373' /><entity id='AS' value='3875' /><entity id='EU' value='727' /><entity id='AF' value='885' /><entity id='AU' value='32' /></data></map>");
+	   map.render("mapdiv");
+	</script>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

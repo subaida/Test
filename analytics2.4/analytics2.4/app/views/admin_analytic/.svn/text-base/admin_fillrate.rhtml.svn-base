@@ -1,0 +1,371 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "analytic-datepicker"%>
+<%= javascript_include_tag :defaults %>
+<script type="text/javascript">
+ function acceptDates(status)
+{
+	statusMoveAdv('menuDiv') ;
+	document.getElementById('duration').disabled=false;
+	document.getElementById('go').disabled=false;
+	if (status=='Ok')
+	{
+		document.getElementById('adminstart_on').value=document.getElementById('start_on').value;
+		document.getElementById('adminend_on').value=document.getElementById('end_on').value;
+	}
+}
+//onchange="popupCustom(this);"
+function popupCustom(obj)
+{	
+	if (obj.value=='custom')
+	{
+		statusMoveAdv('menuDiv');
+		document.getElementById('duration').disabled=true;
+		document.getElementById('go').disabled=true;
+	}
+	else
+	{
+		var myDate=new Date();
+		//	format end date
+		if (obj.value=='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myEndDay= "00" + (myDate.getDate());
+		myEndDay = myEndDay.substring(myEndDay.length - 2);
+		var myEndMonth=calendarMonth[myDate.getMonth()];
+		var myEndYear=myDate.getFullYear();
+		var end_date=myEndDay+"-"+myEndMonth+"-"+myEndYear;
+		//calculate and format start date
+		if (obj.value!='1')
+		{
+			myDate.setDate(myDate.getDate()-parseInt(obj.value));
+		}
+		var myDay= "00" + (myDate.getDate());
+		myDay = myDay.substring(myDay.length - 2);
+		var myMonth=calendarMonth[myDate.getMonth()];
+		var myYear=myDate.getFullYear();
+		var start_date=myDay+"-"+myMonth+"-"+myYear;
+		document.getElementById('adminstart_on').value= start_date;
+		document.getElementById('adminend_on').value= end_date;	
+	}
+}
+function statusMoveAdv(div) 
+{
+	new Effect[Element.visible(div) ? 'BlindUp' : 'BlindDown'](div, {duration: 0.25});
+}
+function resetDate(obj)
+{
+	document.getElementById('duration').selectedIndex = 0;
+}
+</script> 
+<style type="text/css">
+div.auto_complete ul { 
+  border:1px solid #888;
+  margin:0; 
+  padding:0; 
+  width:100%; 
+  background-color: #ffffff;
+  list-style-type:none; 
+} 
+div.auto_complete ul li { 
+  margin:0; 
+  padding:3px; 
+  color:#0066CC;
+} 
+div.auto_complete ul li.selected { 
+  background-color:#E8E8E8;
+  text-decoration: underline;
+ 
+} 
+div.auto_complete ul strong.highlight { 
+  color: #800; 
+  margin:0; 
+  padding:0; 
+} 
+</style> 
+
+</head>
+
+<body>
+<form  action="/admin_analytic/admin_fillrate" method="post" name="form_pub_fillrate">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          
+          <tr>
+            <td width="1%" height="15">&nbsp;</td>
+            <td width="98%" height="15"><span class="heading">Fill Rate Overview  </span></td>
+            <td width="1%" height="15">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt;  <span class="nav_link">Fill Rate Overview</span></td>
+				<td align="RIGHT"><strong> <a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>
+			  </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="99%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+              <tr>
+                <td width="70%"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                    <tr class="link_strip">
+                      <td align="LEFT"><div id="div1" style="position:relative; display:inline;z-index:10000; float:left"><strong>Publisher:</strong>&nbsp;
+					         <%= text_field_with_auto_complete :publisher, :publisher_name, {:value=>((session[:pub_name]!=nil && session[:pub_name]!='') ? session[:pub_name] : 'All'),:maxlength => 50,:size=>20 }, {:method => :get,:skip_style => true} %></div><div id="div2" style="position:relative; display:inline;z-index:10000; float:left">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Country:</strong>&nbsp;<%= text_field_with_auto_complete :analytics_country_list, :country_name, {:value=>session[:country_name],:maxlength => 50 ,:size=>20}, {:method => :get,:skip_style => true} %></div><div id="div3" style="position:relative; display:inline;z-index:10000; float:left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;Duration:</strong>&nbsp;<select onchange="popupCustom(this);" onfocus="resetDate(this);popupCustom(this);" name="duration" id="duration" style="width:120px;" >
+							  <option value="1" <%if session[:duration].to_s=='1'%>selected="selected"<%end%>>Yesterday</option>
+							  <option value="6" <%if session[:duration].to_s=='6'%>selected="selected"<%end%>>Last 7 days</option>
+                              <option value="29" <%if session[:duration].to_s=='29'%>selected="selected"<%end%>>Last 30 days</option>
+                              <option value="89" <%if session[:duration].to_s=='89'%>selected="selected"<%end%>>Last 90 days</option>
+                              <option value="179" <%if session[:duration].to_s=='179'%>selected="selected"<%end%>>Last 180 days</option>
+                              <option value="364" <%if session[:duration].to_s=='364'%>selected="selected"<%end%>>Last 365 days</option>
+                              <option onclick="popupCustom(this);" value="custom" <%if session[:duration].to_s=='custom'%>selected="selected"<%end%>>Custom</option>
+                            </select>
+                        &nbsp;
+                        <input type="submit" name="Submit" id="go" value="GO" /></div>
+                        &nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="23%"><table align="LEFT" class="subpagetableborder" width="100%" border="0" cellspacing="0" cellpadding="5" height="37">
+                    <tr class="link_strip">
+                      <td align="LEFT" width="23%"><strong>Range</strong> :
+                        <%if session[:adminstart_on]!=nil or session[:adminstart_on]!='' %>
+                          <%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%>
+                        <%else%>
+                          <%=Time.parse(@startdate).strftime("%d-%b-%Y")%>
+                        <%end%>
+                        &nbsp;<strong>to</strong>
+                        <%if session[:adminend_on]!='' or session[:adminend_on]!=nil %>
+                        	<%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%>
+                        <%else%>
+                        	<%=Time.parse(@enddate).strftime("%d-%b-%Y")%>
+                        <%end%>
+                        <div id="get_dateRange">
+                          <input type="hidden" name="from" value="<%=@history%>" />
+                          <input  type="hidden" id="adminstart_on" name="adminstart_on" readonly='true' value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=session[:adminstart_on]%><%else%><%=@startdate%><%end%>"/>
+                          <input type="hidden" id="adminend_on"  name="adminend_on" readonly='true' value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=session[:adminend_on]%><%else%><%=@enddate%><%end%>" />
+                          <input type="hidden" id="statistics" name="statistics" value="impressions" readonly='true' />
+                        </div></td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+         <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table align="center" width="100%">
+              <tr>
+                <td><table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+                    <tr>
+                      <td width="50%" align="left" scope="col"><span class="report_text"><strong>Export to: <a href="/admin_analytic/generate_Csv?heading=admin_device_summary"><img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a></strong> </span></td>
+                      <td align="right" scope="col"><table border="0" align="RIGHT">
+                          <tr>
+                            <td align="RIGHT"><%if  @fillrate_pages.current.previous !=nil%>
+                                <%= link_to '<< First',{:page => @fillrate_pages.first } ,{:class=>'paginate' }%>
+                                <%else%>
+                              &lt;&lt;&nbsp;First
+                              <%end%>
+                              &nbsp;&nbsp;
+                              <%if  @fillrate_pages.current.previous !=nil%>
+                              <%= link_to '< Prev', { :page => @fillrate_pages.current.previous },{:class=>'paginate'}  %>
+                              <%else%>
+                              &lt;&nbsp;Prev
+                              <%end%>
+                              &nbsp;&nbsp; <span class="pagination"><%= pagination_links(@fillrate_pages,:window_size => 5)%></span>
+                              <%if @fillrate_pages.current.next !=nil%>
+                              &nbsp;&nbsp; <%= link_to 'Next >', { :page => @fillrate_pages.current.next},{:class=>'paginate'} %>
+                              <%else%>
+                              Next&nbsp;&gt;
+                              <%end%>
+                              &nbsp;&nbsp;
+                              <%if @fillrate_pages.last !=nil && @fillrate_pages.current.next !=nil %>
+                              <%= link_to 'Last >>', { :page => @fillrate_pages.last},{:class=>'paginate'}%>
+                              <%else%>
+                              Last&nbsp;&gt;&gt;
+                              <%end%>
+                            </td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                </table></td>
+              <tr>
+                <td><div align="center" class=" yui-skin-sam"  >
+                    <div id="markup" class="yui-b">
+                      <table align="CENTER" id="accounts" width="100%" cellpadding="2" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Country Name </th>
+                            <th>Publisher</th>
+                            <th>Adclient</th>
+                            <th>Traffic Acquired </th>
+                            <th>Traffic Delivered </th>
+                            <th>Unfilled Impressions </th>
+                            <th>Fill Rate(%)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%session[:csv_string]=nil%>
+                          <%session[:csv_string] = FasterCSV.generate do |csv|%>
+                          <%csv << ["Country","Publisher","Adclient","Acquired", "Filled","Unfilled","Fill Rate"]%>
+                          <%for pub_fillrate in @fillrate%>
+                          <%if (pub_fillrate.traffic_acquired==nil && pub_fillrate.traffic_delivered==nil) || (pub_fillrate.traffic_acquired=='' && pub_fillrate.traffic_delivered=='') || (pub_fillrate.traffic_acquired=='0' && pub_fillrate.traffic_delivered=='0') || (pub_fillrate.traffic_acquired==0 && pub_fillrate.traffic_delivered==0)%>
+                          <%else%>
+                          <%countryName=@countrynameHash["#{pub_fillrate.continent_code}.#{pub_fillrate.country_code}"]%>
+                          <%csv<<["#{(countryName=='' || countryName==nil) ? 'Unknown' : countryName}","#{(@pub_details[pub_fillrate.client_id.to_s.to_sym]==nil or @pub_details[pub_fillrate.client_id.to_s.to_sym]=='') ? 'Unknown' : @pub_details[pub_fillrate.client_id.to_s.to_sym][1]}","#{(@pub_details[pub_fillrate.client_id.to_s.to_sym]==nil or @pub_details[pub_fillrate.client_id.to_s.to_sym]=='') ? 'Unknown' : @pub_details[pub_fillrate.client_id.to_s.to_sym][0]}","#{pub_fillrate.traffic_acquired==nil ? 0 : pub_fillrate.traffic_acquired}","#{pub_fillrate.traffic_delivered==nil ? 0 : pub_fillrate.traffic_delivered}","#{pub_fillrate.fillrate==nil ? 0 : pub_fillrate.fillrate}","#{pub_fillrate.fr_percentage==nil ? 0.00 : sprintf('%0.2f',pub_fillrate.fr_percentage)}%"]%>
+                          <tr>
+                            <td><%=(countryName=='' || countryName==nil) ? 'Unknown' : countryName%></td>
+                            <td><%=(@pub_details[pub_fillrate.client_id.to_s.to_sym]==nil or @pub_details[pub_fillrate.client_id.to_s.to_sym]=='') ? 'Unknown' : @pub_details[pub_fillrate.client_id.to_s.to_sym][1]%></td>
+                            <td><%=(@pub_details[pub_fillrate.client_id.to_s.to_sym]==nil or @pub_details[pub_fillrate.client_id.to_s.to_sym]=='') ? 'Unknown' : @pub_details[pub_fillrate.client_id.to_s.to_sym][0]%></td>
+                            <td><%=pub_fillrate.traffic_acquired==nil || pub_fillrate.traffic_acquired=='' ? 0 : pub_fillrate.traffic_acquired%></td>
+                            <td><%=pub_fillrate.traffic_delivered==nil || pub_fillrate.traffic_delivered=='' ? 0 : pub_fillrate.traffic_delivered%></td>
+                            <td><%=pub_fillrate.fillrate==nil || pub_fillrate.fillrate=='' ? 0 : pub_fillrate.fillrate%></td>
+                            <td><%=pub_fillrate.fr_percentage==nil ? 0.00 :sprintf('%0.2f',pub_fillrate.fr_percentage)%></td>
+                          </tr>
+                          <%end%>
+                          <%end%>
+                          <%end%>
+                        </tbody>
+                      </table>
+                    </div>
+                </div></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>
+<div id="menuDiv" style="position:absolute; display:none; top:195px; left:593px; z-index:10000;" >
+   <table border="0" cellspacing="0" cellpadding="0" >
+     <tr >
+       <td class="subpagetableborder" ><div id="customDates" >
+           <table border="0" cellpadding="3" cellspacing="2" style="background-color:#FFFFFF">
+             <tr>
+               <td width="15" height="5" bgcolor="#FFFFFF" ></td>
+               <td height="5" bgcolor="#FFFFFF" ><strong>&nbsp;Custom Range:&nbsp;</strong></td>
+               <td width="13" height="5" bgcolor="#FFFFFF" colspan="5"></td>
+             </tr>
+             <tr>
+               <td width="15" bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF"><input readonly=true type="text" id="start_on" name="start_on" size = '15' class ='Inputtext' onClick="displayDatePicker('start_on', this, 'dmy', '-');" value="<%if session[:adminstart_on]!="" && session[:adminstart_on]!=nil %><%=Time.parse(session[:adminstart_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@startdate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle" onClick="displayDatePicker('start_on', this, 'dmy', '-');" /></td>
+               <td bgcolor="#FFFFFF" colspan="2" align="center">to</td>
+               <td width="13" bgcolor="#FFFFFF"><input readonly =true type="text" id="end_on" name="end_on" size = '15' class ='Inputtext' onClick="displayDatePicker('end_on', this, 'dmy', '-');" value="<%if session[:adminend_on]!="" && session[:adminend_on]!=nil %><%=Time.parse(session[:adminend_on]).strftime("%d-%b-%Y")%><%else%><%=Time.parse(@enddate).strftime("%d-%b-%Y")%><%end%>"/></td>
+               <td width="13" bgcolor="#FFFFFF"><img src="/images/analytic/calander.gif" align="absmiddle"  onClick="displayDatePicker('end_on', this, 'dmy', '-');"/></td>
+             </tr>
+             <tr>
+               <td bgcolor="#FFFFFF" >&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" width="7">&nbsp;</td>
+               <td valign="top" bgcolor="#FFFFFF" colspan="2"><table width="100%" border="0">
+                 <tr>
+                   <td align="right" width="50%"><input name="ok" onclick="acceptDates('Ok');updateDateField('start_on');updateDateField('end_on');document.form_pub_fillrate.submit();" type="submit" value="Submit" /></td>
+                   <td align="right" width="50%"><input name="cancel" type="submit" value="Cancel" onclick="acceptDates('Cancel');" /></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table>
+       </div></td>
+     </tr>
+   </table>
+</div>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"country_name",label:"Country",sortable:true,resizeable:true},
+			  {key:"publisher",label:"Publisher",sortable:true},
+ 			  {key:"adclient",label:"Adclient",sortable:true},
+			 {key:"traffic_acquired",label:"Acquired",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}}, 
+			 {key:"traffic_delivered",label:"Filled",formatter:formatNumber,sortable:true},
+			 {key:"fillrate",label:"Unfilled",formatter:formatNumber,sortable:true},      
+             {key:"percentage",label:"Fill Rate (%)",formatter:formatFloat,sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"country_name"},
+			 		{key:"publisher"},   
+					{key:"adclient"},
+			        {key:"traffic_acquired", parser:YAHOO.util.DataSource.parseNumber},
+					{key:"traffic_delivered", parser:YAHOO.util.DataSource.parseNumber}, 
+					{key:"fillrate", parser:YAHOO.util.DataSource.parseNumber},    
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"traffic_acquired",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - admin_fillrate view Exception :: #{e.to_s}"
+%>
+<%end%>

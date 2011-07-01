@@ -1,0 +1,208 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ Analytics - Keyword Summary</title>
+	<script type="text/javascript">
+		  window.onload=function(){ 
+		  <%if @XML_keyword_report!=nil && @XML_keyword_report!=""%>
+				<%if @XML_keyword_report[:xml_string]!=nil && @XML_keyword_report[:xml_string]!=""%>
+					var myChart_keyword = new FusionCharts("/FusionCharts_Developer/Charts/Bar2D.swf", "myChartId", "100%", "100%", "0", "0");
+					myChart_keyword.setDataXML("<%=@XML_keyword_report[:xml_string]%>");
+					myChart_keyword.setTransparent(true);
+					myChart_keyword.render("keyword_div");
+				<%end%>
+			<%end%>
+		  }
+	</script>	
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%" height="15"></td>
+            <td width="98%" height="15">&nbsp;</td>
+            <td width="1%" height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                 <td width="32%" align="left"><a href="/publisher_analytic/publisher_home">Publisher Home</a> &gt; <strong> Keyword Summary </strong></td>
+                 <td width="64%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span>&nbsp;</td>
+                 <td width="4%" align="right"><a href="#" onclick="printWindow()"><img alt="Print" src="/images/analytic/print.png" align="top" title="Print" border="0" /></a> </td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" align="center"><span class="heading">
+			Keyword Summary			</span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td  align="center" height="225" width="100%">
+					<div id="keyword_div" align="center" style="height:100%; width:75%"><div class="nodata_indicator">&nbsp;</div></div>
+				</td>
+                
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+	<tr>
+		<td>
+			<table width="100%" border="0" align="RIGHT">
+  <tr>
+     <td width="50%" align="left">&nbsp;<strong>Export to:</strong> <a href="/publisher_analytic/generate_Csv?heading=keyword_report"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+     <td align="right">
+		  <%if  @keyworddata_pages.current.previous !=nil%>
+		  		<%= link_to '<< First',{:page => @keyworddata_pages.first } ,{:class=>'paginate' }%> 
+		  <%else%>
+		  		&lt;&lt;&nbsp;First
+		  <%end%>
+		  &nbsp;&nbsp;	
+		  <%if  @keyworddata_pages.current.previous !=nil%>
+		  		<%= link_to '< Prev', { :page => @keyworddata_pages.current.previous },{:class=>'paginate'}  %> 
+		  <%else%>
+		  		&lt;&nbsp;Prev
+		  <%end%>
+		  &nbsp;&nbsp;
+		  <span class="pagination"><%= pagination_links(@keyworddata_pages,:window_size => 5)%></span>
+		  <%if @keyworddata_pages.current.next !=nil%>
+		  		&nbsp;&nbsp;
+		   		<%= link_to 'Next >', { :page => @keyworddata_pages.current.next},{:class=>'paginate'} %>
+		  <%else%>
+		   		Next&nbsp;&gt;
+		  <%end%>
+		  &nbsp;&nbsp;
+		  <%if @keyworddata_pages.last !=nil && @keyworddata_pages.current.next !=nil %>
+		  		<%= link_to 'Last >>', { :page => @keyworddata_pages.last},{:class=>'paginate'}%>
+		  <%else%>
+		  		Last&nbsp;&gt;&gt;                    
+		  <%end%>     
+	</td>
+	
+  </tr>
+</table>
+
+		</td>
+	</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th> Keyword</th>  
+                  <th>Traffic</th>  
+                 <th>Percentage - Traffic(%)</th>  
+             </tr>  
+         </thead>  
+         <tbody>
+		 	 <%begin%>  
+		 	 <%session[:csv_string]=nil%>  
+		 	 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	 <%csv << ["Keyword", "Traffic","Percentage - Traffic"]%>     
+		 	 <%for @keyword in @keyworddata%>
+			 	 <%csv<<["#{@keyword.keywords}","#{@keyword.sum_keyword==nil ? 0 : @keyword.sum_keyword}","#{@keyword.keyword_percentage==nil ? 0.00 :sprintf('%.2f',@keyword.keyword_percentage)}%"]%>
+             <tr>  
+                 <td><%=@keyword.keywords%></td>  
+                 <td><%=@keyword.sum_keyword==nil ? 0 : @keyword.sum_keyword%></td>  
+                 <td><%=@keyword.keyword_percentage==nil ? 0.00 : sprintf('%.2f',@keyword.keyword_percentage)%></td>  
+             </tr> 
+			 <%end%> 
+			 <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in publisher keyword view #{e}"%>
+			 <%end%>
+         </tbody>  
+    </table>  
+	</div>
+</div>
+
+</td>
+</tr>
+</table>
+			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"keyword",label:"Keyword",sortable:true},   
+             {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}},   
+             {key:"percentage",label:"Percentage - Traffic(%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"keyword"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"traffic",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });  
+
+</script>
+<%rescue Exception=>e%>
+<%puts"An Exception occured in publisher keyword and #{e}"%>
+<%end%>

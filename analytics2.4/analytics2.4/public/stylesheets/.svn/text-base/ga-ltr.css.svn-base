@@ -1,0 +1,248 @@
+/* CSS Document */
+#container {
+  padding: 1em;
+  min-width: 800px;
+  font-size: 92.8%;
+}
+#content > div#modal_background {
+  position: fixed;
+}
+#main_content {
+  float: right;
+  width: 100%;
+  position: relative;
+}
+#main_content.basic {
+  float: none;
+  clear: both;
+  margin: 1em auto;
+  width: 800px;
+}
+
+/* BEGIN: report section
+------------------------------------ */
+.report_section {
+  float: left;
+  margin: 0 0 1em;
+  width: 100%;
+}
+.report_section.divided {
+  background: url(../images/bg/eeeeee.gif) top center repeat-y;
+}
+.report_section .subsections {
+  margin: 0;
+}
+.report_section.dashboard .subsections {
+  margin: 0;
+}
+.report_section .section {
+  float: left;
+  width: 48%;
+}
+.report_section.dashboard .section {
+  width: 49%;
+}
+.report_section .section.section_2 {
+  float: right;
+}
+.horizontal_stack {
+  float: left;
+  display: inline;
+  margin: -1.3em 0 1.3em;
+  width: 100%;
+}
+.horizontal_stack .subsections {
+  margin: 0;
+}
+.horizontal_stack .section {
+  float: left;
+}
+
+.divided_stack {
+  float: left;
+  display: inline;
+  margin: 0;
+  width: 100%;
+}
+.divided_stack .subsections {
+  margin: 0;
+}
+.divided_stack .section {
+  float: left;
+  margin: 0;
+}
+.divided_stack .section.section_1 {
+  margin: 0;
+  padding-right: 1.7em;
+}
+.divided_stack .section.section_2 {
+  margin: 0;
+  padding: 0 1.7em;
+  border-left: 1px solid #666;
+}
+
+.report_vertical_section .report_section {
+  padding-bottom: 20px;
+}
+/* END: report section
+------------------------------------ */
+
+/* BEGIN: dashboard scorecard, modules
+------------------------------------ */
+.scorecard.dashboard {
+  margin: 0 0 2em 0;
+  border: solid #ddd;
+  border-width: 0 0 2px;
+}
+.dashboard_modules {
+  margin: 0;
+  padding: 0;
+  list-style:none;
+}
+.dashboard_module {
+  position: relative;
+  margin: 0 0 2em 0;
+}
+.dashboard_intro {
+  margin: 0 0 1em;
+  width: 100%;
+}
+.dashboard_module h2,
+.dashboard_intro h2 {
+  position: relative;
+  margin: 0;
+  border: 1px solid #666;
+  padding: 0;
+  font-size: 120%;
+  color: #fff;
+  background: #666;
+}
+.dashboard_module h2 b,
+.dashboard_intro h2 b {
+  position: relative;
+  top: -2px;
+  display: block;
+  margin: 0;
+  border-top: 1px solid #666;
+  background: #666;
+}
+.dashboard_module h2 b {
+  padding-left: 5px;
+}
+.dashboard_intro h2 b {
+  padding: .3em .4em .2em;
+}
+.dashboard_module h2 b span {
+  display: block;
+  width: 98%;
+  margin: 0;
+  padding: .3em 0 .2em 12px;
+  background: url(/images/analytic/gripper.gif) no-repeat center left;
+  cursor: move;
+}
+.dashboard_module h2 a {
+  position: absolute;
+  top: .5em;
+  right: 6px;
+  display: block;
+  padding: 10px 0 0 0;
+  width: 10px;
+  height: 0;
+  overflow: hidden;
+  text-indent: -5000px;
+  font-weight: normal;
+  background: url(../images/icons/remove.gif) no-repeat;
+  cursor: pointer;
+}
+.dashboard_module p {
+  margin: 0;
+  border: solid #bbb;
+  border-width: 1px 1px 0;
+  font-size: 95%;
+  text-align: left;
+  background: #e5e5e5;
+}
+.dashboard_module p b {
+  position: relative;
+  bottom: -1px;
+  display: block;
+  padding: .5em .75em .7em;
+  border-bottom: 1px solid #bbb;
+}
+.scorecard.dashboard .sparklines {
+  margin: 0 1px 1em;
+  padding: 1em 1em 0;
+}
+.scorecard.dashboard .sparkline {
+  float: left;
+  width: 50%;
+  margin: 0 0 1em 0;
+}
+.dashboard_module .graph {
+  position: relative;
+  border: solid #ddd;
+  border-width: 0 1px;
+  height: 14em;
+  overflow: hidden;
+  background: #fff;
+}
+.dashboard_module .graph .graph_wrapper {
+  display: table;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+.dashboard_module .graph .graph_wrapper .graph_wrapper {
+  display: table-cell;
+  border: 0;
+  padding: 0 2%;
+  width: 96%;
+  vertical-align: middle;
+  text-align: center;
+}
+.mini_graph_label {
+  margin-top: .4em;
+  text-align: left;
+  font-weight: bold;
+}
+.mini_graph_label dt,
+.mini_graph_label dd {
+  display: inline;
+  margin: 0;
+  padding: 0 .1em 0 0;
+  font-size: 95%;
+}
+.mini_graph_label dt {
+  font-size: 150%;
+}
+.dashboard_surrogate {
+  border: 2px dotted #000;
+  display: block;
+  background: #ddd;
+}
+.dashboard_module.placeholder {
+  background: #eee;
+}
+.dash.vis {
+  padding-top: .7em;
+}
+.dashboard_module .graph .loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  margin: -1em 0pt 0pt -15em;
+  width: 30em;
+  font-weight: bold;
+}
+.dashboard_module .graph .loading img {
+  vertical-align: middle;
+  padding: 0 .3em 0 0;
+}
+/* TODO: add IE workaround for vertical
+centering of map_overlay contents here
+------------------------------------ */
+/* END: dashboard scorecard, modules
+------------------------------------ */

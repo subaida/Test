@@ -1,0 +1,5 @@
+select SQL_NO_CACHE cl.channel as channel_tar,count(cl.channel) as requests,adc.publisher_id as pub_id,a.client_id as client_id, a.ad_client_type as 
+ad_client_type,hour(a.delivery_time) as delivery_hour,date(a.delivery_time) as delivery_date from adsdeliveries a ,channel_lists cl, adclients adc where a.client_id=adc.id and 
+delivery_time>=concat(if(hour(curTime())='00' or hour(curTime())='01',DATE_ADD(CURDATE(), INTERVAL -1 DAY),curDate()),' ',if(hour(curTime())='00',22,if(hour(curTime())='01',23,hour(subtime(curTime(),'0 2:0:0')))),':00:00') and 
+delivery_time<=concat(if(hour(curTime())='00' or hour(curTime())='01',DATE_ADD(CURDATE(), INTERVAL -1 DAY),curDate()),' ',if(hour(curTime())='00',22,if(hour(curTime())='01',23,hour(subtime(curTime(),'0 2:0:0')))),':59:59')
+and a.channels like concat('%',cl.channel,'%') group by channel_tar, delivery_date, delivery_hour, client_id order by null

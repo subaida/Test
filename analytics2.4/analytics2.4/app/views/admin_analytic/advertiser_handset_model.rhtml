@@ -1,0 +1,190 @@
+<%begin%>
+ <%if @advXML_handset_report!=nil %>
+	<%if @advXML_handset_report[:xml_string]!=nil && @advXML_handset_report[:xml_string]!=""%>
+		<script type="text/javascript">
+			window.onload=function(){ 
+				var myChart_handsets = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+				myChart_handsets.setDataXML("<%=@advXML_handset_report[:xml_string]%>");
+				myChart_handsets.setTransparent(true);
+				myChart_handsets.render("handset_div");
+			}
+		</script>
+	<%end%>
+<%end%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+          <tr>
+            <td width="1%">&nbsp;</td>
+            <td width="98%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              
+              <tr>
+                <td height="15"><span class="heading">Handset Model Summary<%if @handset!=nil && @handset!=''%>&nbsp;&gt;&nbsp;<%=@handset%><%end%></span> </td>
+              </tr>
+              <tr>
+                <td height="25"><table width="100%" border="0">
+                  <tr>
+                    <td width="36%"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_adv_report/<%=encrypt(session[:advreport_camp_id])%>/<%=encrypt(session[:advreport_ad_id])%>/<%=session[:advreport_start_on]%>/<%=session[:advreport_end_on]%>/<%=session[:duration]%>/<%=session[:advreport_type]%>"> Advertiser Home</a> &gt; <span class="nav_link"> Handset Model Summary</span></td>
+                    <td width="60%" align="RIGHT"><span class="subtitle"><%=session[:advreport_start_on]%></span>&nbsp;&nbsp;to&nbsp;&nbsp;<span class="subtitle"><%=session[:advreport_end_on]%></span></td>
+                    <td align="RIGHT" width="4%"><a href="#" onclick="printWindow()"><img alt="Print" title="Print" src="/images/analytic/print.png" align="top" border="0" /> </a></td>
+                  </tr>
+                </table></td>
+                </tr>
+              
+              <tr>
+                <td height="25" align="center">&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+                  <tr>
+                    <td  width="100%" height="300" align="CENTER">
+                        <div id="handset_div" style="height:100%; width:70%"><div class="nodata_indicator">&nbsp;</div></div>                     </td>
+                    </tr>
+                </table></td>
+                </tr>
+              
+           
+              <tr>
+                <td><table align="center" width="100%">
+                  
+				   <tr>
+                    <td><table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;
+		<span class="report_text"><strong>Export to: <a href="/admin_analytic/generate_Csv?heading=handset_model_report"><img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /> </a></strong> </span></td>
+            <td align="right" scope="col"><table border="0" align="RIGHT">
+              <tr>
+                <td align="RIGHT">
+					<%if  @handsets_pages.current.previous !=nil%>
+                    	<%= link_to '<< First',{:page => @handsets_pages.first } ,{:class=>'paginate' }%>
+                    <%else%>
+                    	&lt;&lt;&nbsp;First
+                    <%end%>
+					&nbsp;&nbsp;               
+					<%if  @handsets_pages.current.previous !=nil%>
+                    	<%= link_to '< Prev', { :page => @handsets_pages.current.previous },{:class=>'paginate'}  %>
+                    <%else%>
+                    	&lt;&nbsp;Prev
+                    <%end%>
+					&nbsp;&nbsp;
+					<span class="pagination"><%= pagination_links(@handsets_pages,:window_size => 5)%></span>
+					<%if @handsets_pages.current.next !=nil%>
+						&nbsp;&nbsp;
+                    	<%= link_to 'Next >', { :page => @handsets_pages.current.next},{:class=>'paginate'} %>
+                    <%else%>
+                    	Next&nbsp;&gt;
+                    <%end%>
+					&nbsp;&nbsp;                
+					<%if @handsets_pages.last !=nil && @handsets_pages.current.next !=nil %>
+                    	<%= link_to 'Last >>', { :page => @handsets_pages.last},{:class=>'paginate'}%>
+                    <%else%>
+                    	Last&nbsp;&gt;&gt;
+                    <%end%>				</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>			</td>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="2" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Model</th>
+                                <th>Traffic</th>
+                                <th>Percentage - Traffic (%)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+							 <%begin%>  
+							 <%session[:csv_string]=nil%>  
+							 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+							 <%csv << ["Device", "Traffic","Percentage - Traffic"]%>
+                              <%for device in @handsets%>
+							  	<%csv<<["#{(device.handset_model=='' || device.handset_model==nil) ? 'Unknown' : device.handset_model}","#{device.requests==nil ? 0 : device.requests}","#{device.percentage==nil ? 0.00 : sprintf('%0.2f',device.percentage)}%"]%>
+                              <tr>
+                                <td><%=(device.handset_model=='' || device.handset_model==nil) ? 'Unknown' : device.handset_model%>	</td>
+                                <td><%=device.requests%></td>
+                                <td><%=device.percentage==nil ? 0.00 :sprintf('%0.2f',device.percentage)%></td>
+                              </tr>
+                              <%end%>
+							  <%end%> 
+							 <%rescue Exception=>e%>
+							 <%puts"Exception occured in  admin handset model view #{e}"%>
+							 <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+                </table></td>
+              </tr>
+              
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+        </tr>
+        </table></td>
+            <td width="1%" align="left" valign="top">&nbsp;</td>
+          </tr>
+      
+    </table></td>
+  </tr>
+</table>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in _analytic_controller - _handsets view Exception :: #{e.to_s}"
+%>
+<table width="100%" border="0" cellpadding="5" cellspacing="2" class="infobar">
+  <tr>
+    <td class="textBlueBold" align="left">Error occoured. </td>
+  </tr>
+</table>
+<%end%>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"device",label:"Model",sortable:true,resizeable:true},
+			 {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true,sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_ASC}},   
+             {key:"percentage",label:"Percentage - Traffic(%)",formatter:formatFloat,sortable:true}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"device"},   
+			        {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"traffic",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>

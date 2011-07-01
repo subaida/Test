@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="../Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">Using JavaScript functions as links</h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>Instead of using simple links, you can also 
+        set JavaScript links using FusionMaps i.e., you can invoke a JavaScript 
+        function present in the same page (in which the map is present) when 
+        the end viewer clicks a map element. To attain this, all 
+        you need to do is place the name of JavaScript function instead of the 
+        link URL, as under:</p>
+      <p class="codeInline">&lt;entity id='NA' value='515' link=&quot;JavaScript:myJS('NA, 515');&quot;/&gt;</p>
+      <p>In the above code, <span class="codeInline">myJS</span> refers to a custom 
+        JavaScript function present in the HTML page that embeds this map. You 
+        can also specify any number of parameters for this function. When you 
+        now click the map element, 
+        <span class="codeInline">myJS </span>function would be invoked and 'NA, 
+        515' would be passed to the function as the function parameter. Here, 
+        we've passed the entity label and value just for demonstration purposes. 
+        In actual apps, you can pass identifier numbers or strings to each data. 
+        When the user clicks on the link, these identifiers can be sent back to 
+        your JavaScript functions for further actions (like loading detailed data 
+        for that identifier using AJAX or anything - the possibilities are endless).</p>
+      <p>Let's quickly put up an example for this kind of links. We'll create 
+        a simple World Population Map. 
+        Each continent when clicked, would pass its label and value to our custom 
+        JavaScript function <span class="codeInline">myJS</span>, which (for the 
+        sake of demonstration) would just write it out in an alert box. </p>
+      <p>We create <span class="codeInline">JSExample.html</span> for this example 
+        in <span class="codeInline">DrillDown</span> folder. It contains the following 
+        HTML code:</p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="codeBlock"><p>&lt;html&gt;<br />
+      &lt;head&gt;<br />
+      &nbsp;&nbsp;&nbsp;&lt;title&gt;Drill Down Example&lt;/title&gt;<br />
+      &nbsp;&nbsp;&nbsp;&lt;script language=&quot;JavaScript&quot; src=&quot;../../JSClass/FusionMaps.js&quot;&gt;&lt;/script&gt;<br />
+      &nbsp;&nbsp;<strong>&nbsp;&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function myJS(myVar){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.alert(myVar);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//--&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;/SCRIPT&gt;</strong><br />
+  &lt;/head&gt;</p>
+      <p>&lt;body&gt;<br />
+      &nbsp;&nbsp;&nbsp;&lt;div id=&quot;mapdiv&quot; align=&quot;center&quot;&gt; <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FusionMaps.<br />
+  &nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+  &nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map = new FusionMaps(&quot;../../Maps/FCMap_World.swf&quot;, &quot;Map1Id&quot;, &quot;500&quot;, &quot;300&quot;, &quot;0&quot;, &quot;0&quot;);<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.setDataURL(&quot;JSExample.xml&quot;); <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.render(&quot;mapdiv&quot;);<br />
+  &nbsp;&nbsp;&nbsp;&lt;/script&gt;<br />
+  &lt;/body&gt;<br />
+  &lt;/html&gt;<br />
+      </p>
+      <p><br />
+      </p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>Here, we've a defined a function <span class="codeInline">myJS</span> 
+        which will respond to the clicks generated from the map.</p>
+      <p>And now<span class="codeInline"> JSExample.xml</span> looks as under:</p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="codeBlock">&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;data&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='NA' value='515' <strong>link=&quot;JavaScript:myJS('NA, 515');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='SA' value='373' <strong>link=&quot;JavaScript:myJS('SA, 373');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AS' value='3875' <strong>link=&quot;JavaScript:myJS('AS, 3875');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='EU' value='727' <strong>link=&quot;JavaScript:myJS('EU, 727');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AF' value='885' <strong>link=&quot;JavaScript:myJS('AF, 885');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AU' value='32' <strong>link=&quot;JavaScript:myJS('AU, 32');&quot;</strong>/&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;/data&gt; <br />
+&lt;/map&gt;</td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">As you can see above, for each data item, we've 
+      defined a JavaScript link, that points to the custom function <span class="codeInline">myJS</span>. 
+      To this function, we're passing the name and value of the entity. 
+      <p>When you view the map and click on a continent, you'll see something like 
+        under: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/JS.jpg" width="508" height="318" /></td>
+  </tr>
+</table>
+</body>
+</html>

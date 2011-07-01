@@ -1,0 +1,239 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Publisher Reports Analytics</title>
+<script type="text/javascript">
+	window.onload=function(){ 
+		<%if @xml_unique_visitors!=nil && @xml_unique_visitors!=""%>
+			<%if @xml_unique_visitors[:xml_string]!=nil && @xml_unique_visitors[:xml_string]!=""%>
+					var myChart_unique_visitor = new FusionCharts("/FusionCharts_Developer/Charts/Line.swf", "myChartId", "100%", "100%", "0", "0");
+					myChart_unique_visitor.setDataXML("<%=@xml_unique_visitors[:xml_string]%>");
+					myChart_unique_visitor.setTransparent(true);
+					myChart_unique_visitor.render("visitor_div");
+			<%end%>
+		<%end%>
+	}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"></td>
+            <td width="98%"></td>
+            <td width="1%"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><span class="heading">Unique Visitor Summary <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                 <td width="40%" align="left"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_report/<%=encrypt(session[:report_adclient])%>/<%=session[:report_start_on]%>/<%=session[:report_end_on]%>/<%=session[:duration]%>/<%=session[:filled]%>">Publisher Home</a> &gt; <span class="nav_link"> Unique Visitor Summary </span></td>
+                 <td width="56%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span>&nbsp;</td>
+                 <td width="4%" align="right"> <a href="#" onclick="printWindow()"><img alt="Print" src="/images/analytic/print.png" align="top" title="Print" border="0" /></a></td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td  align="center" height="225" width="100%">
+					<div id="visitor_div" align="center" style="height:100%; width:85%"><div class="nodata_indicator">&nbsp;</div></div>				</td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+	<tr>
+		<td>
+			<table width="100%" border="0" align="RIGHT">
+  				<tr>
+					 <td width="50%" align="left">&nbsp;<strong>Export to:</strong> <a href="/admin_analytic/generate_Csv?heading=unique_visitor"> <img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+					 <td align="right">
+						  <%if  @visitordata_pages.current.previous !=nil%>
+								<%= link_to '<< First',{:page => @visitordata_pages.first } ,{:class=>'paginate' }%> 
+						  <%else%>
+								&lt;&lt;&nbsp;First
+						  <%end%>
+						  &nbsp;&nbsp;	
+						  <%if  @visitordata_pages.current.previous !=nil%>
+								<%= link_to '< Prev', { :page => @visitordata_pages.current.previous },{:class=>'paginate'}  %> 
+						  <%else%>
+								&lt;&nbsp;Prev
+						  <%end%>
+						  &nbsp;&nbsp;
+						  <span class="pagination"><%= pagination_links(@visitordata_pages,:window_size => 5)%></span>
+						   <%if @visitordata_pages.current.next !=nil%>
+								&nbsp;&nbsp;
+								<%= link_to 'Next >', { :page => @visitordata_pages.current.next},{:class=>'paginate'} %>
+						   <%else%>
+								Next&nbsp;&gt;
+						   <%end%>
+						   &nbsp;&nbsp;
+						  <%if @visitordata_pages.last !=nil && @visitordata_pages.current.next !=nil %>
+								<%= link_to 'Last >>', { :page => @visitordata_pages.last},{:class=>'paginate'}%>
+						  <%else%>
+								Last&nbsp;&gt;&gt;
+						  <%end%>					 </td>
+				 </tr>
+			</table>		</td>
+	</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="0" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th>Date</th>  
+                 <th>Number of Visitors</th>  
+                 <th>Percentage - Traffic (%)</th>  
+             </tr>  
+         </thead>  
+         <tbody>
+		 <%session[:csv_string]=nil%>  
+		 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 <%csv << ["Date", "Traffic","Percentage - Traffic"]%>
+		 <%for visitor_summary in @visitordata%>
+        	<%csv<<["#{Time.parse(visitor_summary.delivered_date).strftime('%d-%b-%Y')}","#{visitor_summary.sum_visitor==nil ? 0 : visitor_summary.sum_visitor}","#{visitor_summary.visitor_percentage==nil ? 0.00 :sprintf('%.2f',visitor_summary.visitor_percentage)}%"]%>
+             <tr>  
+                 <td><%=visitor_summary.delivered_date%></td>  
+                 <td><%=visitor_summary.sum_visitor==nil ? 0 : visitor_summary.sum_visitor%></td>  
+                 <td><%=visitor_summary.visitor_percentage==nil ? 0.00 : sprintf('%.2f',visitor_summary.visitor_percentage)%></td>  
+             </tr> 
+		<%end%> 
+		<%end%>
+         </tbody>  
+    </table>  
+	</div>
+</div></td>
+</tr>
+</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+// Define a custom format function
+	var myFormatDate = function(elCell, oRecord, oColumn, oData) {
+	var myYear=oData.split("/")[0];
+	var myMonth=oData.split("/")[1];
+	var myDay=oData.split("/")[2];
+    var oDate = new Date();
+    var sMonth;
+    switch(myMonth) {
+        case '01':
+            sMonth = "Jan";
+            break;
+        case '02':
+            sMonth = "Feb";
+            break;
+        case '03':
+            sMonth = "Mar";
+            break;
+        case '04':
+            sMonth = "Apr";
+            break;
+        case '05':
+            sMonth = "May";
+            break;
+        case '06':
+            sMonth = "Jun";
+            break;
+        case '07':
+            sMonth = "Jul";
+            break;
+        case '08':
+            sMonth = "Aug";
+            break;
+        case '09':
+            sMonth = "Sep";
+            break;
+        case '10':
+            sMonth = "Oct";
+            break;
+        case '11':
+            sMonth = "Nov";
+            break;
+        case '12':
+            sMonth = "Dec";
+            break;
+    }
+    elCell.innerHTML = myDay + "-" + sMonth  + "-" +myYear;
+}
+
+ formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"date",label:"Date", formatter:myFormatDate,sortable:true},   
+             {key:"visitor",label:"Number of Visitors",formatter:formatNumber,sortable:true},   
+             {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         } 
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"date"},   
+                    {key:"visitor", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"date",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e%>
+<%puts"An Exception occured in publisher visitor and #{e}"%>
+<%end%>

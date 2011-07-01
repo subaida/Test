@@ -1,0 +1,199 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Publisher Reports Analytics</title>
+<script type="text/javascript">
+	window.onload=function(){ 
+		<%if @XML_channel_report!=nil && @XML_channel_report!=""%>
+			<%if @XML_channel_report[:xml_string]!=nil && @XML_channel_report[:xml_string]!=""%>
+				var myChart_channel = new FusionCharts("/FusionCharts_Developer/Charts/Pie2D.swf", "myChartId", "100%", "100%", "0", "0");
+				myChart_channel.setDataXML("<%=@XML_channel_report[:xml_string]%>");
+				myChart_channel.setTransparent(true);
+				myChart_channel.render("channel_div");
+			<%end%>
+		<%end%>	
+	}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td valign="top">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"></td>
+            <td width="98%"></td>
+            <td width="1%"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><span class="heading">Channel Summary <%if session[:disp_username]!=nil && session[:disp_username]!=""%>&nbsp;>&nbsp;<%=session[:disp_username]%><%end%></span></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                 <td width="33%" align="left"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <a href="/admin_analytic/generate_report/<%=encrypt(session[:report_adclient])%>/<%=session[:report_start_on]%>/<%=session[:report_end_on]%>/<%=session[:duration]%>/<%=session[:filled]%>">Publisher Home</a> &gt; <span class="nav_link"> Channel Summary </span></td>
+                 <td width="63%" align="right"><span class="subtitle"><%=session[:report_start_on]%> </span>&nbsp; to&nbsp;&nbsp;<span class="subtitle"><%=session[:report_end_on]%> </span> </td>
+				<td width="4%"><a href="#" onclick="printWindow()"><img alt="Print" src="/images/analytic/print.png" align="top" title="Print" border="0" /></a> </td>
+              </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+          
+          
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15" valign="top">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td  align="center" height="300" width="100%">
+						<div id="channel_div" align="center" style="height:100%; width:70%;"><div class="nodata_indicator">&nbsp;</div></div>					</td>
+				  </tr>
+				</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+				<table align="center" width="100%">
+	<tr>
+		<td>
+		<table width="100%" border="0" align="RIGHT">
+			<tr>
+				<td width="50%" align="left">&nbsp;<strong>Export to</strong>: <a href="/admin_analytic/generate_Csv?heading=channel_report"><img alt="Export to CSV" title="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0"></a></td>
+				<td align="right">
+					<%if  @channeldata_pages.current.previous !=nil%>
+						<%= link_to '<< First',{:page => @channeldata_pages.first } ,{:class=>'paginate' }%> 
+					 <%else%>
+						 &lt;&lt;&nbsp;First
+					 <%end%>
+					&nbsp;&nbsp;
+					<%if  @channeldata_pages.current.previous !=nil%>
+						   <%= link_to '< Prev', { :page => @channeldata_pages.current.previous },{:class=>'paginate'}  %> 
+					<%else%>
+						  &lt;&nbsp;Prev
+					<%end%>
+					&nbsp;&nbsp;
+					<span class="pagination"><%= pagination_links(@channeldata_pages,:window_size => 5)%></span>
+					 <%if @channeldata_pages.current.next !=nil%>
+							&nbsp;&nbsp;
+						   <%= link_to 'Next >', { :page => @channeldata_pages.current.next},{:class=>'paginate'} %>
+					  <%else%>
+						   Next&nbsp;&gt;
+					  <%end%>
+					 &nbsp;&nbsp;	
+					<%if @channeldata_pages.last !=nil && @channeldata_pages.current.next !=nil %>
+						 <%= link_to 'Last >>', { :page => @channeldata_pages.last},{:class=>'paginate'}%>
+					<%else%>
+						 Last&nbsp;&gt;&gt;             
+					<%end%>				</td>
+			</tr>
+		</table>		</td>
+	</tr>
+<tr>
+<td>
+<div align="center" class=" yui-skin-sam"  >
+<div id="markup" class="yui-b">   
+	<table align="CENTER" id="accounts" width="100%" cellpadding="5" cellspacing="0">   
+         <thead>  
+             <tr>  
+                 <th> Channel</th>  
+                  <th align="right">Traffic</th>  
+                 <th align="right">Percentage - Traffic (%)</th>  
+             </tr>  
+         </thead>  
+         <tbody>
+		 	 <%begin%>  
+		 	 <%session[:csv_string]=nil%>  
+		 	 <%session[:csv_string] = FasterCSV.generate do |csv|%>
+		 	 <%csv << ["Channel", "Traffic","Percentage - Traffic"]%>
+		 	 <%for @channel in @channeldata%>
+			 <%csv<<["#{(@channel.channel=='' || @channel.channel==nil) ? 'Unknown' : @channel.channel}","#{@channel.sum_requests==nil ? 0 : @channel.sum_requests}","#{@channel.channel_percentage==nil ? 0.00 :sprintf('%.2f',@channel.channel_percentage)}%"]%>
+             <tr>  
+                 <td align="LEFT"><%=(@channel.channel=='' || @channel.channel==nil) ? 'Unknown' : @channel.channel%></td>  
+                 <td align="RIGHT"><%=@channel.sum_requests==nil ? 0 : @channel.sum_requests%></td>  
+                 <td align="RIGHT"><%=@channel.channel_percentage==nil ? 0.00 : sprintf('%.2f',@channel.channel_percentage)%></td>  
+             </tr> 
+			 <%end%> 
+			 <%end%> 
+			 <%rescue Exception=>e%>
+			 <%puts"Exception occured in publisher channel view #{e}"%>
+			 <%end%>
+         </tbody>  
+    </table>  
+	</div>
+</div></td>
+</tr>
+</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+        </table>
+		
+		</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"channel",label:"Channel",sortable:true},   
+             {key:"traffic",label:"Traffic",formatter:formatNumber,sortable:true},   
+             {key:"percentage",label:"Percentage - Traffic (%)",formatter:formatFloat,sortable:true}];   
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }  
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"channel"},   
+                    {key:"traffic", parser:YAHOO.util.DataSource.parseNumber},   
+                     {key:"percentage",parser:this.parseNumberFromFloat}  
+             ]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"channel",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<%rescue Exception=>e%>
+<%puts"An Exception occured in publisher channel and #{e}"%>
+<%end%>

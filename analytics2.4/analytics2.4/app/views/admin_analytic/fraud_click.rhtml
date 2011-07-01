@@ -1,0 +1,255 @@
+<%begin%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ZestADZ - Admin  Analytics</title>
+<%= stylesheet_link_tag "zestadz-datepicker" %>
+<%= javascript_include_tag "zest_datepicker"%>
+<%= javascript_include_tag :defaults %>
+  
+
+<style type="text/css">
+div.auto_complete ul { 
+  border:1px solid #888; 
+  margin:0; 
+  padding:0; 
+  width:100%; 
+  background-color: #ffffff;
+  list-style-type:none; 
+} 
+div.auto_complete ul li { 
+  margin:0; 
+  padding:3px; 
+  color:#0066CC;
+  
+} 
+div.auto_complete ul li.selected { 
+	background-color:#E8E8E8;
+	text-decoration: underline;
+ 
+} 
+div.auto_complete ul strong.highlight { 
+  color: #800; 
+  margin:0; 
+  padding:0; 
+} 
+.cal_height
+{
+margin:1px 6px 0px 6px ;
+}
+</style> 
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+          <tr>
+            <td height="15">&nbsp;</td>
+            <td height="15"><span class="heading">Fraud Click Report </span></td>
+            <td height="15">&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td height="5"></td>
+            <td height="5"></td>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td align="LEFT"><a href="/admin_analytic/admin_home">Admin Home</a> &gt; <span class="nav_link">Fraud Click Report </span></td>
+				<td align="RIGHT"><strong><a href="#" onclick="printWindow()"><img src="/images/analytic/print.png" border="0" /> </a></strong></td>
+			  </tr>
+			</table>
+			 </td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+			  <tr>
+				<td align="CENTER">
+					<table width="100%" border="0" cellspacing="5" cellpadding="5" class="subpagetableborder" >
+              <tr>
+                <td width="73%"><form  action="/admin_analytic/fraud_click_search" method="post" name="fraud_ck"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="subpagetableborder">
+                    <tr class="link_strip">
+                      <td align="LEFT">
+                        <div id="div" style="position:relative; display:inline; z-index:10000; float:left;"><strong>Campaign: </strong>
+                          <%= text_field_with_auto_complete :campaign, :campaign_name, {:value=>@camp_name,:maxlength => 250,:size=>20 }, {:method => :get,:skip_style => true} %><input type="hidden" value="<%if @offset==nil or @offset==''%>100<%else%><%=@offset%><%end%>" id="show" name="show">						  &nbsp;&nbsp;&nbsp;&nbsp;</div>
+                       
+						  <div id="divAuto" style="position:relative; display:inline; z-index:10000; float:left;"><strong>Publisher: </strong>
+						 <%= text_field_with_auto_complete :publisher, :publisher_name, {:value=>@pub_name,:maxlength => 32,:size=>20 }, {:method => :get,:skip_style => true} %>						 &nbsp;&nbsp;&nbsp;&nbsp;</div>
+           				<div id="div2" style="position:relative; display:inline; float:left;"><strong>Date: </strong>
+						<input readonly="true" type="text" id="search_date" name="search_date" size = '15' value="<%=@delivery_time%>" onClick="displayDatePicker('search_date', this, 'dmy', '-');"/><img src="/images/analytic/calander.gif" width="22" height="22" align="top" onClick="displayDatePicker('search_date', document.getElementById('search_date'), 'dmy', '-');" border="0" class="cal_height">&nbsp;&nbsp;&nbsp;&nbsp;</div>&nbsp;<input type="submit" name="Submit" id="go" value="GO" /></td>
+                    </tr>
+                </table>
+                </form></td>
+                </tr>
+            </table>				</td>
+			  </tr>
+			</table>			</td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"></td>
+            <td height="15"></td>
+          </tr>
+          <tr>
+            <td height="15"></td>
+            <td height="15"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+              
+			  <tr>
+			  	<td>
+					<table align="center" width="100%">
+	<tr>
+		<td>
+		<table align="CENTER" width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="50%" align="left" scope="col">&nbsp;</td>
+            <td align="right" scope="col"><table border="0" align="RIGHT">
+              <tr>
+                <td align="RIGHT">
+					
+                    	&lt;&lt;&nbsp;<%if @limit<=0%>First&nbsp;&nbsp;&lt;&nbsp;Prev<%else%><a href="javascript:void(0);" id="f" onClick="zPagination(this.id,'<%=@paginate_url%>');">First</a>&nbsp;&nbsp;&lt;&nbsp;<a href="javascript:void(0)" id="p" onClick="zPagination(this.id,'<%=@paginate_url%>');">Prev</a><%end%>&nbsp;&nbsp;<%if @limit + @offset>=@max_limit%>Next&nbsp;&gt;&nbsp;&nbsp;Last<%else%><a href="javascript:void(0)" id="n" onClick="zPagination(this.id,'<%=@paginate_url%>');">Next</a>&nbsp;&gt;&nbsp;&nbsp;<a href="javascript:void(0)" id="l" onclick="zPagination(this.id,'<%=@paginate_url%>');">Last</a><%end%>&nbsp;&gt;&gt;
+                    			</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>			</td></tr>
+                  <tr>
+                    <td><div align="center" class=" yui-skin-sam"  >
+                        <div id="markup" class="yui-b">
+                          <table align="CENTER" id="accounts" width="100%" cellpadding="2" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Campaign</th>
+                                <th>Fraud Click</th>
+                                <th>Amount not charged ($)</th>
+                                <th>Client Id</th>
+                                <th>Chargeback ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+							<%for fc in @sum_fc%>
+							  <tr>
+							    <td><strong>Total</strong></td>
+                                <td><strong><%=number_with_delimiter(fc['fraud_click'].to_i)%></strong></td>
+                                <td><strong><%=sprintf("%.2f",(fc['bid']).to_s)%></strong></td>
+                                <td><strong>NA</strong></td>
+                                <td><strong><%=sprintf("%.2f",((fc['bid'].to_f*60)/100).to_s)%></strong></td>
+                               </tr>
+							<%end%>
+							 <%for data in @fraud_clicks%>
+                              <tr>
+							    <td><%=data['campaign_name']%></td>
+                                <td><%=number_with_delimiter(data['fraud_click'].to_i)%></td>
+                                <td><%=sprintf("%.2f",(data['fraud_click'].to_i * data['bid'].to_f).to_s)%></td>
+                                <td><a href="/admin_analytic/fc_details?campaign_id=<%=data['campaign_id']%>&amp;delivery_time=<%=@delivery_time%>&pub_id=<%=data['pub_id']%>&client_id=<%=data['client_id']%>"><%=data['client_id']%></a></td>
+                                <td><%=sprintf("%.2f",(((data['fraud_click'].to_i * data['bid'].to_f)*60)/100).to_s)%></td>
+                                </tr>
+							  <%end%>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div></td>
+                  </tr>
+				  <tr><td>&nbsp;</td></tr>
+				  <tr>
+				    <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+					  <tr>
+						<td align="LEFT"><strong>Export to: </strong><a href="/admin_analytic/generate_csv_report?type=FC&amp;campaign_name=<%=@camp_name%>&amp;publisher_name=<%=@pub_name%>&amp;delivery_time=<%=@delivery_time%>"><img alt="Export to CSV" src="/images/analytic/icon_csv.gif" align="ABSMIDDLE" border="0" /></a></td>
+						<td align="RIGHT"><strong>Show:</strong>&nbsp;<select onchange="update_show(this);"><option value="10" <%if @offset==10%>selected<%end%>>10</option><option value="50" <%if @offset==50%>selected<%end%>>50</option><option value="100" <%if @offset==100%>selected<%elsif @offset==nil or @offset==''%>selected<%end%>>100</option></select></td>
+					  </tr>
+					</table>
+					</td>
+				  </tr>
+                </table>				</td>
+			  </tr>
+            </table></td>
+            <td height="15"></td>
+          </tr>
+
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+<input type="hidden" id="max_limit" value="<%=@max_limit%>" />
+<input type="hidden" id="limit" value="<%=@limit%>" />
+<input type="hidden" id="offset" value="<%=@offset%>" />
+<script type="text/javascript">
+formatFloat = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 2});
+ };
+ formatNumber = function(elCell, oRecord, oColumn, oData) {
+ var value = oData;
+ elCell.innerHTML = YAHOO.util.Number.format(parseFloat(value), {thousandsSeparator: ",", decimalPlaces: 0});
+ };
+YAHOO.util.Event.addListener(window, "load", function() {   
+     YAHOO.example.EnhanceFromMarkup = new function() {   
+         var myColumnDefs = [   
+             {key:"campiagn",label:"Campaign",sortable:true},
+			 {key:"fraud_click",label:"Fraud Click"},   
+             {key:"amt_not_charged",label:"Amount not charged ($)"},
+			 {key:"client_id",label:"Client Id"},
+			 {key:"charge_back",label:"Chargeback ($)"}];  
+		 this.parseNumberFromFloat = function(sString) {  
+             return parseFloat(sString.substring(0));   
+         }   
+         this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("accounts"));   
+         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;   
+         this.myDataSource.responseSchema = {   
+             fields: [{key:"campiagn"},   
+			        {key:"fraud_click"},
+					{key:"amt_not_charged"},
+					{key:"client_id"},
+					{key:"charge_back"}]   
+			 
+         };   
+    
+         this.myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, this.myDataSource,   
+                 {caption:"",   
+                 sortedBy:{key:"campiagn",dir:"desc"}
+				 }   
+				
+         );   
+     };  
+	 
+ });   
+
+</script>
+<script type="text/javascript" src="/javascripts/z_pagination.js"></script>
+<script type="text/javascript">
+	function update_show(obj)
+	{
+		document.getElementById('show').value=obj.value;
+		document.getElementById('offset').value=obj.value;
+		document.forms["fraud_ck"].submit();
+	}
+</script>
+<%rescue Exception=>e
+puts "DEBUG :: ERROR :: in admin_analytic_controller - fraud click view Exception :: #{e.to_s}"
+%>
+<%end%>

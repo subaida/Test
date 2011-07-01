@@ -1,0 +1,1 @@
+Owing to the size of library item, the library is now available as a separate download from www.fusioncharts.com/PUC > Add-ons. 

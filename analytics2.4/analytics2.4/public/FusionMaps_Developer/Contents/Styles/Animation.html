@@ -1,0 +1,222 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="../Style.css" type="text/css" />
+</head>
+
+<body topMargin='10' leftMargin='10'>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td class="text"><span class="pageHeader">Animation Style Type Parameters</span></td>
+  </tr>
+  <tr> 
+    <td class="text"><p class="text">Using the <span class="codeInline">Animation 
+        Style Type</span>, you can animate different objects of the map. You can define custom animation styles and apply them to various 
+        objects of the map. Each map object has a list of supported animation 
+        properties that can be set through <span class="codeInline">Animation 
+        Style Type.</span></p></td>
+  </tr>
+  <tr> 
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="text"><p class="text">Before we get to the parameters supported 
+        by the animation style type, let's quickly glance through the properties 
+        of map objects that we can animate using <span class="codeInline">Animation 
+        Style Type.</span> The animation style type helps you with the animation 
+        of following properties:</p></td>
+  </tr>
+  <tr> 
+    <td class="text"><table border="1" cellpadding="3" cellspacing="0" bordercolor="f1f1f1">
+        <tr> 
+          <td width="127" valign="top"><p class="textBold">Property</p></td>
+          <td width="751" valign="top"><p class="textBold">Description</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" bordercolor="f1f1f1" class="codeInline"><p>_x</p></td>
+          <td width="751" valign="top" bordercolor="f1f1f1" class="text"><p>Helps 
+              animate the <span class="codeInline">x</span> position of the given 
+              map object</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" bordercolor="f1f1f1" class="codeInline"><p>_y</p></td>
+          <td width="751" valign="top" bordercolor="f1f1f1" class="text"><p>Helps 
+              animate the <span class="codeInline">y</span> position of the given 
+              map object.</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" bordercolor="f1f1f1" class="codeInline"><p>_xScale</p></td>
+          <td width="751" valign="top" bordercolor="f1f1f1" class="text"><p>Using 
+              this property, you can animate the <span class="codeInline">x-scale 
+              </span>(horizontal scale) of the given map object</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" bordercolor="f1f1f1" class="codeInline"><p>_yScale</p></td>
+          <td width="751" valign="top" bordercolor="f1f1f1" class="text"><p>Like 
+              <span class="codeInline">xScale</span>, this animates the <span class="codeInline">y-scale.</span></p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" bordercolor="f1f1f1" class="codeInline"><p>_alpha</p></td>
+          <td width="751" valign="top" bordercolor="f1f1f1" class="text"><p>Helps 
+              <span class="codeInline">alpha</span> transition (transparency fading) 
+              animation effect</p></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="text"><p class="text">Not all parameters can be applied to all 
+        map objects. For example, text fields cannot be <span class="codeInline">x-scaled</span> 
+        or <span class="codeInline">y-scaled</span>. The list of animation 
+        parameters for each map object is given in Overview page of this section<span class="codeInline">.</span></p></td>
+  </tr>
+  <tr> 
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="text"><p>Multiple animations in combination or multiple animations 
+        in sequence can also be applied to any map object. For example, you 
+        can opt to <span class="codeInline">y-scale</span> and <span class="codeInline">alpha-fade</span> 
+        the <span class="codeInline">plot </span>or you might go for <span class="codeInline">x-scale</span> and        <span class="codeInline"> y-scale</span>.</p></td>
+  </tr>
+  <tr> 
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="text"><p>Let's now get to the attributes that<span class="codeInline"> 
+        Animation Style Type </span>exposes to help us control the functionalities:</p></td>
+  </tr>
+  <tr> 
+    <td class="text"><table border="1" cellpadding="3" cellspacing="0" bordercolor="f1f1f1">
+        <tr> 
+          <td width="127" valign="top"><p class="textBold">Attribute</p></td>
+          <td width="751" valign="top"><p class="textBold">Description</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" class="codeInline"><p>param</p></td>
+          <td width="751" valign="top" class="text"><p>This attribute lets you specify the 
+              property of map object which you want to animate e.g., <span class="codeInline">_x, 
+              _y, _xscale</span> etc</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" class="codeInline"><p>start</p></td>
+          <td width="751" valign="top" class="text"><p>The <span class="codeInline">start</span> 
+              value of animation e.g., if you're animating the map plot for fade 
+              in alpha effect, the start value of <span class="codeInline">alpha</span> 
+              would be 0</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" class="codeInline"><p>Duration</p></td>
+          <td width="751" valign="top" class="text"><p>Using this, you can control the <span class="codeInline">duration</span> 
+              of animation in seconds</p></td>
+        </tr>
+        <tr> 
+          <td width="127" valign="top" class="codeInline"><p>Easing</p></td>
+          <td width="751" valign="top" class="text"><p>This attribute lets you specify the 
+              pattern of animation easing. Valid values are<span class="codeInline"> 
+              "elastic", "bounce", "regular", "strong" or "none".</span></p></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td class="text"><p>For the<span class="codeInline"> Animation Style Type</span>, 
+        except <span class="codeInline">Easing</span>, all the above attributes 
+    are <strong>mandatory</strong></p>      
+      <p>Before getting to detailed explanations, let's quickly 
+        cruise through a quick animation sample. Let's try and animate our plot (map drawing) so that it scales up after the map is loaded. </p>    
+      <p class="text">To do so, we first need to define our custom style. Since 
+        scaling up involves increment of both<span class="codeInline"> 
+        _xScale </span>and<span class="codeInline"> _yScale</span>, we'll now 
+        need to define two animation styles and then apply them to Plot object. 
+    The style definition goes as under:</p></td>
+  </tr>
+  
+  <tr> 
+    <td valign="top" class="codeBlock"><p>&lt;styles&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;definition&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MyXAnim' type='animation' param='_xScale' start='0' duration='1' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MyYAnim' type='animation' param='_yScale' start='0' duration='1' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/definition&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... More XML Here .... <br />
+        &lt;/styles&gt;</p></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="text">In the above code, we name the two styles as<span class="codeInline"> 
+        MyXAnim</span> and<span class="codeInline"> MyYAnim </span>with 
+        their param (animation parameter) as<span class="codeInline"> _xscale</span> 
+        and<span class="codeInline"> _yscale</span> respectively. We set start 
+        value as 0, we want the plot to scale up from 0 to 100 (remember that 
+        scales are always from 0-100 in FusionMaps). We also specify the duration 
+        as 1 for the animation sequence.</p></td>
+  </tr>
+  <tr> 
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="text">To apply this animation style to plot, the following code 
+      is used:</td>
+  </tr>
+  <tr> 
+    <td class="codeBlock"><p>&lt;styles&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... More XML Here ....<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;application&gt;<br />
+        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;apply toObject='Plot' styles='MyXAnim,MyYAnim' 
+        /&gt;</strong><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/application&gt;<br />
+        &lt;/styles&gt;</p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">If you run the above code against any map, you'll see that the map scales up from 0 size to full size, 
+        before the data is animated and rendered. Bingo! Exactly what we needed! 
+    Let's move on to the attributes in details now.</p></td>
+  </tr>
+  
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="header"><span class="codeInline">param</span> attribute</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">The<span class="codeInline"> param </span><span class="text">attribute</span> 
+        specifies the property of map object, which is to be animated. As earlier 
+        discussed, it can take one of the following values, depending on the map 
+        object:</p>
+      <ul type="disc">
+        <li class="codeInline">_x </li>
+        <li class="codeInline">_y</li>
+        <li class="codeInline">_xScale </li>
+        <li class="codeInline">_yScale</li>
+        <li class="codeInline">_alpha</li>
+        <li class="codeInline">_rotation</li>
+      </ul>      <p class="text">We reiterate that not all map objects support all the 
+      above properties. </p></td>
+  </tr>
+  
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="header">Setting the start position of animation object</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">In our above example, where we were scaling the plot 
+        from 0 to 100, we had set the start value of animation to 0, as we want 
+        the plot to scale from 0 to 100. You always need to set a start value 
+        for any animation style. The end value is decided by FusionMaps based 
+        on the map object and animation parameter.</p>      
+      <p class="text">For example, if you want to animate the<span class="codeInline"> 
+        x </span>position of <span class="codeInline">plot </span> from 0 
+        to their final position, you need to set 
+        start position to 0. But since you do not know the end position of individual 
+        <span class="codeInline">map entity</span>, it's automatically set by FusionMaps.</p>      </td>
+  </tr>
+</table>
+</body>
+</html>

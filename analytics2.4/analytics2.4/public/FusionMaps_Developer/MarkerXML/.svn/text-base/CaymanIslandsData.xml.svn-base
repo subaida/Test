@@ -1,0 +1,29 @@
+<map animation='0' showShadow='0' showBevel='0' showMarkerLabels='1' fillColor='F1f1f1' borderColor='999999' baseFont='Verdana' baseFontSize='10' markerBorderColor='000000' markerBgColor='FF5904' markerRadius='6' legendPosition='bottom' useHoverColor='1' showMarkerToolTip='1' showLabels='0' >
+	<data>
+		<entity id='KY.BT'  />
+		<entity id='KY.CB'  />
+		<entity id='KY.EE'  />
+		<entity id='KY.GT'  />
+		<entity id='KY.SO'  />
+		<entity id='KY.NS'  />
+		<entity id='KY.WB'  />
+	</data>
+	<markers>
+	<shapes>
+	       <shape id='myCustomShape' type='circle' fillColor='FFFFFF,333333' fillPattern='radial' showBorder='0' radius='4'/>
+		   <shape id='newCustomShape' type='circle' fillColor='FFFFFF,000099' fillPattern='radial' showBorder='0' radius='3'/>
+	   </shapes> 
+		<definition>
+			<marker id='GE' x='134.76' y='418.51' label='George Town' labelPos='right'  />
+			<marker id='01' x='142.94' y='323.34' label='Rum Point'  />
+			<marker id='02' x='883.78' y='22.51' label='The Bluff' labelPos='left'  />
+			<marker id='03' x='600.34' y='72.65' label='Jackson Point'  />
+		</definition>
+		<application>
+			<marker id='GE' shapeId='myCustomShape'  />
+			<marker id='01' shapeId='newCustomShape'  />
+			<marker id='02' shapeId='newCustomShape'  />
+			<marker id='03' shapeId='newCustomShape'  />
+		</application>
+	</markers>
+</map>

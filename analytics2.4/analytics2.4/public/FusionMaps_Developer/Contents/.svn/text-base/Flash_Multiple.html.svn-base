@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" /></head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionMaps and Flash &gt; Loading Multiple Maps </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>In our previous example, we had seen how to load a single map in a Flash movie. Here, we'll see how to load two maps in a single Flash Movie.</p>
+      <p>Loading two (or n maps) in your Flash movie is as simple and straight-forward as loading a single movie. You just need to create instances of each map class, provide it the right XML data and then ask it to render. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">In Example</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>For this example, we create <span class="codeInline">MultipleMaps.fla</span> under FlashExamples folder. Copy &quot;<span class="codeInline">World Map</span>&quot; and &quot;<span class="codeInline">USA Map</span>&quot; folder from <span class="codeInline">FCMap_World.fla</span> and <span class="codeInline">FCMap_USA.fla</span> (or <span class="codeInline">MapLibrary.fla</span> if you've a license other than Enterprise license) respectively to this .fla. </p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Mul_Lib.jpg" width="221" height="375" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Now, like in previous example, create a layer <span class="codeInline">&quot;Graphic Elements&quot;</span> in this file too and add two oval backgrounds instead of one, as we'll now be loading two maps. Shown below is a reference image: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Mul_Ov.jpg" width="600" height="425" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Now, in the <span class="codeInline">Actions</span> Layer of this movie, punch the following code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p class="codeComment">/**<br />
+      * This keyframe contains the Actions required to load a FusionMaps<br />
+      * map in your Flash movie.<br />
+      *<br />
+      * We've set the FPS of this movie to 120 for smooth animations.<br />
+      * Depending on your requirements, you can set any FPS. FusionMaps<br />
+      * renders time based animations, so the length of animation would stay<br />
+      * same. Only the smoothness would vary.<br />
+      */<br />
+      //You first need to include the following two files in your movie.<br />
+      //These two files contain pre-loading functions and application<br />
+      //messages for the map.</p>
+      <p><span class="codeComment">//Note: If you're loading multiple maps in your Flash movie, you<br />
+        //do NOT need to include these files for each each. You can put these<br />
+        //lines in the main timeline, so that it gets loaded only once.</span><br />
+        #include &quot;com/fusionmaps/includes/LoadingFunctions.as&quot;<br />
+      #include &quot;com/fusionmaps/includes/AppMessages.as&quot;</p>
+      <p><span class="codeComment">//Import the Class of the map which you want to create. <br />
+        //All maps are present in the package <br />
+        //com.fusionmaps.maps (Download Package &gt; MapSource folder)</span><br />
+        import com.fusionmaps.maps.WorldMap;<br />
+      import com.fusionmaps.maps.USAMap;</p>
+      <p class="codeComment">// ------------- XML Data for the map -------------- //<br />
+        //FusionMaps necessarily needs its data in XML format.<br />
+        //So, if you've data in arrays, forms, recordsets, etc., you<br />
+        //first need to convert it into XML. Only then would you be able<br />
+        //to use the maps.</p>
+      <p class="codeComment">//Here, we're hard-coding an XML data document for demo.<br />
+        //In your applications, this XML data could be dynamically<br />
+        //built at run time using string concatenation or XML<br />
+        //Object.<br />
+      </p>
+      <p><span class="codeComment">// --------------- Data for World Map -----------------//<br />
+        //Generate the XML data. We hide the border of map, set background<br />
+        //alpha as 0 (for transparency), set legend at bottom, hide its shadow</span><br />
+        var strXML1:String = &quot;&lt;map bgAlpha='0' showCanvasBorder='0' includeNameInLabels='0' includeValueInLabels='1'  numberSuffix=' Mn.' labelSepChar=': ' baseFontSize='9' legendPosition='BOTTOM' legendShadow='0'&gt;&quot;;<br />
+        <span class="codeComment">//Define color range</span><br />
+        strXML1 = strXML1 + &quot;&lt;colorRange&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;color minValue='0' maxValue='500' displayValue='Sparsely Populated' color='A7E9BC' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;color minValue='500' maxValue='1000' displayValue='Well Populated' color='FFFFCC' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;color minValue='1000' maxValue='5000' displayValue='Densely Populated' color='FF9377' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;/colorRange&gt;&quot;;<br />
+        <span class="codeComment">//Add simple data for demo.</span><br />
+        strXML1 = strXML1 + &quot;&lt;data&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='NA' value='515' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='SA' value='373' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='AS' value='3875' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='EU' value='727' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='AF' value='885' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;entity id='AU' value='32' /&gt;&quot;;<br />
+        strXML1 = strXML1 + &quot;&lt;/data&gt;&quot;;<br />
+      strXML1 = strXML1 + &quot;&lt;/map&gt;&quot;; </p>
+      <p><span class="codeComment">// ------------ Data for US Map ---------- //</span><br />
+        var strXML2:String = &quot;&lt;map bgAlpha='0' showCanvasBorder='0' labelSepChar=': ' baseFontSize='9' legendPosition='BOTTOM' legendShadow='0'&gt;&quot;;<br />
+        <span class="codeComment">//Color Range</span><br />
+        strXML2 = strXML2 + &quot;&lt;colorRange&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;color minValue='0' maxValue='1000000' displayValue='Sparsely Populated' color='A7E9BC' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;color minValue='1000000' maxValue='5000000' displayValue='Well Populated' color='FFFFCC' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;color minValue='5000000' maxValue='100000000' displayValue='Densely Populated' color='FF9377' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;/colorRange&gt;&quot;;<br />
+        <span class="codeComment">//Actual Data</span><br />
+        strXML2 = strXML2 + &quot;&lt;data&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Al' value='4557808' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ak' value='663661' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Az' value='5939292' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ar' value='2779154' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ca' value='36132147' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Co' value='4665177' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ct' value='3510297' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='De' value='843524' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='DC' value='550521' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Fl' value='17789864' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ga' value='9072576' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Hi' value='1275194' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Id' value='1429096' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Il' value='12763371' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='In' value='6271973' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Io' value='2966334' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ks' value='2744687' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ky' value='4173405' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='La' value='4523628' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Me' value='1321505' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Md' value='5600388' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ma' value='6398743' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Mi' value='10120860' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Mn' value='5132799' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ms' value='2921088' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Mo' value='5800310' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Mt' value='935670' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ne' value='1758787' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nv' value='2414807' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nh' value='1309940' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nj' value='8717925' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nm' value='1928384' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ny' value='19254630' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nc' value='8683242' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Nd' value='636677' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Oh' value='11464042' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ok' value='3547884' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Or' value='3641056' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Pa' value='12429616' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ri' value='1076189' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Sc' value='4255083' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Sd' value='775933' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Tn' value='5962959' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Tx' value='22859968' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Ut' value='2469585' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Vt' value='623050' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Va' value='7567465' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Wa' value='6287759' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Wv' value='1816856' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Wi' value='5536201' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;entity id='Wy' value='509294' /&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;/data&gt;&quot;;<br />
+        strXML2 = strXML2 + &quot;&lt;/map&gt;&quot;;</p>
+      <p><span class="codeComment">//FusionMaps map classes accept XML data as XML Object<br />
+        //and not XML String.<br />
+        //So, if you've an XML string, first create an XML object from it<br />
+        //and then pass to the map. We do the same.</span><br />
+        var xmlData1:XML = new XML(strXML1);<br />
+        var xmlData2:XML = new XML(strXML2);<br />
+        <span class="codeComment">// --------------------------------------------------- // <br />
+        </span></p>
+      <p><span class="codeComment">// -------------- Actual Code to create the map ------------//<br />
+        //Create movie clip holders for the map.</span><br />
+        var mapContainerMC1:MovieClip = this.createEmptyMovieClip(&quot;MapHolder1&quot;,1);<br />
+        var mapContainerMC2:MovieClip = this.createEmptyMovieClip(&quot;MapHolder2&quot;,2);<br />
+        <span class="codeComment">//Now, instantiate the map using Constructor functions.</span><br />
+        var myWorldMap:WorldMap = new WorldMap(mapContainerMC1, 1, 380, 320, 20, 15, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);<br />
+        var myUSAMap:USAMap = new USAMap(mapContainerMC2, 1, 380, 320, 440, 15, false, &quot;EN&quot;, &quot;noScale&quot;, false, &quot;&quot;);</p>
+      <p><span class="codeComment">//Convey the XML data to maps. </span><br />
+        myWorldMap.setXMLData(xmlData1);<br />
+        myUSAMap.setXMLData(xmlData2);<br />
+        <span class="codeComment">//Draw the maps</span><br />
+        myWorldMap.render();<br />
+        myUSAMap.render();<br />
+        <span class="codeComment">//Stop</span><br />
+        stop();</p>
+    <p></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above code, we're:</p>
+      <ol>
+        <li>First including   <span class="codeInline">com/fusionmaps/includes/LoadingFunctions.as</span> &amp; <span class="codeInline">com/fusionmaps/includes/AppMessages.as</span> - required files for pre-loading map. </li>
+        <li>Thereafter, we import the <span class="codeInline">WorldMap</span> class and <span class="codeInline">USAMap</span> Class as we'll be plotting two maps in this example.</li>
+        <li>We now create the XML data for both the maps. In this example, again, we've hard-coded the XML data. You can create the XML data dynamically based on your data sources.</li>
+        <li>We convert the XML data into XML Objects.</li>
+        <li>We now create two empty movie clips - one for each map.</li>
+        <li>Next, we create instances of both the map and pass the required parameters. We set the x and y offset of USA Map so that it draws on the right of World Map.</li>
+        <li>Moving on, we convey the XML data of each map using <span class="codeInline">setXMLData</span> method.  </li>
+        <li>Finally, we draw both the maps by calling the <span class="codeInline">render()</span> method for each map's instance object. </li>
+      </ol>
+    <p>When you now view the application, you'll get the following output. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Mul_Out.jpg" width="600" height="284" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In this example, we've included just the World Map and USA Map. You can include any map in your application in the same way. </p>
+      <p>Also, here we've shown just 2 maps together. You can include any number of maps in your application (on a single screen too).</p>
+      <p>Now that you're fairly convinced of the power of FusionMaps in conjunction with Flash, let's move ahead and see an advanced example that will illustrate a few advanced features like updating map data at run-time, hiding map, re-initializing map etc. </p></td>
+  </tr>
+</table>
+</body>
+</html>

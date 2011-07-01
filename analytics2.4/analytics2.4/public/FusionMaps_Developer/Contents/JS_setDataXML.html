@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr>
+    <td valign="top" class="pageHeader">FusionMaps, JavaScript and <span class="codeInline">setDataXML</span> Method  </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>You can change the data of a map at client side using the <span class="codeInline">setDataXML</span> method of map. Consider the following code contained in <span class="codeInline">ChangeDataXML.html</span>:</p>
+      <p><span class="highlightBlock">Code examples discussed in this section are present in <span class="codeInline">Download Package &gt; Code &gt; JavaScript  </span> folder. </span></p>
+      <p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;HTML&gt;<br />
+      &lt;HEAD&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;TITLE&gt;FusionMaps &amp; JavaScript - Updating map using setDataXML() Method&lt;/TITLE&gt; <br />
+&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;Javascript&quot; SRC=&quot;../JSClass/FusionMaps.js&quot;&gt;&lt;/SCRIPT&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//updateMap method is called whenever the user clicks the button to<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//update the map. Here, we get a reference to the map and update it's<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//data using setDataXML method.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function updateMap(DOMId){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//Get reference to map object using Dom ID</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var mapObj = getMapFromId(&quot;map1Id&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">&nbsp;//Update it's data</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapObj.setDataXML(&quot;&lt;map animation='0' borderColor='005879' fillColor='D7F4FF' numberSuffix=' per sq. mile' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;&lt;data&gt;&lt;entity id='NA' value='32' /&gt;	&lt;entity id='SA' value='73' /&gt;&lt;entity id='AS' value='203' /&gt;&lt;entity id='EU' value='134' /&gt;&lt;entity id='AF' value='65' /&gt;&lt;entity id='AU' value='6.4' /&gt;&lt;/data&gt;&lt;/map&gt;&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="codeComment">//Disable the button</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.document.frmUpdate.btnUpdate.disabled = true;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&lt;/SCRIPT&gt;<br />
+&lt;/HEAD&gt;<br />
+&lt;BODY&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;div id=&quot;map1div&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FusionMaps<br />
+&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;script language=&quot;JavaScript&quot;&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map1 = new FusionMaps(&quot;../Maps/FCMap_World.swf&quot;, &quot;map1Id&quot;, &quot;750&quot;, &quot;400&quot;, &quot;0&quot;, &quot;1&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map1.setDataXML(&quot;&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;&lt;data&gt;	&lt;entity id='NA' value='515' /&gt;&lt;entity id='SA' value='373' /&gt;&lt;entity id='AS' value='3875' /&gt;&lt;entity id='EU' value='727' /&gt;&lt;entity id='AF' value='885' /&gt;&lt;entity id='AU' value='32' /&gt;&lt;/data&gt;&lt;/map&gt;&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map1.render(&quot;map1div&quot;);<br />
+&nbsp;&nbsp;&nbsp;&lt;/script&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;form name='frmUpdate'&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='button' value='Show Population Density' onClick='javaScript:updateMap();' name='btnUpdate'&gt;<br />
+&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br />
+&lt;/BODY&gt;<br />
+&lt;/HTML&gt;<br /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>In the above code, we're first creating a World Map with DOM Id as <span class="codeInline">map1Id</span>. We also register it with JavaScript. We initially provide the following data to the map and ask it to render:</p>
+      <p class="codeInline">&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;&lt;data&gt;	&lt;entity id='NA' value='515' /&gt;&lt;entity id='SA' value='373' /&gt;&lt;entity id='AS' value='3875' /&gt;&lt;entity id='EU' value='727' /&gt;&lt;entity id='AF' value='885' /&gt;&lt;entity id='AU' value='32' /&gt;&lt;/data&gt;&lt;/map&gt;</p>
+    <p>Thereafter, we're creating a button, which when clicked would update the map with new XML data. The button calls the <span class="codeInline">updateMap()</span> JavaScript function when clicked. </p>
+    <p>The <span class="codeInline">updateMap() </span>JavaScript function has the following code to update the map: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">function updateMap(DOMId){<br />
+      &nbsp;&nbsp;<span class="codeComment">&nbsp;//Get reference to map object using Dom ID</span><br />
+      &nbsp;&nbsp;&nbsp;var mapObj = getMapFromId(&quot;map1Id&quot;);<br />
+      &nbsp;&nbsp;&nbsp;<span class="codeComment">//Update it's data</span><br />
+      &nbsp;&nbsp;&nbsp;mapObj.setDataXML(&quot;&lt;map animation='0' borderColor='005879' fillColor='D7F4FF' numberSuffix=' per sq. mile' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;&lt;data&gt;&lt;entity id='NA' value='32' /&gt;	&lt;entity id='SA' value='73' /&gt;&lt;entity id='AS' value='203' /&gt;&lt;entity id='EU' value='134' /&gt;&lt;entity id='AF' value='65' /&gt;&lt;entity id='AU' value='6.4' /&gt;&lt;/data&gt;&lt;/map&gt;&quot;);<br />
+      &nbsp;&nbsp;&nbsp;<span class="codeComment">//Disable the button</span><br />
+      &nbsp;&nbsp;&nbsp;this.document.frmUpdate.btnUpdate.disabled = true;<br />
+    }</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>Here, we first get a reference to the map using its DOM Id. We use the <span class="codeInline">getMapFromId()</span> JavaScript function to get the reference. Once we've got the reference, we simply call <span class="codeInline">setDataXML</span> method and pass the new XML data to this function. This method forces the map to read the new XML data and redraw accordingly. Finally, we disable the button, as it has already been clicked once. </p>
+      <p>When you now view this page, you'll first see a World Map showing Population of different continents: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/JSDX_St.jpg" width="600" height="362" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">When you click on the button, you'll get the &quot;Population Density&quot; map as under. Also, the button is now disabled: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/JSDX_Fin.jpg" width="600" height="363" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>The entire thing happens at client side, without any page refreshes or calls to server. </p>
+    <p>Next, we'll see how to update the data of a map from a given URL, instead of XML.  </p></td>
+  </tr>
+</table>
+</body>
+</html>

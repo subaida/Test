@@ -1,0 +1,11 @@
+class Emailcomponent < ActionMailer::Base
+
+  def requestaccess(user1)
+    @subject        = 'Request for access on ZestADZ analytics'
+    @body["user1"]  = user1
+    @recipients     = 'support@zestadz.com'
+    @from           = 'analytics@mobile-worx.com'
+  end
+  
+    
+end

@@ -1,0 +1,415 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.style9 {font-size: 8px; font-family: Verdana; color: #333333; }
+-->
+</style>
+</head>
+
+<body>
+<p class="pageHeader">Uganda  Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:<span class="text">Uganda </span> Map<br />
+    <span class="textbold">SWF Name</span>: FCMap_Uganda.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>: 880 x 910 pixels<br/>
+<span class="textbold">Selection</span>: Districts <br/>
+<span class="textbold">Internal ID Compliant with:</span> HASC<br/>
+
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AI</td>
+    <td class="text">AI</td>
+    <td class="text">Abim</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AD</td>
+    <td class="text">AD</td>
+    <td class="text">Adjumani</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AT</td>
+    <td class="text">AT</td>
+    <td class="text">Amolatar</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AM</td>
+    <td class="text">AM</td>
+    <td class="text">Amuria</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.KQ</td>
+    <td class="text">KQ</td>
+    <td class="text">Amuru</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AC</td>
+    <td class="text">AC</td>
+    <td class="text">Apac</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AW</td>
+    <td class="text">AW</td>
+    <td class="text">Arua</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.BD</td>
+    <td class="text">BD</td>
+    <td class="text">Budaka</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.BG</td>
+    <td class="text">BG</td>
+    <td class="text">Bugiri</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.BW</td>
+    <td class="text">BW</td>
+    <td class="text">Bukwa</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.BL</td>
+    <td class="text">BL</td>
+    <td class="text">Bulisa</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.BN</td>
+    <td class="text">BN</td>
+    <td class="text">Bundibugyo</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.BS</td>
+    <td class="text">BS</td>
+    <td class="text">Bushenyi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.BU</td>
+    <td class="text">BU</td>
+    <td class="text">Busia</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.BJ</td>
+    <td class="text">BJ</td>
+    <td class="text">Butaleja</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.DO</td>
+    <td class="text">DO</td>
+    <td class="text">Dokolo</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.GL</td>
+    <td class="text">GL</td>
+    <td class="text">Gulu</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.HO</td>
+    <td class="text">HO</td>
+    <td class="text">Hoima</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.IB</td>
+    <td class="text">IB</td>
+    <td class="text">Ibanda</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.IN</td>
+    <td class="text">IN</td>
+    <td class="text">Iganga</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.JI</td>
+    <td class="text">JI</td>
+    <td class="text">Jinja</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.AB</td>
+    <td class="text">AB</td>
+    <td class="text">Kaabong</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KA</td>
+    <td class="text">KA</td>
+    <td class="text">Kabale</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.BR</td>
+    <td class="text">BR</td>
+    <td class="text">Kabarole</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KD</td>
+    <td class="text">KD</td>
+    <td class="text">Kaberamaido</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KN</td>
+    <td class="text">KN</td>
+    <td class="text">Kalangala</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.RO</td>
+    <td class="text">RO</td>
+    <td class="text">Kaliro</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KM</td>
+    <td class="text">KM</td>
+    <td class="text">Kampala</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KX</td>
+    <td class="text">KX</td>
+    <td class="text">Kamuli</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KE</td>
+    <td class="text">KE</td>
+    <td class="text">Kamwenge</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.UU</td>
+    <td class="text">UU</td>
+    <td class="text">Kanungu</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KP</td>
+    <td class="text">KP</td>
+    <td class="text">Kapchorwa</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KS</td>
+    <td class="text">KS</td>
+    <td class="text">Kasese</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KK</td>
+    <td class="text">KK</td>
+    <td class="text">Katakwi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KY</td>
+    <td class="text">KY</td>
+    <td class="text">Kayunga</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KI</td>
+    <td class="text">KI</td>
+    <td class="text">Kibale</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KG</td>
+    <td class="text">KG</td>
+    <td class="text">Kiboga</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.KH</td>
+    <td class="text">KH</td>
+    <td class="text">Kiruhura</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KR</td>
+    <td class="text">KR</td>
+    <td class="text">Kisoro</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.TG</td>
+    <td class="text">TG</td>
+    <td class="text">Kitgum</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.OK</td>
+    <td class="text">OK</td>
+    <td class="text">Koboko</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KF</td>
+    <td class="text">KF</td>
+    <td class="text">Kotido</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KU</td>
+    <td class="text">KU</td>
+    <td class="text">Kumi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.KJ</td>
+    <td class="text">KJ</td>
+    <td class="text">Kyenjojo</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.LI</td>
+    <td class="text">LI</td>
+    <td class="text">Lira</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.LW</td>
+    <td class="text">LW</td>
+    <td class="text">Luwero</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.MF</td>
+    <td class="text">MF</td>
+    <td class="text">Manafwa</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.MH</td>
+    <td class="text">MH</td>
+    <td class="text">Maracha</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MA</td>
+    <td class="text">MA</td>
+    <td class="text">Masaka</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MC</td>
+    <td class="text">MC</td>
+    <td class="text">Masindi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MG</td>
+    <td class="text">MG</td>
+    <td class="text">Mayuge</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.ME</td>
+    <td class="text">ME</td>
+    <td class="text">Mbale</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.RR</td>
+    <td class="text">RR</td>
+    <td class="text">Mbarara</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.TY</td>
+    <td class="text">TY</td>
+    <td class="text">Mityana</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MT</td>
+    <td class="text">MT</td>
+    <td class="text">Moroto</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MY</td>
+    <td class="text">MY</td>
+    <td class="text">Moyo</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MI</td>
+    <td class="text">MI</td>
+    <td class="text">Mpigi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MD</td>
+    <td class="text">MD</td>
+    <td class="text">Mubende</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.MN</td>
+    <td class="text">MN</td>
+    <td class="text">Mukono</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.NM</td>
+    <td class="text">NM</td>
+    <td class="text">Namutumba</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.NP</td>
+    <td class="text">NP</td>
+    <td class="text">Nakapiripirit</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.NK</td>
+    <td class="text">NK</td>
+    <td class="text">Nakaseke</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.NA</td>
+    <td class="text">NA</td>
+    <td class="text">Nakasongola</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.NE</td>
+    <td class="text">NE</td>
+    <td class="text">Nebbi</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.NT</td>
+    <td class="text">NT</td>
+    <td class="text">Ntungamo</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">UG.OY</td>
+    <td class="text">OY</td>
+    <td class="text">Oyam</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.PD</td>
+    <td class="text">PD</td>
+    <td class="text">Pader</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.PL</td>
+    <td class="text">PL</td>
+    <td class="text">Pallisa</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.RA</td>
+    <td class="text">RA</td>
+    <td class="text">Rakai</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.RK</td>
+    <td class="text">RK</td>
+    <td class="text">Rukungiri</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.SE</td>
+    <td class="text">SE</td>
+    <td class="text">Sembabule</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.SI</td>
+    <td class="text">SI</td>
+    <td class="text">Sironko</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.SR</td>
+    <td class="text">SR</td>
+    <td class="text">Soroti</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.TR</td>
+    <td class="text">TR</td>
+    <td class="text">Tororo</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.WA</td>
+    <td class="text">WA</td>
+    <td class="text">Wakiso</td>
+  </tr>
+  <tr height="18">
+    <td height="18" class="text">UG.YU</td>
+    <td class="text">YU</td>
+    <td class="text">Yumbe</td>
+  </tr>
+</table>
+<br><br>
+<table width="95%" height="2" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+</table>
+<p class="textbold"><br />
+</p>
+</body>
+</html>

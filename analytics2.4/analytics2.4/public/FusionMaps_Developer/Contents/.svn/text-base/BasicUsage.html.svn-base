@@ -1,0 +1,322 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+<style type="text/css">
+<!--
+body {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+-->
+</style></head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><span class="pageHeader">How to use FusionMaps? </span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">In this section, we'll show how to use FusionMaps in your web applications. As you already know, FusionMaps uses XML data files to render the maps. As such, you can use FusionMaps with any of your dynamic web scripting languages like ASP, .NET, PHP, JSP, ColdFusion, Ruby on Rails etc. From your scripting language, all you would need to do is dynamically generate the XML data document (containing data from your data sources), and then convey it to FusionMaps.</p>
+      <p class="text">Here, for the purpose of learning, we'll hand code the the XML data files. When working with scripting languages, you can replace this process with scripts that dynamically build XML data document in variables (using either String concatenation or native XML Object methods). </p>
+      <p class="highlightBlock">If you're a non-technical user and want to generate maps without using any programs or scripts, you can  switch to the next section &quot;Using the GUI&quot;, where we explain how to visually configure and generate a data-driven map, without getting into any programming. </p>
+      <p class="text">Let's now jump to our example. </p>
+      <p class="text">For our first example, we'll create a World Map to show the Population 
+        Distribution across continents. Our motive is to display the following 
+        data visually on a map. </p></td>
+  </tr>
+  <tr> 
+    <td><p class="textBold"><strong>Population in Millions</strong></p></td>
+  </tr>
+  <tr> 
+    <td><table border="1" cellpadding="3" cellspacing="0" bordercolor="f1f1f1">
+        <tr> 
+          <td width="295" valign="top" class="text"><p><strong>Continent</strong></p></td>
+          <td width="295" valign="top" class="text"><p><strong>Population (in 
+              Millions)</strong></p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>North America </p></td>
+          <td width="295" valign="top" class="text"><p>515</p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>South America </p></td>
+          <td width="295" valign="top" class="text"><p>373</p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>Asia </p></td>
+          <td width="295" valign="top" class="text"><p>3875</p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>Europe </p></td>
+          <td width="295" valign="top" class="text"><p>727</p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>Africa </p></td>
+          <td width="295" valign="top" class="text"><p>885</p></td>
+        </tr>
+        <tr> 
+          <td width="295" valign="top" class="text"><p>Australia </p></td>
+          <td width="295" valign="top" class="text"><p>32</p></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><span class="text">Though it wouldn't serve a great scientific purpose to show this data on a map (instead of a table), it would serve our purpose of a demo. As we proceed, you'll later see how maps can make data interpretation 
+    way easier than simple data tables.</span></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="header">Assembling the required elements </p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">To create any map, you need to make sure that you've the 
+        following things ready with you:</p>
+      <ol start="1" type="1">
+        <li class="text"><strong class="text">The SWF File of the map</strong> 
+          &ndash; For our world map, it's called<span class="codeInline"> FCMap_World.swf</span>. 
+          It is present in the <span class="codeInline">Download Package &gt; 
+          Maps</span> folder. </li>
+        <li class="text"><strong class="text">Map Specification Sheet</strong> 
+          &ndash; This sheet lists the<span class="codeInline"> IDs </span>of 
+          the entities of that map. For the specification sheet of each map, refer to the section &quot;<span class="codeInline">Map Specification Sheets</span>&quot; section of this documentation.</li>
+        <li class="text"><strong class="text">XML Data Document</strong> &ndash; 
+          This contains the actual data that you want to show on the map. The 
+          <span class="codeInline">XML </span>has to be built by you.</li>
+        <li class="text"><strong>FusionMaps JavaScript Class </strong>- This JavaScript class helps you embed maps in your web pages. This class is present in <span class="codeInline">Download Package &gt; JSClass</span> folder. </li>
+      </ol>
+      <p class="text">Let's create a new folder for this example. We name the folder as <span class="codeInline">HowToUse</span>. In the download package, it's present under <span class="codeInline">Code</span> folder.</p>
+      <p class="text">Copy <span class="codeInline">FCMap_World.swf</span> file in this folder along with <span class="codeInline">FusionMaps.js</span>. That completes our initial setup for the map. We'll next see how to create the XML data for this map. But, before that, let's just glance through the Map Specification Sheet of the world map, as this will be required to create the XML data. </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="header">Map Specification Sheet for our World Map </td>
+  </tr>
+  <tr> 
+    <td><p class="text">The <span class="codeInline">Entities</span> table for the world Map is reproduced below 
+        (from the World Map Specification Sheet). </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="highlightBlock">An entity for a map is the smallest item that we're dealing 
+        with on the map. For example, in a World Map showing continents, each 
+        continent is an entity. In a continent map showing countries, each country 
+        is referred to as an entity. Similarly, if a country map is showing states, 
+        each state is referred to as an entity.</p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><table border="1" cellpadding="3" cellspacing="0" bordercolor="f1f1f1">
+        <tr> 
+          <td width="197" valign="top" class="text"><p><strong>Entity Id</strong></p></td>
+          <td width="197" valign="top" class="text"><p><strong>Entity Short Name</strong></p></td>
+          <td width="197" valign="top" class="text"><p><strong>Entity Long Name</strong></p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>NA</p></td>
+          <td width="197" valign="top" class="text"><p>NA</p></td>
+          <td width="197" valign="top" class="text"><p>North America </p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>SA</p></td>
+          <td width="197" valign="top" class="text"><p>SA</p></td>
+          <td width="197" valign="top" class="text"><p>South America </p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>EU</p></td>
+          <td width="197" valign="top" class="text"><p>EU</p></td>
+          <td width="197" valign="top" class="text"><p>Europe </p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>AS</p></td>
+          <td width="197" valign="top" class="text"><p>AS</p></td>
+          <td width="197" valign="top" class="text"><p>Asia </p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>AF</p></td>
+          <td width="197" valign="top" class="text"><p>AF</p></td>
+          <td width="197" valign="top" class="text"><p>Africa </p></td>
+        </tr>
+        <tr> 
+          <td width="197" valign="top" class="text"><p>AU</p></td>
+          <td width="197" valign="top" class="text"><p>AU</p></td>
+          <td width="197" valign="top" class="text"><p>Australia </p></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="text">As you can see above, each entity on the map has three 
+        properties:</p>
+      <ul type="disc">
+        <li class="text"><strong class="codeInline">Internal Id (Entity Id)</strong> 
+          through which we refer to that entity in the <span class="codeInline">XML 
+          </span>data document.</li>
+        <li class="text"><strong class="codeInline">Short Name</strong> of the 
+          entity which gets displayed on the map.</li>
+        <li class="text"><strong class="codeInline">Full Name</strong> of the 
+          entity, which by default is shown as tool tip for the entity. You can 
+          also opt to show full name on the map instead of short name.</li>
+      </ul></td>
+  </tr>
+  <tr> 
+    <td><p class="highlightBlock">You can define your own<span class="codeInline"> IDs</span>, 
+        short names and long names for each entity &ndash; we'll see that later.</p></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="pageHeader">Creating the XML File for our example</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Since this is our first example, we'll try and put up 
+        a basic map to show the population data. Create a file <span class="codeInline">FirstData.xml</span> with the following XML: </p></td>
+  </tr>
+  <tr> 
+    <td><p class="codeBlock">&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' 
+        Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;<br />
+        &nbsp;&nbsp; &lt;data&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='NA' value='515' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='SA' value='373' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='AS' value='3875' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='EU' value='727' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='AF' value='885' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id='AU' value='32' 
+        /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/data&gt;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+        &lt;/map&gt;</p></td>
+  </tr>
+  <tr> 
+    <td><p><span class="text">In the above code, we're basically providing the tabular data to map in XML format, as FusionCharts FusionMaps accepts only XML. </span></p>
+      <p class="text">Each <span class="codeInline">XML </span>data document 
+        for FusionMaps starts with <span class="codeInline">&lt;map&gt;</span> element. 
+        There are a number of cosmetic and functional attributes which you can 
+        specify for <span class="codeInline">&lt;map&gt; </span>element. You can see them in &quot;<span class="codeInline">FusionMaps and XML &gt; XML Attributes</span>&quot; section. For this example, we've defined the 
+        border color of the map, fill color, number suffix (to be added at the 
+        end of every number), a flag to include data values in map labels, the 
+        label separator character and font size attributes.</p>
+      <p class="text">Immediately inside the <span class="codeInline">&lt;map&gt; 
+        </span>element, we've defined <span class="codeInline">&lt;data&gt;</span> 
+        element, whose child nodes contain the actual data. To define data for 
+        each entity on the map, an <span class="codeInline">&lt;entity&gt;</span> 
+        element is added as under:</p>
+      <p class="codeInline">&lt;entity id='NA' value='515' /&gt;</p>
+      <p class="text">The<span class="codeInline"> id </span>here corresponds 
+        to the internal Id of the entity (picked from Map Specification Sheet).<span class="codeInline"> 
+        value</span> denotes the actual value which we want to show on the map.         </p>
+      <p class="text">That completes the XML part of the application. Now, for the map to use this XML, we first need to put the map in an HTML page. We'll see that next. </p>
+      <p class="highlightBlock">Using the Visual GUI provided in <span class="codeInline">Download Package &gt; Tools &gt; GUI</span>, you can automatically generate the Entity XML template for any map. That is, you would not have to manually write the <span class="codeInline">&lt;entity&gt;</span> element for each entity of the map. Instead our GUI will build this for you, and you can plug it in your code and then replace the values with values from your data store. </p>    </td>
+  </tr>
+  
+  
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="pageHeader">Creating the HTML Container</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Create a file <span class="codeInline">FirstMap.html</span> in the same folder with the following code: </p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="codeBlock"><p>&lt;html&gt;<br>
+      &nbsp;&nbsp;&nbsp;&lt;head&gt;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;My First Map&lt;/title&gt;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script language=&quot;JavaScript&quot; src=&quot;FusionMaps.js&quot;&gt;&lt;/script&gt;<br>
+      &nbsp;&nbsp;&nbsp;&lt;/head&gt;</p>
+      <p>&nbsp;&nbsp;&nbsp;&lt;body&gt;
+      <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div id=&quot;mapdiv&quot; align=&quot;center&quot;&gt; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FusionMaps.<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map = new FusionMaps(&quot;FCMap_World.swf&quot;, &quot;Map1Id&quot;, &quot;750&quot;, &quot;400&quot;, &quot;0&quot;, &quot;0&quot;);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.setDataURL(&quot;FirstData.xml&quot;); <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.render(&quot;mapdiv&quot;);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/script&gt;
+  <br>
+  &lt;/body&gt;<br>
+  &lt;/html&gt;</p>    </td>
+  </tr>
+  <tr> 
+    <td class="text"><p class="text">Here, we're first including <span class="codeInline">FusionMaps</span> JavaScript Class file (<span class="codeInline">FusionMaps.js</span>). This file is required to include the map in an HTML page. </p>
+      <p class="highlightBlock">You can also directly provide the HTML <span class="codeInline">&lt;OBJECT&gt;</span> code to embed the Flash movie for map, but then it would show the &quot;<span class="codeInline">Click to activate...</span>&quot; message in Internet Explorer. Also, using this class makes a lot of map actions very easy to invoke. </p>
+      <p class="codeInline">&lt;script language=&quot;JavaScript&quot; src=&quot;FusionMaps.js&quot;&gt;&lt;/script&gt;</p>
+      <p class="text">Each map in the page needs to reside in a DIV. So, we   create a DIV in the page body with a unique           id (<span class="codeInline">mapdiv</span> in example above). </p>
+      <p class="codeInline">&lt;div id=&quot;mapdiv&quot; align=&quot;center&quot;&gt;</p>
+      <p class="text">After that, we instantiate the map by creating an instance of <span class="codeInline">FusionMaps</span> class. </p>
+      <p class="codeInline">var map = new FusionMaps(&quot;FCMap_World.swf&quot;, &quot;Map1Id&quot;, &quot;750&quot;, &quot;400&quot;, &quot;0&quot;, &quot;0&quot;);</p>
+      <p>Here, <span class="codeInline">map</span> is the name of the JavaScript object that contains reference to our map.</p>
+      <p>As parameters, we pass:</p>
+      <ol>
+        <li>URL of SWF file of the map that we intend to use</li>
+        <li>DOM Id for the map - You can give any id for the map. Just make sure 
+          that if you're using multiple maps in the same HTML page, each map 
+          should have a unique Id.</li>
+        <li>Required width and height of the map. For best results, always use proportionate width and height of the map compared to the original width and height. The original width and height of each map is given in its Specification Sheet. </li>
+        <li class="text">The last two parameters are <span class="codeInline">debugMode </span>and <span class="codeInline">registerWithJS</span> and are normally set 
+          to 0. We'll explain those parameters later. </li>
+      </ol>
+      <p class="text">After this, we convey the path of XML data document to the map. To do this, we call the <span class="codeInline">setDataURL()</span> method of our <span class="codeInline">map</span> object. </p>
+      <p class="codeInline">map.setDataURL(&quot;FirstData.xml&quot;); </p>
+      <p class="text">Finally, we ask the map to render by calling <span class="codeInline">render()</span> method of the map object and specifying the <span class="codeInline">Id</span> of the DIV which we want the map to occupy.<br />
+        <span class="codeInline">map.render(&quot;mapdiv&quot;);</span></p>
+      <p class="highlightBlock">Using the FusionMaps Visual GUI provided in <span class="codeInline">Download Package &gt; Tools &gt; GUI</span>, you can automatically generate the HTML code for embedding the map. </p>
+      <p class="text">Time to see the efforts fructify - when you now run the<span class="codeInline"> 
+      HTML file</span>, you should see a map as under.</p>      </td>
+  </tr>
+  <tr> 
+    <td><table width="95%" border="0" cellspacing="0" cellpadding="2">
+        <tr> 
+          <td><div align="center"><img src="Images/WorldMap1.gif" width="600" height="351" class="imageBorder" /></div></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Very basic &ndash; but exactly what we had intended to. 
+        When you roll  your mouse over any continent, you'll see the hover 
+        color and tool tip information as shown under:</p></td>
+  </tr>
+  <tr> 
+    <td align="center" valign="top"><table width="95%" border="0" cellspacing="0" cellpadding="2">
+        <tr> 
+          <td><div align="center"><img src="Images/WorldMap2.gif" width="600" height="309" align="top" class="imageBorder" /></div></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="highlightBlock">If you need to add any captions or additional information 
+    for the map, you can do so in <span class="codeInline">HTML file</span>. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><span class="text">Next, we'll see how to use the visual GUI for map generation. </span></td>
+  </tr>
+</table>
+</body>
+</html>

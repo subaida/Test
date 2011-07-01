@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+<style type="text/css">
+<!--
+body {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+-->
+</style></head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><p class="text"><span class="pageHeader">Showing Custom Labels and tool 
+        tips for entities</span></p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">You can show custom labels and tool tips for any entity 
+        on the map. To do so, just add the following to <span class="codeInline">XML:</span></p></td>
+  </tr>
+  <tr> 
+    <td> <p class="codeBlock"> &lt;map borderColor='005879' fillColor='D7F4FF' 
+        numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;data&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='NA' value='515' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='SA' value='373' <strong>displayValue='C/S 
+        America: 373 M' toolText='Central and South America: 373 Million (Including 
+        External</strong> <strong>Islands)'</strong>/&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AS' value='3875' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='EU' value='727' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AF' value='885' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AU' value='32' /&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;/data&gt; <br />
+        &lt;/map&gt;</p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Here, we've added out custom display value (label) and 
+        tool text for South America Entity. When you view the chart, you'll get 
+        the following output:</p></td>
+  </tr>
+  <tr> 
+    <td><table width="95%" border="0" cellspacing="0" cellpadding="2">
+        <tr> 
+          <td><div align="center"><img src="Images/WorldMap6.gif" width="424" height="345" class="imageBorder" /></div></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td><p class="text">&nbsp;</p>    </td>
+  </tr>
+  <tr> 
+    <td class="header">Hiding an entity's name </td>
+  </tr>
+  <tr>
+    <td class="text">To hide an entity's name just set its displayValue as a blank space. Example: </td>
+  </tr>
+  <tr>
+    <td class="codeBlock">&lt;map borderColor='005879' fillColor='D7F4FF' numberSuffix=' Mill.' includeValueInLabels='1' labelSepChar=': ' baseFontSize='9'&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;data&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='NA' value='515' <strong>displayValue=' '</strong>/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='SA' value='373' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AS' value='3875' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='EU' value='727' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AF' value='885' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id='AU' value='32' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;/data&gt; <br>
+&lt;/map&gt;</td>
+  </tr>
+  <tr>
+    <td class="text">In the above example, we've hidden the label of North America by setting its <span class="codeInline">displayValue</span> attrbute to a blank space. When you view this map, you'll get the following results: </td>
+  </tr>
+  <tr>
+    <td class="text"><img src="Images/WorldMapNoLabel.jpg" alt="" width="600" height="313"></td>
+  </tr>
+  <tr>
+    <td class="text">Note that North America is without any label now, though the tool tip will still function over it. </td>
+  </tr>
+  <tr>
+    <td class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="header">Showing full labels and hiding the values</td>
+  </tr>
+  <tr>
+    <td><span class="text">To show full labels and hide the values on the map, use:<br />
+        <br />
+        <span class="codeInline">&lt;map &hellip; <strong>useSNameInLabels='0' 
+    includeValueInLabels='0'</strong> &hellip; &gt;</span></span></td>
+  </tr>
+  <tr>
+    <td><img src="Images/WorldMap3.gif" width="400" height="230" class="imageBorder" /></td>
+  </tr>
+  <tr>
+    <td><p class="text">Now that we've played enough with the configuration options of the map, let's shift to the one of the most important aspects of FusionMaps - defining range based data and colors for better visual interpretation. </p>
+        </td>
+  </tr>
+  <tr>
+    <td class="text">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

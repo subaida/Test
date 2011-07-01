@@ -1,0 +1,259 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="../Style.css" type="text/css" />
+</head>
+
+<body topMargin='10' leftMargin='10'>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><p class="pageHeader"><strong>How to Use Styles</strong></p></td>
+  </tr>
+  <tr> 
+    <td><span class="text">To use the <span class="codeInline">Styles </span>feature 
+      in FusionMaps, you first need to define your styles in the <span class="codeInline">XML</span> 
+      data document. To define styles, the following <span class="codeInline">XML</span> 
+      is used:</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">&nbsp;</p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="codeBlock"><p>&lt;map&gt;</p>
+      <p>&lt;!-- Your data here --&gt;<br>
+        <br>
+          <strong>&lt;styles&gt;</strong><br>
+&nbsp;&nbsp;&nbsp;&lt;definition&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MyFirstFontStyle' type='font' face='Verdana' size='11' color='0372AB' bold='1' bgColor='FFFFFF' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MyFirstAnimationStyle' type='animation' param='_xScale' start='0' duration='1' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MySecondAnimationStyle' type='animation' param='_yScale' start='0' duration='1' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='MyFirstShadow' type='Shadow'  /&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;/definition&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;application&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;apply toObject='Labels' styles='MyFirstFontStyle,MyFirstShadow' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;apply toObject='Plot' styles='MyFirstAnimationStyle,MySecondAnimationStyle' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;/application&gt;&nbsp;<br>
+<strong>&lt;/styles&gt;</strong></p>
+    <p>&lt;/map&gt;</p></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="text">As you can see above, all the style related elements and 
+        attributes appear under the <strong class="codeInline">&lt;styles&gt;</strong> 
+        parent element. It should effectively contain all your style related <span class="codeInline">XML</span> 
+        code. FusionMaps will not recognize any style definition outside the<span class="codeInline"> 
+        <strong>&lt;styles&gt;</strong> </span>parent element.</p>      <p class="text">Children to<span class="codeInline"> <em class="codeInline">&lt;</em>styles<em class="codeInline">&gt;</em></span> 
+        element are <span class="codeInline"><em class="codeInline">&lt;</em>definition<em>&gt;</em></span> 
+        and <span class="codeInline"><em class="codeInline">&lt;</em>application<em class="codeInline">&gt;</em></span> 
+        elements. As the name suggests, <span class="codeInline">&lt;definition&gt; 
+        </span>element contains your custom styles definition for the map while 
+        under <span class="codeInline">&lt;application&gt;</span> element you 
+        apply your custom defined styles to different map objects. </p>      <p class="text">Now, let's first get to the definition of styles.</p></td>
+  </tr>
+  
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><strong class="header">Defining your Styles</strong></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Cruising back through the above <span class="codeInline">XML</span> 
+        code, you'll see that we've defined four custom styles namely:</p>
+      <ul type="disc">
+        <li class="text"><span class="codeInline">MyFirstFontStyle,</span> which 
+          will later help us in setting font properties for text on the map.</li>
+        <li class="text"><span class="codeInline">MyFirstAnimationStyle &amp; MySecondAnimationStyle, </span>which will 
+          help us in animating  objects, and</li>
+        <li class="text"><span class="codeInline">MyFirstShadow </span>that can 
+          render a shadow effect on any map object.</li>
+      </ul>      <p class="text">Each style has to be defined using the <span class="codeInline">&lt;style&gt;</span> 
+        element. Multiple style elements may be placed one after another under 
+        <span class="codeInline">&lt;definition&gt;</span> element. So, if you 
+        wish to define five custom styles, you need to create five <span class="codeInline">&lt;style&gt; 
+      </span>elements.</p>
+      <p class="text">Depending on the style type you are defining, each <span class="codeInline">&lt;style&gt;</span> 
+        element can have multiple attributes. In the above code example, each<span class="codeInline"> 
+        &lt;style&gt;</span> element has its own set of properties. However, following 
+        two attributes are common to all: </p>      <ol start="1" type="1">
+        <li class="codeInline">name </li>
+        <li class="codeInline">type. </li>
+      </ol>      <p class="text">Both the attributes are mandatory for each <span class="codeInline">style 
+      </span>definition. </p></td>
+  </tr>
+  
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="header">Mandatory Attributes</span></td>
+  </tr>
+  <tr> 
+    <td><span class="textBold">Style Name</span>      <span class="text"><span class="codeInline">Name</span> attribute lets 
+      you assign your custom name for the style definition. For example, in the 
+      above code, we have named the font style as<span class="codeInline"> MyFirstFontStyle,</span> 
+      which could well have been <span class="codeInline">JohnFirstStyle</span> 
+      or <span class="codeInline">GlobalFont </span>or<span class="codeInline"> 
+    BigFont </span>etc. </span>      <p class="text">Format: <strong class="codeInline">name='stylename'</strong></p></td>
+  </tr>
+  
+  <tr> 
+    <td class="codeBlock"><p><strong>Example: </strong> <br />
+        &lt;style <strong>name='MyFirstFontStyle'</strong> type='font' face='Verdana' 
+        &hellip;/&gt;<br />
+        &lt;style <strong>name='MyFirstAnimationStyle'</strong> type='animation' 
+        &hellip;/&gt;<br />
+        &lt;style <strong>name='MyFirstShadow'</strong> type='Shadow' &hellip;/&gt;</p></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="text">There are no restrictions on the style name, barring the 
+        pointers below:</p>
+      <ul type="disc">
+        <li class="text"><span class="codeInline">Style</span> name can only include 
+          alphabets and numbers. Punctuation marks (including underscore) shouldn't 
+          be used.</li>
+        <li class="text"><span class="codeInline">Style</span> name must be unique, 
+          i.e., two style definitions cannot have the same name as there will 
+          be a conflict between the two.</li>
+      </ul></td>
+  </tr>
+  <tr> 
+    <td> <span class="textBold">Style Type</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Each style needs to be defined as to what <span class="codeInline">type</span> 
+        it is. The <span class="codeInline">type</span> defines what this style 
+        is going to do. FusionMaps supports six style types:</p>
+      <ul type="disc">
+        <li class="codeInline">Font</li>
+        <li class="codeInline">Animation</li>
+        <li class="codeInline">Shadow</li>
+        <li class="codeInline">Glow</li>
+        <li class="codeInline">Blur</li>
+        <li class="codeInline">Bevel</li>
+      </ul></td>
+  </tr>
+  <tr> 
+    <td><p class="text">So, the <span class="codeInline">type </span>attribute 
+        expects one of the above six values as its parameter. In our example, 
+        we've defined the first style type as <span class="codeInline">&quot;font&quot;</span>, 
+        second one as <span class="codeInline">"animation"</span> and third one 
+        as <span class="codeInline">"shadow",</span> which is self explanatory. 
+      </p></td>
+  </tr>
+  <tr> 
+    <td><span class="text">Format: <strong class="codeInline">type='parameter'</strong> 
+      (must be either<span class="codeInline"> 'Font' </span>or <span class="codeInline">'Animation'</span> 
+      or <span class="codeInline">'Shadow' </span>or <span class="codeInline">'Glow'</span> 
+      or <span class="codeInline">'Blur'</span> or <span class="codeInline">'Bevel'</span>)</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">&nbsp;</p></td>
+  </tr>
+  <tr> 
+    <td class="codeBlock"><p><strong>Example:</strong> <br />
+        &lt;style name='MyFirstFontStyle' <strong>type='font'</strong> face='Verdana' 
+        &hellip;/&gt;<br />
+        &lt;style name='MyFirstAnimationStyle' <strong>type='animation'</strong> 
+        &hellip;/&gt;<br />
+        &lt;style name='MyFirstShadow' <strong>type='Shadow'</strong> &hellip;/&gt;</p></td>
+  </tr>
+  <tr> 
+    <td><span class="text">If you do not define a style type for a particular 
+      style, FusionMaps will ignore the style definition and log an error in 
+      the <span class="codeInline">Debug Window.</span></span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">&nbsp;</p></td>
+  </tr>
+  <tr> 
+    <td><span class="header">Other Attributes</span></td>
+  </tr>
+  <tr> 
+    <td><p class="text">The rest of the attributes for a style element are dependent 
+        on its <span class="codeInline">Type</span>. For example, we can use face, 
+        size, color, bold etc. property for a <span class="codeInline">FONT</span> 
+        style type. However, the same is not valid for <span class="codeInline">ANIMATION</span> 
+        style type, as these parameters make no sense for an animation. Each style 
+        type has therefore its own set of attributes which you can specify which 
+        will be discussed next.</p>
+      <p class="text">Now, if you're already eager to apply the styles to map 
+        objects, let's get to the application part of the story. </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><span class="header"><strong>Applying custom defined styles to map objects</strong></span></td>
+  </tr>
+  <tr> 
+    <td><p class="text"><span class="text">The following </span><span class="codeInline">XML 
+        </span><span class="text">does the work of applying styles to different 
+        map objects:</span></p></td>
+  </tr>
+  <tr> 
+    <td class="codeBlock"><p>&lt;application&gt;<br>
+      &nbsp;&nbsp; &nbsp;&lt;apply toObject='Labels' styles='MyFirstFontStyle,MyFirstShadow' /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;apply toObject='Plot' styles='MyFirstAnimationStyle,MySecondAnimationStyle' /&gt;<br>
+&lt;/application&gt;&nbsp;</p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">Each<span class="codeInline"> <em>&lt;</em>apply&gt; </span>element 
+        helps to apply multiple styles to one map object e.g., in our code, 
+        we first apply the <span class="codeInline">MyFirstFontStyle</span> and <span class="codeInline">MyFirstShadow</span> to all the Labels on the map. Next, we apply <span class="codeInline">MyFirstAnimationStyle</span> and <span class="codeInline">MySecondAnimationStyle</span> to the plot (map drawing). To apply multiple styles, we separate the names of the 
+        respective styles by a comma.</p></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><p class="text">Format: <span class="codeInline">&lt;apply toObject='Object Name' 
+        styles='Style1, Style2, Style3 ...' /&gt; </span></p></td>
+  </tr>
+  <tr> 
+    <td><p class="text">You need to make sure of few things here:</p></td>
+  </tr>
+  <tr> 
+    <td><ul type="disc">
+        <li class="text">To apply multiple styles to a map object, you need 
+          to separate the style names using comma.<br />
+          e.g., <span class="codeInline">&lt;apply toObject='Labels' styles='<strong>MyFirstFontStyle,MyFirstShadow</strong>' 
+          /&gt;</span><br />
+        </li>
+        <li class="text">To apply a single style to multiple objects, you'll need 
+          to define<span class="codeInline"> &lt;apply&gt;</span> element for 
+          each object and then assign the style for it. <br />
+          e.g., <br />
+          <span class="codeInline">&lt;apply toObject='Labels' styles='<strong>MyFirstShadow'</strong> 
+          /&gt;<br />
+          &lt;apply toObject='Legend' styles=<strong>'MyFirstShadow</strong>' 
+          /&gt;<br />
+          </span><br />
+          You <strong>CANNOT</strong> separate the object list by comma and then 
+          assign a single style to it - the following will be INVALID:<br />
+          <span class="codeInline"><s>&lt;apply toObject='Labels,Legend' styles='MyFirstShadow' 
+          /&gt;</s></span></li>
+      </ul></td>
+  </tr>
+  <tr> 
+    <td><ul type="disc">
+        <li class="text">The style name specified during application has been 
+          defined earlier in style definition and the spelling is correct, else, 
+          FusionMaps would ignore it and log the error in <span class="codeInline">Debug 
+          Window.</span></li>
+      </ul></td>
+  </tr>
+  <tr> 
+    <td><p class="text">And now that you're familiar with style definition and 
+        application, we move on to see the list of parameters supported by each 
+        style type. We start with <span class="codeInline">FONT</span> style next.</p></td>
+  </tr>
+</table>
+</body>
+</html>

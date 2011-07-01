@@ -1,0 +1,367 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionMaps v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" align="center" cellpadding="3" cellspacing="0">
+  <tr> 
+    <td><h2 class="pageHeader"><span class="pageHeader">What is FusionMaps?</span></h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>FusionMaps (previously known as PowerMaps) is a collection of vector maps that can be used to show data related to geographical divisions. Suitable for use in websites 
+        and applications, each map exposes its properties using an <span class="codeInline">XML 
+        API</span>. Setting up a map for use barely takes a few minutes and doesn't 
+        involve any modification of source code. All you need to do is feed the 
+        data in <span class="codeInline">XML</span> file and you're ready to go. And to make things easier, we also have a visual GUI that can help you do the same. </p>
+      <p class="highlightBlock">FusionMaps shows data based on geographical entities and not on zip codes. For example, the US map is divided into it's respective states. You can show data for each state by referring to it's ID (pre-defined in FusionMaps). You cannot directly use ZIP code to highlight particular cities or states. <br>
+        <br>
+      However, using the Markers feature, you can create your own custom points on the map and show them with relevant information. </p></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><span class="pageHeader">Usage</span></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p class="text">The maps can be used for a variety 
+        of purposes like:</p>
+      <ul type="disc">
+        <li class="text">Statistical Data e.g., population distribution etc.</li>
+        <li class="text">Business data e.g., <span class="codeInline">"Regions 
+          by revenue", "Regions by Sales"</span> etc.</li>
+        <li class="text">Real-Estate plots</li>
+        <li class="text">Electoral Results</li>
+        <li class="text">Geographical Representations</li>
+        <li class="text">Office Locations</li>
+        <li class="text">Survey Results </li>
+      </ul></td>
+  </tr>
+  
+  <tr> 
+    <td valign="top" class="text"><span class="pageHeader">Features</span></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The maps support the following 
+    features:</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="95%" border="0" align="center" cellpadding="2" cellspacing="0">
+      <tr valign="middle" class="text">
+        <td width="15"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>XML API</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td> Each map is exposed using an <span class="codeInline">XML API.</span> To use a map, all you need to do is plug the right .<span class="codeInline">SWF 
+          File</span> with <span class="codeInline">XML</span> data. No modification 
+          is required in source code. </td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Advanced JavaScript/AJAX integration</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>FusionMaps offers advanced options to integrate maps with AJAX applications or JavaScript modules. You can update maps on client side, invoke JavaScript functions as hotspot links, or make dynamic calls for XML data to server without involving any page refreshes.</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Visual GUI </strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>The visual GUI helps you configure your map properties, add data, create markers, hide/show markers and visually build the XML and HTML code for the map. </td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Custom Markers on Map </strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>FusionMaps supports custom markers on the map. They can be effectively used to pin-point   locations like cities, junctions, houses, malls, shops, offices etc. You can   define any number of markers for each map and then opt to show just a few out of   them. </td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Supports Drill Down</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>Each entity on the map acts as a hotspot, which can be used for drill 
+        down mechanism. You can open the links in same window, new window, frames, pop-ups etc. </td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Dynamically resizable</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>All the maps can be resized dynamically to a constrained proportional 
+          size (relative to the original size).</p>            </td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Custom Animation</strong>s</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>You can define your own animation properties for the map and 
+          text</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Customizable Font propertie</strong><strong>s</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>You can easily customize the cosmetic properties of the text 
+          on the map.</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Support for coloring individual 
+          entities of map based on a defined data color range</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>You can provide color range for the map, and the entities can automatically 
+          color themselves based on the data and color range provided.</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Legend for defined data 
+          color range</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>The map can show the defined color 
+          range in a legend.</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Option to provide colors 
+          for individual regions</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>You can also bypass the 
+          color range definition and directly provide a color for each entity 
+          on the map.</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>2D/3D Looks</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p> Using shadow and bevel effects, you can render 3D looks for the 
+          map.</p></td>
+      </tr>
+      
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr valign="top" class="text">
+        <td valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+        <td class="textBold"><strong>Tool tips and hover colors</strong></td>
+      </tr>
+      <tr valign="top" class="text">
+        <td>&nbsp;</td>
+        <td><p>The map supports tool tips and hover color effects.</p></td>
+      </tr>
+      
+
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Advantages of using FusionMaps </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="95%" border="0" align="center" cellpadding="2" cellspacing="0">
+
+        <tr valign="middle" class="text">
+          <td width="15"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+          <td class="textBold">No installation hassles</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>To use FusionMaps, you do not have to install anything on your 
+            server. All you need to do is copy paste the SWF files (the core files 
+            of FusionMaps) to your server, just like you would do to any image 
+            files - and you're ready to go! So, even on those servers which do 
+            not allow installation of ActiveX or any other form of components, 
+            FusionMaps can run without any hassles. </td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+          <td class="textBold">Easy to use</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>FusionMaps makes the map creation process a painless experience 
+            for you. Since it uses XML as its data, all you need to do is convert 
+            your data into XML using a programming language - and that's all what is required to 
+            create interactive and animated maps. </td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+          <td class="textBold">Runs on a variety of platforms</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>Irrespective of what server side scripting language you're using, 
+            FusionMaps can be used to create maps in that. Since FusionMaps 
+            uses XML as the data interface, you can run it on any server and against 
+            any scripting language. Also, to view the maps, your users just 
+            need to have Adobe Flash Player 8, which is one of the most used browser 
+            plugins on the planet.</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td width="15" valign="middle"><div align="center"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></div></td>
+          <td class="textBold">Reduces load on your servers</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td><p>In traditional image based mapping systems, the maps are generated 
+            as image at the server side. So, for each map that you need to 
+            serve to a user, you'll have to build complex images on the server 
+            and then stream it to the client. When the need of hour is high, 
+            this can be an expensive resource on the server, as image creation 
+            takes a lot of toll on the server. </p>
+              <p>FusionMaps brings you great relief - all the maps are rendered 
+                at client side using the widely installed Adobe Flash Platform. 
+                The server is just responsible for streaming the pre-built SWF files 
+                and your XML data files to the end viewers. From there on, Flash 
+                Player takes the onus of rendering the maps. Also, the map SWF 
+                Files can be cached so that you can just update the data, and not 
+                send map SWF files every time.</p></td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td valign="middle"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></td>
+          <td class="textBold">Wide variey of maps </td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>FusionMaps offers a wide variety, which we will keep extending.</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td valign="middle"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></td>
+          <td class="textBold">Clear licensing policies</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td><p>FusionMaps offers you a clear cut no-nonsense licensing model. 
+            We do NOT charge for per-testing server or per-production server. 
+            Once you buy a license of FusionMaps, you can host it on multiple 
+            servers, if all those servers are hosting the same website/application. We offer 
+            unlimited development servers, unlimited test servers and unlimited 
+            CPUs on a given server with each license of FusionMaps.</p>
+              <p>Moreover, if you're using multiple technologies for the same application 
+                - like say, ASP for a few modules and PHP for a few modules, you 
+                can use FusionMaps for both of them, without having to pay us 
+                anything additional. This saves you a lot on licensing cost and 
+                renders a generic look and feel to all the maps of your application.</p></td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td valign="middle"><img src="Images/Bullet.gif" alt="a" width="9" height="9" /></td>
+          <td class="textBold">Easy AJAX integration</td>
+        </tr>
+        <tr valign="top" class="text">
+          <td>&nbsp;</td>
+          <td>FusionMaps offers advanced  options to easily integrate 
+            maps with AJAX or JavaScript modules. For example, you can change 
+            the map's data at client-side itself without invoking any call to 
+            server. You can call JavaScript modules when user interacts with map's 
+            hot-spots etc.<br /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

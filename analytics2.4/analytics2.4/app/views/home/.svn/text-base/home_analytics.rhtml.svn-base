@@ -1,0 +1,164 @@
+<script type="text/javascript" language="javascript">
+function getRecord(duration)
+{
+	list=document.getElementById('showlist').value
+	document.location.href="/home/" + duration.value + "/" + list;
+}
+function showList(list)
+{
+	var duration=document.getElementById('duration').value
+	document.location.href="/home/" + duration + "/" + list.value;
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+        <td align="center" valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="10" align="left" valign="top"></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%">&nbsp;</td>
+                <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<%if session[:userName]=='demo'%>
+                      <tr>
+                        <td class="blubox_text"><strong>Welcome to the ZestADZ Analytics Demonstration Site!</strong>
+                          You are now viewing sample data for consumer property. <br />
+                          We encourage you to explore the full functionality of ZestADZ Analytics and discover how it can help you better understand the performance of your mobile site. </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                      </tr>
+					  <%end%>
+                      <tr>
+                        <td align="left" valign="top" class="graybox"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td align="left" valign="top" class="greu_dash"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td class="gray_heading">Analytics Home </td>
+                                </tr>
+                              
+                            </table></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td class="sidetext">Show : 
+									<select id="showlist" name="showlist" onchange="showList(this);">
+									<option value="<%=encrypt('5')%>" <%=selected="selected" if @showlist=='5'%>>5</option>
+									<option value="<%=encrypt('10')%>" <%=selected="selected" if @showlist=='10'%>>10</option>
+									<option value="<%=encrypt('20')%>" <%=selected="selected" if @showlist=='20'%>>20</option>
+									<option value="<%=encrypt('ALL')%>" <%=selected="selected" if @showlist=='ALL'%>>ALL</option>
+									</select> 
+									<strong> Per   Page</strong></td>
+                                    <td>&nbsp;</td>
+                                    <td align="right">
+                                        <select id="duration" name="duration" onchange="getRecord(this);">
+                                          	<option value="<%=encrypt('1')%>" <%=selected="selected" if @duration=='1'%>>Yesterday</option>
+										  	<option value="<%=encrypt('6')%>" <%=selected="selected" if @duration=='6'%>>Last 7 days</option>
+										  	<option value="<%=encrypt('29')%>" <%=selected="selected" if @duration=='29'%>>Last 30 days</option>
+                                        </select>
+                                   </td>
+                                  </tr>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                                  <tr>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="28%"> Site &amp; Apps </td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="14%">Impressions</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="13%">Clicks</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="13%">CTR (%)</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="12%">eCPM ($)</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="20%">Revenue Earned ($) </td>
+                                  </tr>
+								  <%if(@adclient_summary==nil || @adclient_summary=='') || (@adclient_summary!=nil and @adclient_summary.size==0)%>
+										<tr>
+											<td bgcolor="#EAF2FB" class="table_content"><strong>No site &amp; apps running </strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+									  </tr>
+								  <%else%>
+									   <%for adclient in @adclient_summary%>
+										  <tr>
+											<td bgcolor="#EAF2FB" class="table_content"><strong><a href="/publisher_analytic/publisher_home?analytic=refresh&site_id=<%=encrypt(adclient.client_id)%>&duration=<%=@duration%>&sdate=<%=@start_date%>&edate=<%=@end_date%>"><%=adclient.site_name%></a></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=adclient.sum_impressions%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=adclient.sum_clicks%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=adclient.ctr==nil ? 0.00 : sprintf('%.2f',adclient.ctr)%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=adclient.ecpm==nil ? 0.00 : sprintf('%.2f',adclient.ecpm)%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=adclient.sum_revenue==nil ? 0.00 : sprintf('%.2f',adclient.sum_revenue)%></strong></td>
+										  </tr>
+									  <%end%>
+                                  <%end%>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                                  <tr>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="28%">Campaigns </td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="14%">Campaign Type </td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="13%">Impressions</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="13%">Clicks</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="12%">CTR (%)</td>
+                                    <td class="table_headings" align="center" valign="middle" bgcolor="#29729D" width="20%">Amount Spent ($)</td>
+                                  </tr>
+								  <%if(@campaign_summary==nil || @campaign_summary=='') || (@campaign_summary!=nil and @campaign_summary.size==0)%>
+								 	<tr>
+										<td bgcolor="#EAF2FB" class="table_content"><strong>No campaigns running </strong></td>
+										<td align="center" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+										<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+										<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+										<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+										<td align="right" bgcolor="#EAF2FB" class="table_content"><strong>NA</strong></td>
+									 </tr>
+								  <%else%>
+								  	 <%for campaign in @campaign_summary%>
+										 <tr>
+											<td bgcolor="#EAF2FB" class="table_content"><strong><a href="/advertiser_analytic/advertiser_home?analytic=refresh&camp_id=<%=encrypt(campaign.campaign_id)%>&duration=<%=@duration%>&sdate=<%=@start_date%>&edate=<%=@end_date%>"><%=campaign.camp_name%></a></strong></td>
+											<td align="center" bgcolor="#EAF2FB" class="table_content"><strong><%=campaign.ad_client_type%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=campaign.sum_impressions%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=campaign.sum_clicks%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=campaign.ctr==nil ? 0.00 : sprintf('%.2f',campaign.ctr)%></strong></td>
+											<td align="right" bgcolor="#EAF2FB" class="table_content"><strong><%=campaign.sum_amount_spent==nil ? 0.00 : sprintf('%.2f',campaign.sum_amount_spent)%></strong></td>
+										 </tr>
+                                  	<%end%>
+								  <%end%>
+                                </table></td>
+                              </tr>
+                            </table></td>
+                          </tr>
+       
+                        </table></td>
+                      </tr>
+                    </table></td>
+                  </tr>
+                </table></td>
+                <td width="1%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+

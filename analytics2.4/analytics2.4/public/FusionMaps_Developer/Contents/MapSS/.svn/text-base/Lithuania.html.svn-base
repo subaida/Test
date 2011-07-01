@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="StyleMapSS.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p class="pageHeader">Lithuania Map Specification Sheet</p>
+<p class="text"><span class="textbold">Map Name</span>:Lithuania Map<br />
+    <span class="textbold">SWF Name</span>:FCMap_Lithuania.swf<br />
+    <span class="textbold">Dimensions (Width x Height)</span>:800 x 620 pixels<br/>
+ <span class="textbold">Selection</span>:Counties </p>
+<p class="textbold">List of Entities</p>
+<table width="98%" border="1" align="center" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+  <tr>
+    <td width="30%" valign="top" class="trGreyBg">&nbsp;<span class="textbold">Internal Id</span> </td>
+    <td width="30%" valign="top" class="trGreyBg"><span class="textbold">Short Name (Abbreviated Name)</span> </td>
+    <td valign="top" class="trGreyBg"><span class="textbold">Long Name</span></td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">56</td>
+    <td class="text">AL</td>
+    <td class="text">Alytus</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">57</td>
+    <td class="text">KU</td>
+    <td class="text">Kaunas</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">58</td>
+    <td class="text">KL</td>
+    <td class="text">Klaip&#279;da&nbsp;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">59</td>
+    <td class="text">MR</td>
+    <td class="text">Marijampol&#279;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">60</td>
+    <td class="text">PN</td>
+    <td class="text">Panev&#279;&#382;ys</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">61</td>
+    <td class="text">SA</td>
+    <td class="text">&Scaron;iauliai&nbsp;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">62</td>
+    <td class="text">TA</td>
+    <td class="text">Taurag&#279;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">63</td>
+    <td class="text">TE</td>
+    <td class="text">Tel&scaron;iai&nbsp;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">64</td>
+    <td class="text">UT</td>
+    <td class="text">Utena&nbsp;</td>
+  </tr>
+  <tr height="17">
+    <td height="17" class="text">65</td>
+    <td class="text">VL</td>
+    <td class="text">Vilnius&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

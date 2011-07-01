@@ -1,0 +1,55 @@
+= interpolated_time_formats
+
+interpolated_time_formats adds support for the interpolation of time/date
+formats when generating strings with Time#strftime or Date#strftime.
+
+== Resources
+
+Wiki
+
+* http://wiki.pluginaweek.org/Interpolated_time_formats
+
+Announcement
+
+* http://www.pluginaweek.org/2006/12/10/7-and-8-date-and-time-get-a-little-extra-oomph/
+
+Source
+
+* http://svn.pluginaweek.org/trunk/plugins/ruby/time/interpolated_time_formats
+
+Development
+
+* http://dev.pluginaweek.org/browser/trunk/plugins/ruby/time/interpolated_time_formats
+
+== Description
+
+Specifying the format of times and dates can sometimes be difficult if you want
+to include more complex operations like ordinalizing the day.  For example,
+suppose you want to create a string format that outputs the following:
+
+  31st of Decemember
+  5th of January
+  2nd of February
+
+In order to use this type of format, you would normally need to create a helper
+method like so:
+
+  def fancy_date(date)
+    "#{date.day.ordinalize} of #{date.strftime('%B')}"
+  end
+
+However, this helper method would not be available everywhere within your
+application unless the method was defined in the Object class.
+
+The best way to approach this would be by adding additional formats through
+ActiveSupport's Time::DATE_FORMATS.  For example,
+
+  >> Time::DATE_FORMATS[:fancy] = '#{day.ordinalize} of %B'
+  => "\#{day.ordinalize} of %B"
+  >> Time.parse('12/31/2006').to_s(:fancy)
+  => "31st of December"
+
+Through the use of interpolation, +day.ordinalize+ will only be evaluated when
++strftime+ evaluates the format.  As a result, in addition to using the
+Time#strftime directives, you also get access to the local variables and methods
+in the instance.

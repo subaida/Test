@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<%= stylesheet_link_tag "static" %>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Mobile AD Network | Mobile Advertising Marketplace | Mobile Publishing Platform | India | USA | UK | Europe - ZestADZ</title>
+<body >
+<table width="1004" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="LEFT" valign="MIDDLE" height="15">&nbsp;</td>
+    <td align="LEFT" valign="MIDDLE" height="15">&nbsp;</td>
+    <td height="15">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="LEFT" valign="MIDDLE" width="10">&nbsp;</td>
+    <td align="LEFT" valign="MIDDLE" width="976"><span class="heading">Request an Invite</span></td>
+    <td width="18">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="LEFT" valign="MIDDLE">&nbsp;</td>
+    <td align="LEFT" valign="MIDDLE">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="LEFT" valign="MIDDLE">&nbsp;</td>
+    <td align="LEFT" valign="MIDDLE"><% form_tag :controller => 'login', :action => 'request_access', :id=>@user do %>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="LEFT" valign="MIDDLE"><strong>Please provide us your  Email Id so that we can proceed  further on your request</strong></td>
+          </tr>
+          <tr>
+            <td valign="MIDDLE" align="LEFT" height="15" ></td>
+          </tr>
+		   <%if flash[:notice]==nil && session[:errorText]==nil && flash[:message]==nil%>
+          <tr>
+            <td  valign="MIDDLE" align="LEFT" >
+              <table width="100%" border="0" cellspacing="2" cellpadding="2"class="infobar">
+                <tr>
+                  <td>You need to be an existing user of ZestADZ</td>
+                </tr>
+              </table></td>
+          </tr>
+		  <%end%>
+		  <%if flash[:notice] || session[:errorText]!=nil%>
+          <tr>
+		  	 <td width="582" valign="MIDDLE" align="LEFT" class="infobar" >&nbsp;
+				<%if flash[:notice]%>
+               <span style="color:red;"> <%=flash[:notice] %></span>
+              <%flash[:notice]=nil%>
+                <% elsif (session[:errorText]!=nil) %>
+                <span style="color:red;"><%=session[:errorText]%></span>
+              <%session[:errorText]=nil%>
+			  <%end%>
+             </td>
+          </tr>
+		   <% end %> 
+		   <%if flash[:message]%>
+          <tr>
+            <td width="582" valign="MIDDLE" align="LEFT" class="infobar" >
+                <%=flash[:message] %>
+				<%flash[:message]=nil %>
+            </td>
+          </tr>
+		  <%end%>
+          <tr>
+             <td valign="MIDDLE" align="LEFT" height="15" ></td>
+          </tr>
+          <tr>
+            <td align="LEFT" valign="MIDDLE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="11%" align="LEFT" valign="MIDDLE" height="30"><strong>Email Id : </strong></td>
+                  <td width="89%" align="LEFT" valign="MIDDLE" height="30"><label> <%= text_field 'user', 'email',:size=>'35', :id=>'access_on_analytics' , :class=>'emailTextBox'%> </label></td>
+                </tr>
+                
+                <tr>
+                  <td class="textWhite" align="LEFT" height="30" valign="MIDDLE">&nbsp;</td>
+                  <td class="textWhite" valign="MIDDLE" align="LEFT" height="30"><input type="submit" name="SIGNIN" value="Send" /></td>
+                </tr>
+            </table></td>
+          </tr>
+        </table>
+      <%end%></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
